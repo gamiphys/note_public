@@ -1,0 +1,809 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+\begin{document}
+
+\title{線形代数}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+
+\section{線形代数}
+\subsection{行列の積}
+\begin{itembox}[l]{\textbf{Thm.行列の積の分割}}
+  行列$A,B$の積は、ベクトルを用いることで以下のように分割できる。
+  \begin{enumerate}
+    \item 
+    \begin{align}
+      AB = \begin{pmatrix}
+        \vb{a}_1\\
+        \vb{a}_2\\
+        \vdots\\
+        \vb{a}_m
+      \end{pmatrix}
+      \begin{pmatrix}
+        \vb{b}'_1 & \vb{b}'_2 & \cdots & \vb{b}'_n
+      \end{pmatrix}
+      =
+      \begin{pmatrix}
+        \vb{a}_1 \vb{b}'_1 & \vb{a}_1 \vb{b}'_2 & \cdots & \vb{a}_1 \vb{b}'_n\\
+        \vb{a}_2 \vb{b}'_1 & \vb{a}_2 \vb{b}'_2 & \cdots & \vb{a}_2 \vb{b}'_n\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \vb{a}_m \vb{b}'_1 & \vb{a}_m \vb{b}'_2 & \cdots & \vb{a}_m \vb{b}'_n
+      \end{pmatrix}
+    \end{align}
+  \item 
+  \begin{align}
+    AB = \begin{pmatrix}
+      \vb{a}'_1 & \vb{a}'_2 & \cdots & \vb{a}'_m
+    \end{pmatrix}
+    \begin{pmatrix}
+      \vb{b}_1\\
+      \vb{b}_2\\
+      \vdots\\
+      \vb{b}_n
+    \end{pmatrix}  
+    =
+    \begin{pmatrix}
+      \vb{a}'_1 \vb{b}_1 & \vb{a}'_1 \vb{b}_2 & \cdots & \vb{a}'_1 \vb{b}_n\\
+      \vb{a}'_2 \vb{b}_1 & \vb{a}'_2 \vb{b}_2 & \cdots & \vb{a}'_2 \vb{b}_n\\
+      \vdots & \vdots & \ddots & \vdots\\
+      \vb{a}'_m \vb{b}_1 & \vb{a}'_m \vb{b}_2 & \cdots & \vb{a}'_m \vb{b}_n
+    \end{pmatrix}
+  \end{align}%TODO:これ間違ってるかも
+  \item 
+  \begin{align}
+    AB = \begin{pmatrix}
+      \vb{a}_1\\
+      \vb{a}_2\\
+      \vdots\\
+      \vb{a}_m
+    \end{pmatrix}
+    B
+    =
+    \begin{pmatrix}
+      \vb{a}_1 B\\
+      \vb{a}_2 B\\
+      \vdots\\
+      \vb{a}_m B
+    \end{pmatrix}
+  \end{align}
+  \item
+  \begin{align}
+    AB = A
+    \begin{pmatrix}
+      \vb{b}'_1 & \vb{b}'_2 & \cdots & \vb{b}'_n
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      A \vb{b}'_1 & A \vb{b}'_2 & \cdots & A \vb{b}'_n
+    \end{pmatrix}
+  \end{align}
+  \end{enumerate}
+\end{itembox}
+
+\subsection{行列式}
+\subsubsection{置換}
+\begin{itembox}[l]{\textbf{Def.置換}}
+  $n$個の文字$1,2,\cdots,n$からなる集合を
+  \begin{align}
+    M_n = \{1,2,\cdots,n\}
+  \end{align}
+  とする。このとき、写像$\sigma:M_n \to M_n$が置換であるとは、この写像が全単射であることをいう。このとき、
+  \begin{align}
+    \sigma = \begin{pmatrix}
+      1 & 2 & \cdots & n\\
+      \sigma(1) & \sigma(2) & \cdots & \sigma(n)
+    \end{pmatrix}
+  \end{align}
+  と表す。また、$n$個の文字の置換全体の集合を$S_n$と書く。
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Def.置換の積}}
+  置換$\sigma,\tau$に対して、その積$\tau \sigma$を以下のように定義する。
+  \begin{align}
+    \tau \sigma := \tau \circ \sigma
+  \end{align}
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Def.巡回置換/互換}}
+  $M_n = \{1,2,\cdots,n\}$のうち、$i_1,i_2,\cdots,i_m$以外を動かさないで、$i_1 \mapsto i_2, i_2 \mapsto i_3, \cdots, i_m \mapsto i_1$のように一巡させる置換
+  \begin{align}
+    \begin{pmatrix}
+      i_1 & i_2 & \cdots & i_m & i_{m+1} & \cdots & i_n\\
+      i_2 & i_3 & \cdots & i_1 & i_{m+1} & \cdots & i_n
+    \end{pmatrix}
+  \end{align}
+  を巡回置換といい、
+  \begin{align}
+    (i_1,i_2,\cdots,i_m)
+  \end{align}
+  と表す。また、$2$つの文字を入れ替える置換
+  \begin{align}
+    \begin{pmatrix}
+      i_1 & i_2 & \cdots & i_n\\
+      i_2 & i_1 & \cdots & i_n
+    \end{pmatrix}
+  \end{align}
+  を互換といい、
+  \begin{align}
+    (i_1,i_2)
+  \end{align}
+  と表す。
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Thm.巡回置換による置換の分解}}
+  任意の置換は共通の文字を含まない巡回置換の積に分解できる。
+\end{itembox}
+\textbf{Prf.}\\
+適当な置換
+\begin{align}
+  \sigma = \begin{pmatrix}
+    1 & 2 & \cdots & n\\
+    i_1 & i_2 & \cdots & i_n
+  \end{pmatrix}
+\end{align}
+を考える。このとき、例えば1がどのように移るかを考える。1を何回も移したときにもどって来ないと仮定する。
+いま、$M_n$は有限だから、1を移す操作を繰り返すと、1以外のある数字が繰り返し出てくる。この数字を$j_k$とする。そうすると、ある二つの数字$j_{k-1},j_m$について、
+$j_{k-1} \to j_k, j_m \to j_{k}$となる。これは、置換が全単射なことに矛盾する。したがって、1を何回も移してもとに戻る。同様に、他の数字についても同様の議論ができる。以上より、示された。\hfill\qedsymbol\\
+%TODO:図を入れる。
+
+\begin{itembox}[l]{\textbf{Thm.互換による巡回置換の分解}}
+  巡回置換$(i_1,i_2,\cdots,i_m)$は以下のように$m-1$個の互換の積に分解できる。
+  \begin{align}
+    (i_1,i_2,\cdots,i_m) = (i_1,i_m)(i_1,i_{m-1})\cdots(i_1,i_3)(i_1,i_2)
+  \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+手を動かせば明らかである。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Cor.互換による置換の分解}}
+  任意の置換は互換の積に分解できる。
+\end{itembox}
+\textbf{Prf.}\\
+上二つの定理から明らかである。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Def.置換の符号}}
+  置換$\sigma$に対して、その符号$\text{sgn}(\sigma)$を以下のように定義する。
+  \begin{align}
+    \text{sgn}(\sigma) = (-1)^{N(\sigma)}
+  \end{align}
+  ただし、$N(\sigma)$は$\sigma$を互換の積に分解したときの互換の個数である。
+\end{itembox}
+
+置換の符号の定義がwell-definedであることが以下で示される。\\
+\begin{itembox}[l]{\textbf{Thm.置換の符号の不変性}}
+  互換への分解の仕方によらず、置換の符号は一意である。
+\end{itembox}
+\textbf{Prf.}\\
+
+
+\subsubsection{行列式の定義}
+\begin{itembox}[l]{\textbf{Def.行列式}}
+  $n$次正方行列$A$に対して、その行列式$\det A$は以下のように定義される。
+  \begin{align}
+    \det A = \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{n\sigma(n)}
+  \end{align}
+  ただし、$\text{sgn}(\sigma)$は置換$\sigma$の符号であり、$\sigma$が偶置換のとき$+1$、奇置換のとき$-1$となる。
+\end{itembox}
+\textbf{Ex.}\\
+$2$次正方行列$A$に対して、
+\begin{align}
+  A = \begin{pmatrix}
+    a_{11} & a_{12}\\
+    a_{21} & a_{22}
+  \end{pmatrix}
+\end{align}
+について、
+\begin{align}
+  \det A &= 1 \cdot a_{11}a_{22} + (-1) \cdot a_{12}a_{21}\\
+  &= a_{11}a_{22} - a_{12}a_{21}
+\end{align}
+である。\\
+
+
+\subsubsection{行列式の性質}
+\begin{itembox}[l]{\textbf{Thm.}}
+  \begin{align}
+    \begin{vmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n}\\
+      0 & a_{22} & \cdots & a_{2n}\\
+      \vdots & \vdots & \ddots & \vdots\\
+      0 & a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+    =
+    a_{11}
+    \begin{vmatrix}
+      a_{22} & \cdots & a_{2n}\\
+      \vdots & \ddots & \vdots\\
+      a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+  \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+行列式の定義は、
+\begin{align}
+  \det A = \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{n\sigma(n)}
+\end{align}
+であった。ここで、$k > 1$について、$\sigma(k) =1$だとすると、
+\begin{align}
+  \text{sgn}a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{n\sigma(n)} = 0
+\end{align}
+となるから、和の中で考える必要がない。したがって、$\sigma(1) = 1$となる部分だけ和を考えればよい。このとき、
+\begin{align}
+  \det A &= \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{n\sigma(n)}\\
+  &= \sum_{\sigma \in S_n, \sigma(1) = 1} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{n\sigma(n)}\\
+  &= a_{11} \sum_{\sigma \in S_n, \sigma(1) = 1} \text{sgn}(\sigma) a_{2\sigma(2)}\cdots a_{n\sigma(n)}\\
+  &= a_{11} \sum_{\sigma \in S_{n-1}} \text{sgn}(\sigma) a_{22}a_{2\sigma(2)}\cdots a_{n\sigma(n)}\\
+  &= a_{11}
+  \begin{vmatrix}
+    a_{22} & \cdots & a_{2n}\\
+    \vdots & \ddots & \vdots\\
+    a_{n2} & \cdots & a_{nn}
+  \end{vmatrix}
+\end{align}
+である。以上より、示された。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Cor.}}
+  上三角行列$A$の行列式は、対角成分の積に等しい。すなわち、
+  \begin{align}
+    \det A = a_{11}a_{22}\cdots a_{nn}
+  \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+上の定理を繰り返し用いればよい。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  $A$を$r$次正方行列とし、$D$を$s$次正方行列とする。このとき、
+  \begin{align}
+    \begin{vmatrix}
+      A & B\\
+      O & D
+    \end{vmatrix}
+    = \det A \det D
+  \end{align}
+  が成り立つ。
+\end{itembox}
+\textbf{Prf.}\\
+\begin{align}
+X = \begin{pmatrix}
+  A & B\\
+  O & D
+  \end{pmatrix}
+  =
+  (a)_{ij}
+\end{align}
+とし、$n=r+s$とする。このとき、行列式の定義から、
+\begin{align}
+  \det X = \sum_{\sigma \in S_n} \text{sgn}(\sigma) (a)_{1\sigma(1)}(a)_{2\sigma(2)}\cdots (a)_{n\sigma(n)}
+\end{align}
+である。上の定理を参考に、置換を分解して考えると、%TODO:書く
+
+
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  行列$A$の一つのを$c$倍すると、行列式も$c$倍される。すなわち、
+  \begin{align}
+      \begin{vmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n}\\
+        a_{21} & a_{22} & \cdots & a_{2n}\\
+        \vdots & \vdots & \cdots & \vdots\\
+        ca_{i1} & ca_{i2} & \cdots & ca_{in}\\
+        \vdots & \vdots & \cdots & \vdots\\
+        a_{n1} & a_{n2} & \cdots & a_{nn}
+      \end{vmatrix}
+      =c
+      \begin{vmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n}\\
+        a_{21} & a_{22} & \cdots & a_{2n}\\
+        \vdots & \vdots & \cdots & \vdots\\
+        a_{i1} & a_{i2} & \cdots & a_{in}\\
+        \vdots & \vdots & \cdots & \vdots\\
+        a_{n1} & a_{n2} & \cdots & a_{nn}
+      \end{vmatrix}
+    \end{align}
+    が成り立つ。
+\end{itembox}
+\textbf{Prf.}\\
+左辺を計算すると、行列式の定義より、
+\begin{align}
+  \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots ca_{i\sigma(i)}\cdots a_{n\sigma(n)} 
+  &= c \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{i\sigma(i)}\cdots a_{n\sigma(n)}
+\end{align}
+となることがわかる。したがって、示された。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Cor.}}
+  行列$A$の一つの成分がすべて$0$であるとき、行列式は$0$である。
+\end{itembox}
+\textbf{Prf.}\\
+$0 = 0 \times 0$として上の定理を用いればよい。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  \begin{align}
+    \begin{vmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n}\\
+      a_{21} & a_{22} & \cdots & a_{2n}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      b_{i1}+c_{i1} & b_{i2}+c_{i2} & \cdots & b_{in}+c_{in}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+    =
+    \begin{vmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n}\\
+      a_{21} & a_{22} & \cdots & a_{2n}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      b_{i1} & b_{i2} & \cdots & b_{in}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+    +
+    \begin{vmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n}\\
+      a_{21} & a_{22} & \cdots & a_{2n}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      c_{i1} & c_{i2} & \cdots & c_{in}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+  \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+略。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.二つの行の入れ替え}}
+  行列式の二つの行を入れ替えると、行列式は$-1$倍される。すなわち、
+  \begin{align}
+  \begin{vmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{j1} & a_{j2} & \cdots & a_{jn}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{i1} & a_{i2} & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{vmatrix}
+  =-
+  \begin{vmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{i1} & a_{i2} & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{j1} & a_{j2} & \cdots & a_{jn}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{vmatrix}
+  \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+$\tau := \sigma (i,j)$とする。このとき、
+\begin{align}
+  \text{sgn}(\tau) &= \text{sgn}(\sigma(i,j))\\
+  &= \text{sgn}(\sigma) \text{sgn}(i,j)\\
+  &= -\text{sgn}(\sigma)
+\end{align}
+となる。これを用いて計算すると、
+\begin{align}
+  (\text{左辺}) &= \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)}a_{2\sigma(2)}\cdots a_{j\sigma(i)}\cdots a_{i\sigma(j)}\cdots a_{n\sigma(n)}\\
+  & (\sigma(i) = j, \sigma(j) = i)\text{より、}\\
+  &=- \sum_{\tau \in S_n} \text{sgn}(\tau) a_{1\tau(1)}a_{2\tau(2)}\cdots a_{i\tau(i)}\cdots a_{j\tau(j)}\cdots a_{i\tau(i)}\cdots a_{n\tau(n)}\\
+  &=( \text{右辺})
+\end{align}
+である。したがって、示された。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  二つの行が等しい行列の行列式は$0$である。
+\end{itembox}
+\textbf{Prf.}\\
+上の定理を用いれば、
+\begin{align}
+  \det A &= -\det A
+\end{align}
+となるから、$\det A = 0$である。したがって、示された。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  行列の1つの行に任意の数をかけて、他の行に加えても、行列式の値は変わらない。すなわち、
+  \begin{align}
+    \begin{vmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{i1}+ca_{j1} & a_{i2}+ca_{j2} & \cdots & a_{in}+ca_{jn}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+    =
+    \begin{vmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{i1} & a_{i2} & \cdots & a_{in}\\
+      \vdots & \vdots & \cdots & \vdots\\
+      a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{vmatrix}
+  \end{align}
+  が成り立つ。
+\end{itembox}
+\textbf{Prf.}\\
+\begin{align}
+  \text{左辺} &= 
+  \begin{vmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{i1} & a_{i2} & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{vmatrix}
+  +c
+  \begin{vmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{j1} & a_{j2} & \cdots & a_{jn}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{j1} & a_{j2} & \cdots & a_{jn}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{vmatrix}
+  \\
+  &=
+  \begin{vmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{i1} & a_{i2} & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{vmatrix}
+\end{align}
+である。したがって、示された。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  \begin{align}
+    \det A = \det A^T
+  \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+
+
+\subsubsection{行列式の展開}
+\begin{itembox}[l]{\textbf{Def.余因子}}
+  $n$次正方行列$A=(a_{ij})$に対して、その第$i$行および第$j$列を取り除いた$n-1$次正方行列$A_{ij}$を考える。このとき、
+  \begin{align}
+    \tilde{a}_{ij} = (-1)^{i+j} \det A_{ij}
+  \end{align}
+  を$A$の$(a_{ij})$に対する余因子という。
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Thm.余因子展開}}
+  $n$次正方行列$A$に対して、
+  \begin{align}
+    \det A = \sum_{j=1}^n a_{ij} \tilde{a}_{ij}
+  \end{align}
+  が成り立つ。これを、第$i$行に対する余因子展開という。また、
+  \begin{align}
+    \sum_{j=1} a_{ij} \tilde{a}_{kj} = 0 \quad (i \neq k)
+  \end{align}
+  が成り立つ。
+\end{itembox}
+\textbf{Prf.}\\
+与えられた行列$A$の第$i$行は、
+\begin{align}
+  \begin{pmatrix}
+    a_{i1} & a_{i2} & \cdots & a_{in}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    a_{i1} & 0 & \cdots & 0
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    0 & a_{i2} & \cdots & 0
+  \end{pmatrix}
+  +\cdots
+  +
+  \begin{pmatrix}
+    0 & 0 & \cdots & a_{in}
+  \end{pmatrix}
+\end{align}
+と書ける。したがって、行列式は、
+\begin{align}
+  \det A &= 
+  \begin{pmatrix}
+    a_{i1} & a_{i2} & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{i1} & 0 & \cdots & 0\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{pmatrix}
+  +\cdots
+  +
+  \begin{pmatrix}
+    a_{i1} & a_{i2} & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    0 & 0 & \cdots & a_{in}\\
+    \vdots & \vdots & \cdots & \vdots\\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+  \end{pmatrix}
+\end{align}
+となる。行と列をうまく入れ替えて計算することで、
+\begin{align}
+  \det A &= \sum_{j=1}(-1)^{i+j}a_{ij}\det A_{ij}\\
+  &=\sum_{j=1}^n a_{ij} \tilde{a}_{ij}
+\end{align}
+が示される。
+第二の式は気が向いたら証明する。\hfill\qedsymbol\\
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  $n$ 次正方行列 $A, B$ に対して、
+  \begin{align}
+      \det(AB) = \det(A) \det(B)
+  \end{align}
+  が成り立つ。
+\end{itembox}
+\textbf{Prf.}\\
+ 行列 $A, B$ をそれぞれ $A = (a_{ij})$, $B = (b_{ij})$ と書くことにする。そして、行列 $B$ のベクトルを $b_1, b_2, \dots, b_n$ とする。すなわち、
+\begin{align}
+  \vb{b}_j = 
+  \begin{pmatrix}
+      b_{1j} & b_{2j} & \dots & b_{nj}
+  \end{pmatrix}
+  \quad (j = 1, 2, \dots, n)
+\end{align}
+ブロックに分けての計算法によって、
+\begin{align}
+  AB =
+  \begin{pmatrix}
+      a_{11} & \dots & a_{1n} \\
+      \vdots & \ddots & \vdots \\
+      a_{n1} & \dots & a_{nn}
+  \end{pmatrix}
+  \begin{pmatrix}
+      \vb{b}_{1} \\
+      \vdots \\
+      \vb{b}_{n}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+      \sum_{i=1}^{n} a_{1i}\vb{b}_{j} \\
+      \vdots \\
+      \sum_{i=1}^{n} a_{ni}\vb{b}_{j}
+  \end{pmatrix}
+\end{align}
+である。したがって、次の等式を得る。
+\begin{align}
+  \det(AB) = \sum_{j_n=1}^{n} \sum_{j_{n-1}=1}^{n} \dots \sum_{j_2 =1}^{n} \sum_{j_1 =1}^{n} a_{1j_1} \dots a_{nj_n} 
+  \begin{vmatrix}
+      \vb{b}_{j_1} \\
+      \vdots \\
+      \vb{b}_{j_n}
+  \end{vmatrix}
+\end{align}
+ここで、和は $j_1, j_2, \dots, j_n$ がそれぞれ1から $n$ まで動くので $n^n$ 個の項になる。しかし、$b_{j_1}, \dots, b_{j_n}$ のうちに同じものがあれば、行列式
+\begin{align}
+  \begin{vmatrix}
+      \vb{b}_{j_1} \\
+      \vdots \\
+      \vb{b}_{j_n}
+  \end{vmatrix} = 0
+\end{align}
+となるから、$j_1, j_2, \dots, j_n$ がすべて異なる場合の和を考えればよい。すなわち $j_1, j_2, \dots, j_n$ の順列となる場合に他ならない。しかも、和はちょうど $n!$ の順列をわたる。ゆえに、
+\begin{align}
+  \det(AB) = \sum_{\sigma \in S_n} a_{1\sigma(1)} \dots a_{n\sigma(n)} 
+  \begin{vmatrix}
+      \vb{b}_{1\sigma(1)} \\
+      \vdots \\
+      \vb{b}_{n\sigma(n)}
+  \end{vmatrix}
+  = \sum_{\sigma \in S_n} a_{1\sigma(1)} \dots a_{n\sigma(n)} 
+  \begin{vmatrix}
+      \vb{b}_{1} \\
+      \vdots \\
+      \vb{b}_{n}
+  \end{vmatrix}
+\end{align}
+となるので、
+\begin{align}
+  \det(AB) = \det(A) \det(B)
+\end{align}
+が示された。\hfill\qedsymbol\\
+
+\subsection{ベクトル空間}
+\subsubsection{基底間の関係}
+\begin{itembox}[l]{\textbf{Thm.基底の変換}}
+  基底ベクトル間の変換は、2つの基底を$\vb{a}_1, \vb{a}_2, \dots, \vb{a}_n$ と $\vb{b}_1, \vb{b}_2, \dots, \vb{b}_n$ とすると、ある正則行列 $P$ によって 
+  \begin{align}
+    \vb{b}_j = \sum_{i=1}^{n} P_{ij} \vb{a}_i
+  \end{align}
+  と表される。行列表記すると、
+  \begin{align}
+    \begin{pmatrix}
+      \vb{b}_1 & \vb{b}_2 & \dots & \vb{b}_n
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      \vb{a}_1 & \vb{a}_2 & \dots & \vb{a}_n
+    \end{pmatrix}
+    P
+  \end{align}
+  となる。
+\end{itembox}
+\textbf{Prf.}\\
+hoge\hfill\qedsymbol\\
+
+このもとで、成分の変化を見る。今、
+\begin{align}
+  y_1\vb{b}_1 + y_2\vb{b}_2 + \dots + y_n\vb{b}_n &=
+  \begin{pmatrix}
+    \vb{b}_1 & \vb{b}_2 & \dots & \vb{b}_n
+  \end{pmatrix}
+  \begin{pmatrix}
+    y_1\\
+    y_2\\
+    \vdots\\
+    y_n
+  \end{pmatrix}\\
+  &=
+  \begin{pmatrix}
+    \vb{a}_1 & \vb{a}_2 & \dots & \vb{a}_n
+  \end{pmatrix}
+  P
+  \begin{pmatrix}
+    y_1\\
+    y_2\\
+    \vdots\\
+    y_n
+  \end{pmatrix}\\
+  &=
+  \begin{pmatrix}
+    \vb{a}_1 & \vb{a}_2 & \dots & \vb{a}_n
+  \end{pmatrix}
+  \begin{pmatrix}
+    x_1\\
+    x_2\\
+    \vdots\\
+    x_n
+  \end{pmatrix}
+\end{align}
+となる。したがって、
+\begin{align}
+  \begin{pmatrix}
+    y_1\\
+    y_2\\
+    \vdots\\
+    y_n
+  \end{pmatrix}
+  = P^{-1}
+  \begin{pmatrix}
+    x_1\\
+    x_2\\
+    \vdots\\
+    x_n
+  \end{pmatrix}
+\end{align}
+を得る。
+
+\subsubsection{線形写像の行列表現}
+線形写像の行列表現を考える。$V$を$n$次元ベクトル空間、$W$を$m$次元ベクトル空間とし、$V$の基底を$\vb{a}_1, \vb{a}_2, \dots, \vb{a}_n$、$W$の基底を$\vb{b}_1, \vb{b}_2, \dots, \vb{b}_m$とする。このとき、線形写像$f:V \to W$について、
+\begin{align}
+  f(\vb{a}_j) = \sum_{i=1}^{m} A_{ij} \vb{b}_i
+\end{align}
+により行列$A$を定義する。このとき、
+\begin{align}
+  f
+  \begin{pmatrix}
+    \vb{a}_1 & \vb{a}_2 & \dots & \vb{a}_n
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \vb{b}_1 & \vb{b}_2 & \dots & \vb{b}_m
+  \end{pmatrix}
+  A
+\end{align}
+が成り立つ。この行列$A$を線形写像$f$の行列表現という。このもとで、
+\begin{align}
+  f(\vb{x}) &=f(x_1\vb{a}_1 + x_2\vb{a}_2 + \dots + x_n\vb{a}_n)\\
+  &=f\qty(\sum_{j=1}^{n} x_j\vb{a}_j)\\
+  &=\sum_{j=1}^{n} x_j f(\vb{a}_j)\\
+  &=\sum_{j=1}^{n} x_j \sum_{i=1}^{m} A_{ij} \vb{b}_i\\
+  &=\sum_{i=1}^{m} \qty(\sum_{j=1}^{n} A_{ij}x_j) \vb{b}_i\\
+  &=\sum_{i=1}^{m} y_i \vb{b}_i
+\end{align}
+となる。したがって、
+\begin{align}
+  \begin{pmatrix}
+    y_1\\
+    y_2\\
+    \vdots\\
+    y_m
+  \end{pmatrix}
+  = A
+  \begin{pmatrix}
+    x_1\\
+    x_2\\
+    \vdots\\
+    x_n
+  \end{pmatrix}
+\end{align}
+となる。
+
+\begin{itembox}[l]{\textbf{Thm.}}
+  $f: V \to W$ を線形写像とする。$V$ の基底 $\vb{a}_1, \dots, \vb{a}_n$ と $W$ の基底 $\vb{b}_1, \dots, \vb{b}_m$ に関する $f$ の表現行列を $A$ とし、$V$ の基底 $\vb{a}_1', \dots, \vb{a}_n'$ と $W$ の基底 $\vb{b}_1', \dots, \vb{b}_m'$ に関する $f$ の表現行列を $B$ とする。また、基底変換の行列をそれぞれ $P, Q$ とする。すなわち、
+  
+  \begin{align}
+      (\vb{a}_1', \dots, \vb{a}_n') &= (\vb{a}_1, \dots, \vb{a}_n) P, \\
+      (\vb{b}_1', \dots, \vb{b}_m') &= (\vb{b}_1, \dots, \vb{b}_m) Q,
+  \end{align}
+  とおく。このとき、
+  \begin{align}
+  B = Q^{-1} A P
+  \end{align}
+  が成り立つ。
+  \end{itembox}
+  \textbf{Prf.}\\
+  表現行列と基底の変換の行列の定義より
+  \begin{align}
+  (f(\vb{a}_1'), \dots, f(\vb{a}_n')) &= (f(\vb{a}_1), \dots, f(\vb{a}_n)) B = (\vb{b}_1', \dots, \vb{b}_m') QB
+  \end{align}
+  また、線形性から、
+  \begin{align}
+  (f(\vb{a}_1'), \dots, f(\vb{a}_n')) &= (f(\vb{a}_1), \dots, f(\vb{a}_n)) P = (\vb{b}_1, \dots, \vb{b}_m) AP
+  \end{align}
+  であるから、
+  \begin{align}
+  (\vb{b}_1, \dots, \vb{b}_m) QB = (\vb{b}_1, \dots, \vb{b}_m) AP
+  \end{align}
+  が得られる。$\vb{b}_1, \dots, \vb{b}_m$ は一次独立だから、定理 6.4.8 より $QB = AP$ が成り立つ。$Q$ は正則だから、
+  \begin{align}
+  B = Q^{-1} A P
+  \end{align}
+\qed
+
+\subsection{その他}
+\begin{itembox}[l]{\textbf{Thm:}}
+  実$n$次元数ベクトル空間$\mathbb{R}^n$の任意の部分ベクトル空間$W_1, W_2$に対して、
+  \begin{align}
+    W_1 \subset W_2 \Rightarrow \dim W_1 \leq \dim W_2
+  \end{align}
+  が成立する。また、
+  \begin{align}
+    W_1 \subset W_2 \quad \text{and} \quad \dim W_1 = \dim W_2 \quad \Rightarrow \quad W_1 = W_2
+  \end{align}
+  が成立する。
+\end{itembox}
+\textbf{Prf}\\
+%後で書く。\\
+
+
+\end{document}
