@@ -1,0 +1,242 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+\begin{document}
+
+\title{B4ゼミ\#1}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+\setcounter{section}{1}
+\section{確率過程}
+この章では、離散状態に対する確率分布の時間発展を考える。
+\footnote{連続なものについてはchapter4で議論する。}
+例えば、(これは連続なものの例だが)ブラウン運動を考えると、環境の水分子の運動によって、ランダムに位置が変化する。したがって、粒子の位置の時間発展を正確に予言することはできない。そこで、粒子の位置についての確率分布を考え、その時間発展を追うことにする。
+初めに、時間も離散的な場合についてその時間発展を議論する。次に、その極限として、連続時間についての時間発展を議論する。
+
+\subsection{Markov過程と離散時間Markov連鎖}
+$N$ stepの確率過程、すなわち、$N$回状態が変わりうるような時間発展を考える。初期状態を$\omega_0$、i番目のstepの状態を$\omega_i$とする。このとき、$N$ stepを経ることで状態の列$(\omega_0, \omega_1, \cdots, \omega_N)$が得られる。
+
+一般の確率過程においては、$n$番目の状態は、それ以前のすべての状態に陽に依存しうる。すなわち、
+\begin{align}
+    P(\omega_n | \omega_{n-1}, \omega_{n-2}, \cdots, \omega_0) \neq P(\omega_n | \omega_{n-1}) 
+\end{align}
+である。
+\footnote{
+    例えば、1次元ランダムウォークについて、初めのstepで右に一歩進んだ場合、それ以降は1stepで2歩進み、初め左に一歩進んだ場合は、1stepで1歩進む、というルールを作ると、以降の状態は1step目に陽に依存することになる。
+    物理的なモデルとしても、例えばブラウン粒子がbathのすべての粒子とバネで結ばれているようなモデルを考える(調和振動子熱浴)。このとき、過去のバネとの衝突が、少し時間がたってからブラウン粒子に返ってくる。したがって、ブラウン粒子の位置の確率分布は過去の履歴に依存することになる。
+}
+しかし、Markov過程においては、
+\begin{align}
+    P(\omega_n | \omega_{n-1}, \omega_{n-2}, \cdots, \omega_0) = P(\omega_n | \omega_{n-1})
+\end{align}
+が成立する。すなわち、Markov過程は、現在の状態$\omega_n$が次の状態$\omega_{n+1}$に影響を与えるが、過去の状態$\omega_{n-1}, \omega_{n-2}, \cdots, \omega_0$は(陽には)影響を与えない。\\
+
+特に、時間を離散的に区切ったMarkov過程は、Markov連鎖と呼ばれる。以下では、状態$\omega_{i}$を、簡単に$i$と表記することにする。\\
+\indent
+Markov連鎖における確率分布の時間発展は、遷移行列によって記述される。
+
+\begin{itembox}[l]{\textbf{Def.確率遷移行列}}
+    行列$T$が確率遷移行列であるとは、その要素$T_{ij}$が、以下の二つの性質を満たすときに言う。
+    \begin{itemize}
+        \item $\forall i,j \quad T_{ij} \geq 0$ (非負性)
+        \item $\sum_{j} T_{ij} = 1$ (規格化条件)
+    \end{itemize}
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Def.Markov連鎖における時間発展}}
+    Markov連鎖における時間発展は、遷移行列$T$を用いて、以下のように表される。
+        \begin{align}
+            p^{n} = T p^{n-1}
+        \end{align}
+        ここで、$p^{n}$は、$n$ステップ目における状態の確率分布を表すベクトルである。成分を用いて書くと、
+        \begin{align}
+            p_{j}^{n} = \sum_{i} T_{ji} p_i^{n-1}
+        \end{align}
+        となる。
+    \end{itembox}
+すなわち、遷移行列が確率分布の時間発展を特徴づけることとなる。
+
+例えば3状態をとるような系の遷移の仕方は以下の図のように表される。
+TODO: 図を作成する。
+すなわち、$T_{ij}$は、状態$i$から状態$j$に遷移する確率を表している。
+
+確率遷移行列の定義の妥当性を確かめる。遷移行列の各成分が非負であることは、その成分が状態間の遷移確率を表していることから妥当である。
+\footnote{
+    確率分布の時間発展がある行列を用いて表されることを認めるならば、背理法によってもこれを示すことができる。もし、$T_{ij} < 0$であった場合、例えば$p_{j}^{n-1} = 1$であったとき、
+    $p_{i}^{n} = \sum_{k} T_{ik} p_k^{n-1} = T_{ij}p_{j}^{n-1} = T_{ij} < 0$となり、確率分布が負の値をとることになるが、これは矛盾である。
+}
+二つ目の性質は、遷移後の確率分布が規格か条件を満たしていることを確かめればよい。
+\begin{align}
+    \sum_{j} p_{j}^{n} &= \sum_{j} \sum_{i} T_{ji} p_i^{n-1} \\
+    &= \sum_{i} p_i^{n-1} \sum_{j} T_{ji} \\
+    &= \sum_{i} p_i^{n-1} \\
+    &= 1
+\end{align}
+となることから、遷移後の確率分布は規格化条件を満たす。
+\footnote{
+    仮に仮に、ある$i$に対して、
+    $\sum_{j} T_{ij} =c \neq 1$であるとする。このとき、$p_{i}^{n-1} = 1$かつ$p_{k(\neq i)}^{n-1} = 0$であったとき、
+    \begin{align}
+        \sum_{j} p_{j}^{n} &= \sum_{j} T_{ji} p_i^{n-1} \\
+        &= \sum_{j} T_{ji} \cdot 1 \\
+        &= c \neq 1
+    \end{align}
+    となるが、、これは矛盾である。
+    したがって、$\sum_{j} T_{ij} = 1$であることがわかる。
+}
+
+特に、上での議論は遷移行列が時間に依らないとしたが、時間に依存する場合も同様に議論できる。
+n step目の遷移行列を$T^n$とすると、
+\begin{align}
+    T^n_{ij} = P((\omega_i,n) |(\omega_j,n-1))
+\end{align}
+と定義すればよい。
+
+\subsection{連続時間Markov jump過程}
+Markov連鎖においては、時間が離散的に区切られているが、連続時間Markov過程では、時間が連続的に変化する。
+Markov連鎖をMarkov過程に拡張するためには、離散的に区切った時間について、その幅を0に近づけばよい。
+
+時間$0 \leq t \leq \tau$における確率過程について考える。この時間を、$\Delta t$ごとに区切り、$N\Delta t = \tau$とする。
+このように区切ってあげると、これは、$N$ stepのMarkov連鎖の形になっている。
+ここで、遷移確率行列の成分を、以下のように定義する。
+\begin{align}
+    T_{ij}^{n} = 
+    \begin{cases}
+        R_{ij} (n\Delta t) \Delta t & (i \neq j) \\
+        1 - \sum_{k (\neq j)} R_{kj} (n\Delta t) \Delta t & (i = j)
+    \end{cases}
+\end{align}
+ただし、$R_{ij}(t)$は、以下のように定義される。
+
+\begin{itembox}[l]{\textbf{Def.遷移レート行列}}
+    行列$R$が遷移レート行列であるとは、その要素$R_{ij}$が、以下の二つの性質を満たすときに言う。
+    \begin{itemize}
+        \item $\forall i,j \quad (i \neq j) \quad R_{ij} \geq 0$ (非負性)
+        \item $\sum_{i} R_{ij} = 0$ (規格化条件)
+    \end{itemize}
+\end{itembox}
+
+遷移レート行列を用いることで、連続時間Markov過程における確率分布の時間発展を以下のように表すことができる。
+
+\begin{itembox}[l]{\textbf{Def.master 方程式}}
+    連続時間Markov過程における確率分布の時間発展は、以下のように表される。
+    \begin{align}
+        \dv{p_i(t)}{t} = \sum_{j} R_{ij} p_j(t)
+    \end{align}
+    この微分方程式は、master方程式と呼ばれる。
+\end{itembox}
+\textbf{Prf.}\\
+\begin{align}
+    p_i^{n} &= \sum_{j}T_{ij}p_j^{n-1}
+  \end{align}
+  のもとで、
+  \begin{align}
+    p_i^n - p_i^{n-1} &= \sum_{j}T_{ij}p_j^{n-1} - p_i^{n-1}\\
+    &= \sum_{j(\neq i)}T_{ij}p_j^{n-1} + T_{ii}p_i^{n-1} - p_i^{n-1}\\
+    &= \sum_{j(\neq i)}R_{ij} (n\Delta t)\Delta t p_j^{n-1} + (1-\sum_{k(\neq i)}R_{ki} (n\Delta t)\Delta t)p_i^{n-1} - p_i^{n-1}\\
+    &= -\sum_{k(\neq i)}R_{ki} (n\Delta t)\Delta t p_i^{n-1} \Delta t + \sum_{j(\neq i)}R_{ij} (n\Delta t)p_j^{n-1}\Delta t\label{eq:1}\\
+    &= R_{ii} (n\Delta t)p_j^{n-1}\Delta t + \sum_{j(\neq i)}R_{ij} (n\Delta t)p_j^{n-1}\Delta t\\
+    &= \sum_{j}R_{ij} (n\Delta t)p_j^{n-1}\Delta t
+  \end{align}
+  となる。最後に、$N \Delta t = \tau$を保ちながら、$\Delta t \to 0, N \to \infty$の極限をとることで、
+  \begin{align}
+    \dv{t}p_i(t) = \lim_{\Delta t \to 0}\frac{p_i^n - p_i^{n-1}}{\Delta t} = \sum_{j}R_{ij}p_j(t)
+  \end{align}
+  が得られる。\footnote{式\eqref{eq:1}の右辺が特にわかりやすく、第1項は、状態$i$からほかの状態に遷移する確率を表しており、第2項は、逆に、状態$i$に遷移してくる確率を表している。全体としては、正味の確率の増分を表していることとなる。}
+  \qed\\
+
+遷移レートの定義の妥当性を確かめる。
+遷移レート行列の非対角成分が非負であることは、その成分が状態間の単位時間当たりの遷移の頻度を表していることからわかる。
+また、規格化条件については、
+\begin{align}
+    \sum_{i} \sum_{j} R_{ij} p_j(t) &= \sum_{j} \qty(\sum_{i} R_{ij}) p_j(t) \\
+    &= \sum_{j} 0 \cdot p_j(t) \\
+    &= 0
+\end{align}
+が成り立つことから、
+\begin{align}
+    \sum_{i} p_{i}(t) &= \text{const} 
+\end{align}
+が成り立つことがわかる。特に、初期状態で1に規格化されていれば、時間発展しても1に規格化され続ける。\\
+
+今後の便宜のため、現在の状態以外の状態に遷移する確率に対する記号を定義しておく。
+\begin{itembox}[l]{\textbf{Def.エスケープレート}}
+    時刻$t$における状態$j$でのエスケープレートは、以下のように定義される。
+    \begin{align}
+        e_{j,t} \coloneqq \sum_{i (\neq j)} P_{j \to i ;t}= \sum_{i (\neq j)} R_{ij}(t) = -R_{jj}(t)
+    \end{align}
+\end{itembox}
+このとき、$e_{j,t} \Delta t$は、$[t,t+\Delta t]$において、状態$j$から他の状態に遷移する確率を表す。\\
+逆に、$1$から$e_{j,t} \Delta t$を引くことで、状態$j$にとどまる確率を表すことができる。
+
+\begin{itembox}[l]{\textbf{Thm.残留確率}}
+    時間$[0,\tau]$において、状態$j$にとどまる確率$P_{\text{rem}(j;0,\tau)}$は、以下のように表される。
+    \begin{align}
+        P_{\text{rem}}(j;0,\tau) = \exp\left(-\int_{0}^{\tau} e_{j,t} dt\right)
+    \end{align}
+    ただし、$e_{j,t}$は、状態$j$におけるエスケープレートである。
+\end{itembox}
+\textbf{Prf.}\\
+離散化して考える。時間$\tau$を$N$分割し、$N\Delta t = \tau$とし、最後に$\Delta t \to 0$なる極限をとる。このとき、
+\begin{align}
+    P_{\mathrm{rem}}(j; 0, \tau) 
+    &= \prod_{n=0}^{N-1} T_{jj}^{n}(n \Delta t) \\
+    &= \prod_{n=0}^{N-1} \left(1 - e_{j,n\Delta t} \Delta t + O(\Delta t^2)\right) \\
+    &= \prod_{n=0}^{N-1} \left(e^{-e_{j,n\Delta t} \Delta t} + O(\Delta t^2)\right) \\
+    &= \exp\left[- \sum_{n=0}^{N-1} e_{j,n\Delta t} \Delta t \right] + O(\Delta t)\\
+    &\underset{\Delta t \to 0}{\longrightarrow} \exp\left[-\int_{0}^{\tau} e_{j,t} dt \right] + O(\Delta t)\\
+\end{align}
+となる。ただし、最後の等号では、$O(\Delta t^2)$の項\footnote{ここでの
+$O(\Delta t^2)$は、
+\begin{itemize}
+    \item $\Delta t$の間でのエスケープレートの変動(上の証明では、時間$[n\Delta t,(n+1)\Delta t]$におけるエスケープレートを$e_{j,n\Delta t}$としていた。)
+    \item $\Delta t$の間にジャンプが2回以上起こる確率の寄与
+\end{itemize}
+の効果を表している。
+}を$N$回掛けているので、
+\begin{align}
+    N\cdot O(\Delta t^2) &= O(\Delta t) 
+\end{align}
+が成り立つことを用いた。\footnote{$N\Delta t = \tau$であった。}
+\qed\\
+
+    
+
+
+\end{document}
