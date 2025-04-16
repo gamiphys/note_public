@@ -1,12 +1,11 @@
 # Fdb version 4
-["dvipdf"] 1744798513.43811 "chap2.dvi" "chap2.pdf" "chap2" 1744798514.45461 0
-  "chap2.dvi" 1744798513 32548 4ca28d31f544a2b2db5ae51d29b02548 "latex"
+["dvipdf"] 1744801612.71232 "chap3.dvi" "chap3.pdf" "chap3" 1744801613.98801 0
+  "chap3.dvi" 1744801612 14900 b8b3c139fb1de291e87bec877e04749b "latex"
   (generated)
-  "chap2.pdf"
+  "chap3.pdf"
   (rewritten before read)
-["latex"] 1744798512.2854 "chap2.tex" "chap2.dvi" "chap2" 1744798514.4463 0
+["latex"] 1744801611.27878 "chap3.tex" "chap3.dvi" "chap3" 1744801613.97902 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1743309921 3524 cb3e574dea2d1052e39280babc910dc8 ""
-  "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm0800.tfm" 1743309524 1536 05df9db6aeccc4eea94fec15c9024f79 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1743309524 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1743308370 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1743308370 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -41,6 +40,8 @@
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1743309006 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1743309006 1300 b62933e007d01cfd073f79b963c01526 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1743309006 1292 21c1c5bfeaebccffdb478fd231a0997d ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr9.tfm" 1743309006 1292 6b21b9c2c7bebb38aa2273f7ca0fb3af ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmss10.tfm" 1743309006 1316 b636689f1933f24d1294acdf6041daaa ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmss12.tfm" 1743309006 1324 37b971caf729d7edd9cbb9f9b0ea76eb ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1743309006 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1743309006 1116 933a60c408fc0a863a92debe84b2d294 ""
@@ -191,12 +192,13 @@
   "c:/texlive/2025/texmf-dist/web2c/texmf.cnf" 1743308240 42148 61becc7c670cd061bb319c643c27fdd4 ""
   "c:/texlive/2025/texmf-var/web2c/euptex/uplatex.fmt" 1743314285 3337452 a7ab41831b9f0e26f66832580a1f400e ""
   "c:/texlive/2025/texmf.cnf" 1743313992 713 e69b156964470283e0530f5060668171 ""
-  "chap2.aux" 1744798513 594 b8c00c0a4c32a80f603cc03338785a5f "latex"
-  "chap2.out" 1744798513 427 6ed8d20c596df092290331fe0129d332 "latex"
-  "chap2.tex" 1744798511 13107 a3d869e910f0e2e23dce96a5d7d0d708 ""
+  "chap3.aux" 1744801612 1152 c56d84e332e2e0eb7e92a343fbbfc2ca "latex"
+  "chap3.out" 1744801612 307 475707f202088c38be1f033b1adb2763 "latex"
+  "chap3.tex" 1744801609 5590 24fcd5f9074ccf2d93ccfbcc4b51bafa ""
+  "entropy.png" 1744800810 75839 fe1a8d422f9c86cd19f2100cadd1f779 ""
   (generated)
-  "chap2.aux"
-  "chap2.dvi"
-  "chap2.log"
-  "chap2.out"
+  "chap3.aux"
+  "chap3.dvi"
+  "chap3.log"
+  "chap3.out"
   (rewritten before read)
