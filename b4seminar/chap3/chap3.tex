@@ -208,7 +208,7 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
       \end{align}
 \end{itembox}
 
-\subsection{離散状態の系での熱と詳細つり合い条件}
+\subsubsection{離散状態の系での熱と詳細つり合い条件}
 \begin{itembox}[l]{\textbf{Def.熱}}
     状態$\omega$から$\omega'$への遷移において、系が熱浴に放出する熱は以下で定義される:
     \begin{align}
@@ -216,23 +216,41 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
     \end{align}
   \end{itembox}
   
-
+系が単一の熱浴に接しており、奇パリティ変数や、時間反転対処性の破れた場がない時を考える。このとき、平衡状態に関する要請は以下のように書き換えられる。
 \begin{itembox}[l]{\textbf{Def.詳細つり合い条件}}
-
+    遷移レートが詳細つり合い条件を満たすとは、任意の状態$\omega,\omega'$に対して、以下が成り立つことをいう。
+    \begin{align}
+      p_{\omega}^{\text{ss}} P_{\omega \to \omega'} = p_{\omega'}^{\text{eq}} P_{\omega' \to \omega}
+    \end{align}
+    ただし、$p_{\omega}^{\text{ss}}$は定常状態における確率分布である。
 \end{itembox}
 
-
+系が複数の熱浴に接しているとする。また、それぞれの熱浴によって引き起こされる遷移が、それぞれの逆温度に対応するような詳細つり合いを満たすとする。
+このような場合、系は、局所詳細つり合い条件を満たすという。
 \begin{itembox}[l]{\textbf{Def.局所詳細つり合い条件}}
-
+    系が局所詳細つり合い条件を満たすとは、任意の熱浴$\nu$(逆温度$\beta_{\nu}$)に対して、以下の関係が成り立つことをいう。
+    \begin{align}
+      E_{\omega} - E_{\omega'} = \frac{1}{\beta_{\nu}} \ln \frac{P_{\omega \to \omega'}^{\nu}}{P_{\omega' \to \omega}^{\nu}}
+    \end{align}
 \end{itembox}
 
+
+系が時間に依存する制御パラメータによって駆動されているとき、その変化は仕事の形で行われる。
+$E_{\omega}^{\lambda}$を、制御パラメータ$\lambda$のもとでの系の状態$\omega$におけるエネルギーとする。
+このとき、仕事は以下のように定義される。
   \begin{itembox}[l]{\textbf{Def.仕事}}
     系の状態が$\omega$であるとする。このとき、系への仕事は制御パラメータ$\lambda$がポテンシャルを変化させることによって行われる。単位時間あたりに系が外部へ取り出す仕事の量は、以下で定義される:
     \begin{align}
-      \hat{\dot{W}} = -\dv{E^{\lambda(t)}_{\omega}}{\lambda(t)}\dv{\lambda(t)}{t}
+      \hat{\dot{W}} = -\pdv{E^{\lambda(t)}_{\omega}}{\lambda}\dv{\lambda}{t}
     \end{align}
   \end{itembox}
-  以上の定義から、熱力学第一法則は以下のように書くことができる:
+このとき、単位時間当たりの平均の仕事の取り出しは、
+    \begin{align}
+        \dot{W} = -\sum_{\omega} \pdv{E^{\lambda}_{\omega}}{\lambda}\dv{\lambda(t)}{t} p_{\omega}(t)
+    \end{align}
+    となる。
+
+  以上の定義から、平均のレベルでの熱力学第一法則は以下のように書くことができる:
   \begin{align}
     W + Q = -\Delta E
   \end{align}

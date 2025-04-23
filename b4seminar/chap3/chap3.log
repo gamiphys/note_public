@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  23 APR 2025 17:24
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  23 APR 2025 17:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -731,35 +731,27 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 [3]
 
 [4]
-Underfull \hbox (badness 10000) detected at line 222
-[]$[]$[]
- []
-
-
 
 [5]
-Underfull \hbox (badness 10000) detected at line 227
-[]$[]$[]
- []
 
+[6]
 
-
-[6] (./chap3.aux)
+[7] (./chap3.aux)
  ***********
 pLaTeX2e <2023-02-14u04>+1, based on
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `chap3.out' has not changed.
-(rerunfilecheck)             Checksum: 5418A53A8BC7C98C54AD6A0F35B3E3AC;508.
+(rerunfilecheck)             Checksum: 475707F202088C38BE1F033B1ADB2763;307.
  ) 
 Here is how much of TeX's memory you used:
  23170 strings out of 473836
  428456 string characters out of 5734547
- 828933 words of memory out of 5000000
+ 828724 words of memory out of 5000000
  46007 multiletter control sequences out of 15000+600000
  579750 words of font info for 134 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,14n,93p,542b,493s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,93p,542b,466s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap3.dvi (6 pages, 32876 bytes).
+Output written on chap3.dvi (7 pages, 35684 bytes).
