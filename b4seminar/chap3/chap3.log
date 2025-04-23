@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  16 APR 2025 20:06
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  23 APR 2025 17:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -706,6 +706,10 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 6.47278pt on input line 50.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 4.62341pt on input line 50.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 82.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 82.
 
 
 [1
@@ -714,19 +718,21 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 File: entropy.png Graphic file (type bmp)
 <entropy.png>
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 93.
+(Font)              scaled to size 8.32214pt on input line 109.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 93.
+(Font)              scaled to size 8.32214pt on input line 109.
 
 
 [2]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 120.
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 120.
+(Font)              scaled to size 5.5481pt on input line 117.
 
 
-[3] (./chap3.aux)
+[3]
+
+[4]
+
+[5] (./chap3.aux)
  ***********
 pLaTeX2e <2023-02-14u04>+1, based on
 LaTeX2e <2024-11-01> patch level 2
@@ -736,12 +742,12 @@ Package rerunfilecheck Info: File `chap3.out' has not changed.
 (rerunfilecheck)             Checksum: 475707F202088C38BE1F033B1ADB2763;307.
  ) 
 Here is how much of TeX's memory you used:
- 23163 strings out of 473836
- 428309 string characters out of 5734547
- 825695 words of memory out of 5000000
- 46000 multiletter control sequences out of 15000+600000
- 579641 words of font info for 133 fonts, out of 8000000 for 9000
+ 23170 strings out of 473836
+ 428456 string characters out of 5734547
+ 828724 words of memory out of 5000000
+ 46007 multiletter control sequences out of 15000+600000
+ 579750 words of font info for 134 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,10n,93p,542b,456s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,93p,542b,466s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap3.dvi (3 pages, 14900 bytes).
+Output written on chap3.dvi (5 pages, 24660 bytes).

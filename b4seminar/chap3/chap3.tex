@@ -73,7 +73,23 @@ Stochasticエントロピーは、以下の要素を満たす。
 \end{itembox}
 \textbf{Prf.}\\
 \indent
-TODO後で書く。\qed\\
+$a^{n/m} = b \; (n, m \in \mathbb{N}, m \neq 0, a, b \in \mathbb{R})$とする。
+\begin{alignat*}{4}
+  f(a) &= f(a^{1/m} \cdot a^{1/m} \cdots a^{1/m}) \\
+  &= m f(a^{1/m}) && \quad (\text{加法性}) \\
+  f(b) &= f(a^{n/m}) && \quad (\text{$b$の定義}) \\
+  &= n f(a^{1/m}) && \quad (\text{加法性})
+\end{alignat*}
+$f(a^{1/m})$を消去すると、$f(b)=\frac{n}{m} \cdot f(a)$となる。\\
+$a$をNapier数とし、$b=x(>0)$とおくと、$\forall x \in \{ x \mid \ln{x} \in \mathbb{Q} \}$に対して
+\begin{align}
+  f(x) = f(\mathrm{e}) \ln{x}
+\end{align}
+が成り立つ。
+有理数の集合が実数内で稠密であることと関数$f$の連続性から、\\
+$f(x) \propto - \ln{x} \; (x \geq 0)$となる。
+TODO精査
+\qed\\
 
 \subsubsection{Shanonエントロピー}
 Stochasticエントロピーの平均として、Shanonエントロピーが定義される。
@@ -96,8 +112,12 @@ Stochasticエントロピーの平均として、Shanonエントロピーが定�
 \indent
 このとき、$p=\frac{1}{2}$のとき、エントロピーは最大値をとる。例えば、これをコイン投げに例えると、$p=\frac{1}{2}$のとき、表と裏が均等に出るので、コインを投げる前に、表が出るか裏が出るかは全くわからない。
 しかし、$p\neq \frac{1}{2}$のとき、コインの出方が偏っているということになり、ある程度どちらが出るか予測できる。とくに、$p=0$または$p=1$のとき、エントロピーは0となるが、これは、事象の不確実性が0であることを表している。
+また、一般のn変数の確率分布に対しても、分布が一様分布であるとき、エントロピーは最大値をとることが知られている。\footnote{
+    Lagrangeの未定乗数法を用いればすぐに確かめられる。
+}
 
-条件付き確率についても、Shanonエントロピーは定義できる。
+これまでは、どのような事象が起こりそうかまったくわからない状況を取り扱っていたが、ある程度その情報がわかっていることもある。
+このような場合は、不確実性を、条件付きShanonエントロピーによって表すことができる。
 \begin{itembox}[l]{\textbf{Def.条件付きShanonエントロピー}}
     事象$y$のもとでの事象$x$のShanonエントロピーは、
     \begin{align}
@@ -108,7 +128,37 @@ Stochasticエントロピーの平均として、Shanonエントロピーが定�
     ただし、$P(x_i,y_j)$は、事象$x_i$と$y_j$の同時分布である。
 \end{itembox}
 特徴をつかむために、コイントスの例を再び考えてみる。
-TODO後で書く。\\
+
+\begin{table}[H]
+    \centering
+    \caption{コインの確率分布}
+    \label{tab:coin}
+    \begin{tabular}{cccc}
+        \toprule
+        & 表(Heads) & 裏(Tails) & 使用確率 \\
+        \midrule
+        コイン A & $\frac{1}{3}$ & $\frac{2}{3}$ & $\frac{1}{5}$ \\
+        コイン B & $\frac{2}{3}$ & $\frac{1}{3}$ & $\frac{1}{5}$ \\
+        コイン C & $\frac{1}{2}$ & $\frac{1}{2}$ & $\frac{3}{5}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+$X$をコイントスの結果を表す確率変数、$Y$をどのコインが選ばれるかを表す確率変数とする。
+どのコインが選ばれたかわからない状況で、コイントスの結果が表である確率は\\
+$P(\mathrm{Heads}) = P(A) P(\mathrm{Heads}|A) + P(B) P(\mathrm{Heads}|B) + P(C) P(\mathrm{Heads}|C) = \frac{1}{2}$である。
+したがって、Shannonエントロピー$H[X]=\ln{2} \simeq 0.6931 \cdots$となる。\\
+一方で、コインAかBが選ばれたという条件のもとでのShannonエントロピーは、\\
+$H[X|\mathrm{A}] + H[X|\mathrm{B}] = \frac{1}{3} \ln{3} +\frac{2}{3} \ln{\frac{3}{2}} \simeq 0.6365 \cdots$である。
+コインCが選ばれたという条件のもとでのShannonエントロピーは、$H[X|C] = \ln{2} \simeq 0.6931 \cdots$ のままである。
+以上より、条件付きエントロピー$H[X|Y]$は以下のようになる。
+\begin{align}
+  H[X|Y] &= P(\mathrm{A})H[X|\mathrm{A}] + P(\mathrm{B})H[X|\mathrm{B}] + P(\mathrm{C})H[X|\mathrm{C}]\\
+  &= \frac{1}{5} \cdot 0.6365 \cdots + \frac{1}{5} \cdot 0.6365 \cdots + \frac{3}{5} \cdot 0.6932 \cdots \simeq 0.6705
+\end{align}
+このようにどのコインが選ばれるかという情報により、コイントスの結果を表すShannonエントロピーは減少する。
+これはコイントスに限らず一般的に成立する。
+直感的に言えば、何らかの情報を受け取ったとするとShannonエントロピーは必ず減少する（か変わらない）。
 
 条件付き確率は、条件が付いている分、事象の不確実性が落ちているはずである。実際、以下が成り立つことが知られている。
 \begin{itembox}[l]{\textbf{Thm.条件付けによるShanonエントロピーの単調性}}
@@ -119,8 +169,30 @@ TODO後で書く。\\
 \end{itembox}
 この証明は、5章で行う。\footnote{KLダイバージェンスの正値性より従う。}\\
 
+\newpage
 \subsection{熱の定義}
 \subsubsection{平衡状態の時間反転対称性}
+時間反転操作により、符号が変わるような物理量のことを奇パリティ量と呼び、符号が変わらない物理量のことを偶パリティ量と呼ぶ。
+例えば、位置$x$は偶パリティ量であり、運動量$p$は奇パリティ量である。一般に、状態$\omega$の時間反転した状態のことを$\bar{\omega}$と表す。
+例えば、1次元粒子の状態を$\omega = (x,p)$とすると、時間反転した状態は$\bar{\omega} = (x,-p)$となる。
+また、ダイナミクスの時間反転も定義する。例えば、磁場や、回転座標系のように、時間反転対称性の破れる場があれば、その場の符号を反転させる。
+例えば、$B \to -B$のようにする。
+時間反転した遷移レートや経路確率をそれぞれ$R^{\dagger}$、$P^{\dagger}$と表すことにする。また、時間反転過程における物理量も$A^{\dagger}$と表すことにする。\\
+
+系が平衡状態にあるとは、時間発展によってその状態が変化しないことを意味するが、これは、マクロな流れが存在しないことを意味する。
+したがって、平衡状態とは、時間の方向性がない状態といえる。
+これは、あるトラジェクトリを考えたとき、その時間発展と、その時間反転の時間発展が同じ確率で起こるということを意味する。
+また、状態遷移$\omega_0 \to \omega_1$が存在すれば、$\bar{\omega}_1 \to \bar{\omega}_0$も存在する。さらに、等重率の原理によると、
+$P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
+以上の考察を合わせて、次の要請を課す。
+
+\begin{itembox}[l]{\textbf{Req.平衡状態の時間反転対称性}}
+    平衡状態において、任意の状態$\omega,\omega'$に対して、以下が成り立つ。
+    \begin{align}
+        p_{\omega}^{\text{eq}} P_{\omega \to \omega'} = p_{\omega'}^{\text{eq}} P_{\bar{\omega}' \to \bar{\omega}}
+    \end{align}
+
+\end{itembox}
 
 
 \end{document}
