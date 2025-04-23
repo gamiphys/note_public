@@ -1,10 +1,10 @@
 # Fdb version 4
-["dvipdf"] 1745396089.83027 "chap3.dvi" "chap3.pdf" "chap3" 1745396091.40471 0
-  "chap3.dvi" 1745396089 24660 b5ebdc6a3acfc58c5b8df0bff7def3f1 "latex"
+["dvipdf"] 1745396646.15837 "chap3.dvi" "chap3.pdf" "chap3" 1745396647.74002 0
+  "chap3.dvi" 1745396646 32876 8837d01b0e650e2a65403d1acc02362f "latex"
   (generated)
   "chap3.pdf"
   (rewritten before read)
-["latex"] 1745396087.93269 "chap3.tex" "chap3.dvi" "chap3" 1745396091.39534 0
+["latex"] 1745396644.00858 "chap3.tex" "chap3.dvi" "chap3" 1745396647.72621 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1743309921 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1743309524 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1743308370 1120 1e8878807317373affa7f7bba4cf2f6a ""
@@ -192,9 +192,9 @@
   "c:/texlive/2025/texmf-dist/web2c/texmf.cnf" 1743308240 42148 61becc7c670cd061bb319c643c27fdd4 ""
   "c:/texlive/2025/texmf-var/web2c/euptex/uplatex.fmt" 1743314285 3337452 a7ab41831b9f0e26f66832580a1f400e ""
   "c:/texlive/2025/texmf.cnf" 1743313992 713 e69b156964470283e0530f5060668171 ""
-  "chap3.aux" 1745396089 1350 e1c6ca59e5d08e688604283d8cd93e05 "latex"
-  "chap3.out" 1745396089 307 475707f202088c38be1f033b1adb2763 "latex"
-  "chap3.tex" 1745396087 10899 4000a96d4693ba538e57395ab480620f ""
+  "chap3.aux" 1745396646 1511 7d3a7894b16c2380bb912ef6d7c2c88e "latex"
+  "chap3.out" 1745396646 508 5418a53a8bc7c98c54ad6a0f35b3e3ac "latex"
+  "chap3.tex" 1745396642 12651 924fcf2dba4cb067a1ef2bac27cde334 ""
   "entropy.png" 1744800810 75839 fe1a8d422f9c86cd19f2100cadd1f779 ""
   (generated)
   "chap3.aux"

@@ -194,5 +194,48 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
 
 \end{itembox}
 
+\begin{itembox}[l]{\textbf{Req.エスケープレートの時間反転不変性}}
+    escape rateは時間反転に対して不変である。すなわち、
+    \begin{align}
+      e_{\omega,t} = e_{\bar{\omega},t}^{\dagger}
+    \end{align}
+    である。
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Req.エネルギーの時間反転不変性}}
+    \begin{align}
+        E_{\omega} = E_{\bar{\omega}} = E_{\omega}^{\dagger}
+      \end{align}
+\end{itembox}
+
+\subsection{離散状態の系での熱と詳細つり合い条件}
+\begin{itembox}[l]{\textbf{Def.熱}}
+    状態$\omega$から$\omega'$への遷移において、系が熱浴に放出する熱は以下で定義される:
+    \begin{align}
+      \hat{Q}_{\omega \to \omega'} = E_{\omega} - E_{\omega'} = \frac{1}{\beta}\ln \frac{P_{\omega \to \omega'}}{P_{\omega' \to \omega}^{\dagger}}
+    \end{align}
+  \end{itembox}
+  
+
+\begin{itembox}[l]{\textbf{Def.詳細つり合い条件}}
+
+\end{itembox}
+
+
+\begin{itembox}[l]{\textbf{Def.局所詳細つり合い条件}}
+
+\end{itembox}
+
+  \begin{itembox}[l]{\textbf{Def.仕事}}
+    系の状態が$\omega$であるとする。このとき、系への仕事は制御パラメータ$\lambda$がポテンシャルを変化させることによって行われる。単位時間あたりに系が外部へ取り出す仕事の量は、以下で定義される:
+    \begin{align}
+      \hat{\dot{W}} = -\dv{E^{\lambda(t)}_{\omega}}{\lambda(t)}\dv{\lambda(t)}{t}
+    \end{align}
+  \end{itembox}
+  以上の定義から、熱力学第一法則は以下のように書くことができる:
+  \begin{align}
+    W + Q = -\Delta E
+  \end{align}
+  ただし、$\Delta E$は系の平均のエネルギーである。\\
 
 \end{document}
