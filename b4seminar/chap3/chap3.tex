@@ -189,11 +189,12 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
 \begin{itembox}[l]{\textbf{Req.平衡状態の時間反転対称性}}
     平衡状態において、任意の状態$\omega,\omega'$に対して、以下が成り立つ。
     \begin{align}
-        p_{\omega}^{\text{eq}} P_{\omega \to \omega'} = p_{\omega'}^{\text{eq}} P_{\bar{\omega}' \to \bar{\omega}}
+        p_{\omega}^{\text{eq}} P_{\omega \to \omega'} = p_{\omega'}^{\text{eq}} P^{\dagger}_{\bar{\omega}' \to \bar{\omega}}
     \end{align}
 
 \end{itembox}
 
+また、エスケープレートに対しても、時間反転対称性が成り立つ。
 \begin{itembox}[l]{\textbf{Req.エスケープレートの時間反転不変性}}
     escape rateは時間反転に対して不変である。すなわち、
     \begin{align}
@@ -201,11 +202,28 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
     \end{align}
     である。
 \end{itembox}
+このことは、以下の考察から妥当である:\\
+平衡状態の時間反転対称性の式において、$\omega=\omega'$とすると、
+\begin{align}
+  p_{\omega}^{\text{eq}} P_{\omega \to \omega} = p_{\omega}^{\text{eq}} P^{\dagger}_{\bar{\omega} \to \bar{\omega}}
+\end{align}
+が得られる。ここで、$p_{\omega}^{\text{eq}}$について、これがカノニカル分布であることを仮定すると、のちに述べるエネルギーの時間反転対称性から、$p_{\omega}^{\text{eq}} = p_{\bar{\omega}}^{\text{eq}}$が成り立つ。
+このことを用いると、
+\begin{align}
+  P_{\omega \to \omega} = P^{\dagger}_{\bar{\omega} \to \bar{\omega}}
+\end{align}
+がいえる。これは、エスケープレートの時間反転対処性に他ならない。
 
+
+また、エネルギーについても時間反転対称性が成り立つ。例えば、運動エネルギーは運動量の二乗の項
+からなっている。また、ポテンシャルについても、ポテンシャルは位置の関数になっていることから、時間反転に対して不変である。
+このような考察から、次の要請を課す。
 \begin{itembox}[l]{\textbf{Req.エネルギーの時間反転不変性}}
+  エネルギーは時間反転に対して不変である。すなわち、
     \begin{align}
         E_{\omega} = E_{\bar{\omega}} = E_{\omega}^{\dagger}
       \end{align}
+      が成り立つ。
 \end{itembox}
 
 \subsubsection{離散状態の系での熱と詳細つり合い条件}
@@ -215,6 +233,13 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
       \hat{Q}_{\omega \to \omega'} = E_{\omega} - E_{\omega'} = \frac{1}{\beta}\ln \frac{P_{\omega \to \omega'}}{P_{\omega' \to \omega}^{\dagger}}
     \end{align}
   \end{itembox}
+$\because$(二つ目の等号)\\
+\begin{align}
+  E_{\omega} - E_{\omega'} &= -\frac{1}{\beta} \qty( \ln {p_{\omega}^{\text{eq}}} - \ln {p_{\omega'}^{\text{eq}}} ) \\
+  &= -\frac{1}{\beta} \ln \frac{p_{\omega}^{\text{eq}}}{p_{\omega'}^{\text{eq}}} \\
+  &= \frac{1}{\beta} \ln \frac{P_{\omega \to \omega'}}{P_{\omega' \to \omega}^{\dagger}} \quad (\because \text{平衡状態の要請})
+\end{align}
+\qed\\
   
 系が単一の熱浴に接しており、奇パリティ変数や、時間反転対処性の破れた場がない時を考える。このとき、平衡状態に関する要請は以下のように書き換えられる。
 \begin{itembox}[l]{\textbf{Def.詳細つり合い条件}}
@@ -222,8 +247,19 @@ $P_{\text{eq}}(\omega_0) = P_{\text{eq}}(\bar{\omega}_1)$が成り立つ。
     \begin{align}
       p_{\omega}^{\text{ss}} P_{\omega \to \omega'} = p_{\omega'}^{\text{eq}} P_{\omega' \to \omega}
     \end{align}
-    ただし、$p_{\omega}^{\text{ss}}$は定常状態における確率分布である。
+    ただし、$p_{\omega}^{\text{ss}}$は定常状態における確率分布である。\footnote{
+      特に、熱浴が1つ接触している場合、$p_{\omega}^{\text{ss}} = p_{\omega}^{\text{eq}}=\frac{1}{Z} \mathrm{e}^{-\beta E_{\omega}}$となる。
+    }
 \end{itembox}
+要するに、マスター方程式の右辺
+\begin{align}
+  \sum_{\omega'} (R_{\omega \omega'} p_{\omega'} - R_{\omega' \omega} p_{\omega}) 
+\end{align}
+の和の各項が0になるような条件を課している。特に、定常状態が平衡状態であり、平衡状態がカノニカル分布によって指定されるとき、
+\begin{align}
+  \frac{R_{\omega \omega'}}{R_{\omega' \omega}} = \exp(-\beta (E_{\omega} - E_{\omega'}))
+\end{align}
+と書き直せる。文献によっては、この条件を詳細つり合い条件と呼ぶこともある。
 
 系が複数の熱浴に接しているとする。また、それぞれの熱浴によって引き起こされる遷移が、それぞれの逆温度に対応するような詳細つり合いを満たすとする。
 このような場合、系は、局所詳細つり合い条件を満たすという。
@@ -254,6 +290,19 @@ $E_{\omega}^{\lambda}$を、制御パラメータ$\lambda$のもとでの系の�
   \begin{align}
     W + Q = -\Delta E
   \end{align}
-  ただし、$\Delta E$は系の平均のエネルギーである。
+  ただし、$\Delta E$は系の平均のエネルギーである。\\
+  $(\because)$\\
+\begin{align}
+  E &= \sum_{\omega} E_{\omega} p_{\omega}\\
+  \dd{E} &= \sum_{\omega} \pdv{E_{\omega}}{\lambda} \dv{\lambda}{t} \dd{t} p_{\omega} + \sum_{\omega} E_{\omega} \dd{p}_{\omega}\\
+  &= -\dot{W} \dd{t} + \sum_{\omega} E_{\omega} \pdv{p_{\omega}}{t} \dd{t}\\
+  &= -\dot{W} \dd{t} + \sum_{\omega,\omega'} E_{\omega} (R_{\omega \omega'}p_{\omega'} - R_{\omega' \omega} p_{\omega}) \dd{t}\\
+  &= -\dot{W} \dd{t} + \sum_{\omega,\omega'} (E_{\omega} - E_{\omega'}) R_{\omega \omega'} p_{\omega'} \dd{t}\\
+  &= -\dot{W} \dd{t}  -\dot{Q} \dd{t} 
+\end{align}
+ここで、
+$\dot{Q} = \sum_{\omega,\omega'} (E_{\omega} - E_{\omega'}) R_{\omega \omega'} p_{\omega'}$と定義した。\footnote
+{一般に、jumpに対して値を返すような確率変数の期待値はこのように定義すると都合がよい。
+}
 
-\end{document}
+  \end{document}
