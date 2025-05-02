@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  26 APR 2025 21:41
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  30 APR 2025 13:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -718,14 +718,14 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 File: entropy.png Graphic file (type bmp)
 <entropy.png>
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 109.
+(Font)              scaled to size 8.32214pt on input line 108.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 109.
+(Font)              scaled to size 8.32214pt on input line 108.
 
 
 [2]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 117.
+(Font)              scaled to size 5.5481pt on input line 116.
 
 
 [3]
@@ -734,21 +734,21 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 
 [5]
 LaTeX Font Info:    Font shape `JT2/mc/m/it' in size <7> not available
-(Font)              Font shape `JT2/mc/m/n' tried instead on input line 250.
+(Font)              Font shape `JT2/mc/m/n' tried instead on input line 249.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 250.
+(Font)              scaled to size 6.47278pt on input line 249.
 LaTeX Font Info:    Font shape `JY2/mc/m/it' in size <7> not available
-(Font)              Font shape `JY2/mc/m/n' tried instead on input line 250.
+(Font)              Font shape `JY2/mc/m/n' tried instead on input line 249.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 250.
+(Font)              scaled to size 6.47278pt on input line 249.
 LaTeX Font Info:    Font shape `JT2/mc/m/it' in size <6> not available
-(Font)              Font shape `JT2/mc/m/n' tried instead on input line 252.
+(Font)              Font shape `JT2/mc/m/n' tried instead on input line 251.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 252.
+(Font)              scaled to size 5.5481pt on input line 251.
 LaTeX Font Info:    Font shape `JY2/mc/m/it' in size <6> not available
-(Font)              Font shape `JY2/mc/m/n' tried instead on input line 252.
+(Font)              Font shape `JY2/mc/m/n' tried instead on input line 251.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 252.
+(Font)              scaled to size 5.5481pt on input line 251.
 
 
 [6]
@@ -771,6 +771,6 @@ Here is how much of TeX's memory you used:
  46013 multiletter control sequences out of 15000+600000
  580448 words of font info for 136 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,14n,93p,542b,473s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,93p,542b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap3.dvi (8 pages, 43020 bytes).
+Output written on chap3.dvi (8 pages, 42604 bytes).
