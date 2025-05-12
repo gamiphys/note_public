@@ -1,0 +1,249 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+\begin{document}
+
+\title{B4ゼミ\#5}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+\setcounter{section}{3}
+\section{連続空間における確率過程}
+前節では、離散状態に対する確率過程について述べたが、今回は連続時間の確率過程を考える。
+\subsection{数学的基礎}
+\subsubsection{Wiener過程}
+標準的な連続空間のMarkov過程として、Wiener過程が知られている。
+\begin{itembox}[l]{\textbf{Def.Wiener過程}}
+    Wiener過程$\hat{W}(t)$は、
+    \begin{align}
+        P(\hat{W}(t+\Delta t)=x \mid \hat{W}(t)=x') = \frac{1}{\sqrt{2\pi \Delta t}} \exp(-\frac{(x-x')^2}{2\Delta t})\\
+        P(x,0)=\delta(x)
+    \end{align}
+    を満たす確率過程である。
+\end{itembox}
+Wiener過程が確かに存在することを直感的に確かめる。一次元格子におけるランダムウォークを考える。格子定数を$a$、時間間隔を$\Delta \tau$とする。
+各界のステップでは、確率$1/2$で右に$a$、$1/2$で左に$a$移動するものとする。すなわち、
+\begin{align}
+    T_{x \to x+a} = T_{x \to x-a} = \frac{1}{2}
+\end{align}
+とする。初期条件を$P(x,0)=\delta_{x,0}$とすると、時刻$t$における$x$の期待値は常に0である。
+このとき、拡散定数は、
+\begin{align}
+    D &:= \frac{d\langle x^2 \rangle}{dt} \\
+  &= \sum_{x} \frac{ x^2 P(x,t + \Delta t) - P(x,t)}{\Delta t} \\
+  &= \sum_{x} \frac{x^2}{\Delta t} \left[ P_{x-a \rightarrow a} P(x - a, t) + P_{x + a \rightarrow a} P(x + a, t) - P(x,t) \right] \\
+  &= \sum_{x} \frac{x^2}{\Delta t} \left[ \frac{1}{2} P(x - a, t) + \frac{1}{2} P(x + a, t) - P(x,t) \right] \\
+  &= \frac{1}{\Delta t} \left[ \frac{1}{2} \sum_{x} x^2 P(x - a, t) + \frac{1}{2} \sum_{x} x^2 P(x + a, t) - \sum_{x} x^2 P(x,t) \right] \\
+  &= \frac{1}{\Delta t} \left[ \frac{1}{2} \sum_{x'} (x' + a)^2 P(x', t) + \frac{1}{2} \sum_{x''} (x'' - a)^2 P(x'', t) - \sum_{x} x^2 P(x,t) \right] \\
+  &= \frac{1}{\Delta t} \sum_{x} \left[ \frac{(x - a)^2 + (x + a)^2}{2} - x^2 \right] P(x,t) \\
+  &= \frac{a^2}{\Delta t} 
+\end{align}
+
+このとき、確率分布は、中心極限定理により、ガウス分布に収束する。
+\begin{itembox}[l]{\textbf{Recall.中心極限定理}}
+    $N$個の独立同一分布の確率変数$X_i$の平均値は、$N \to \infty$で、平均$\mu$、分散$\sigma^2/N$の正規分布に収束する。
+    ただし、$\mu$は$X_i$の平均、$\sigma^2$は$X_i$の分散である。
+
+\end{itembox}
+TODO:証明つける
+
+Wiener過程の極限として白色Gaussノイズを導入する。
+\begin{itembox}[l]{\textbf{Def.白色Gaussノイズ}}
+    白色ガウスノイズは、以下のように与えられる。
+    \begin{align}
+        \hat{\xi}(t) = \lim_{\Delta t \to 0} \frac{\hat{W}(t+\Delta t) - \hat{W}(t)}{\Delta t}
+    \end{align}
+\end{itembox}
+また、のちの便宜のため、時間$\Delta t$の間で離散化した白色ガウスノイズを
+\begin{align}
+    \hat{\xi}_{\Delta t}(t) \coloneq \hat{W}(t+\Delta t) - \hat{W}(t)
+\end{align}
+と定義する。
+このとき、
+\begin{align}
+    \ev{\hat{\xi}(t)} &= 0 \\
+    \ev{\hat{\xi}(t) \hat{\xi}(t')} &= \delta(t-t') 
+\end{align}
+が成り立つ。\\
+$(\because)$\\
+TODO:証明つける
+
+また、Wiener過程を
+\begin{align}
+    \hat{W}(\tau) = \int_0^{\tau} \dd{t} \hat{\xi}(t)
+\end{align}
+と復元できる。上記の関係を、正式に、
+\begin{align}
+    \dd{\hat{W}(t)} = \hat{\xi}(t) \dd{t}
+\end{align}
+と表す。
+
+特に、Wiener過程の二乗はアンサンブル平均をとることなく
+\begin{align}
+    (\dd{\hat{W}(t)})^2 = \dd{t}
+\end{align}
+が成り立つ。より正確には、$(\dd{\hat{W}(t)})^2$による積分は、二乗平均の極限の意味で普通の時間積分と同等である。
+  \footnote{%
+\(\lim_{\Delta t \to 0} g_{\Delta t} = g\) が平均二乗収束の意味で成り立つとは、  
+\[
+\lim_{\Delta t \to 0} \left\langle (g_{\Delta t} - g)^2 \right\rangle = 0
+\]
+が成り立つことをいう。
+}
+\begin{itembox}[l]{\textbf{Thm.Ito則}}
+  \begin{align}
+    \lim_{\Delta t \to 0} \left\langle
+      \left( \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(n\Delta t)^2 f(n\Delta t)
+      - \int_0^{\tau} \dd{t} f(t) \right)^2
+    \right\rangle &= 0, \\
+    \lim_{\Delta t \to 0} \left\langle
+      \left( \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(n\Delta t) \Delta t f(n\Delta t)
+      \right)^2
+    \right\rangle &= 0, \\
+    \lim_{\Delta t \to 0} \left\langle
+      \left( \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(n\Delta t)^k f(n\Delta t)
+      \right)^2
+    \right\rangle &= 0,
+  \end{align}
+      ここで \( N := \tau / \Delta t \), \( k \geq 3 \) とする。これらの関係式は形式的には次のように書ける：
+      
+      \begin{align}
+        (\dd{\hat{W}(t)})^2 &= \dd{t}, \\
+        \dd{\hat{W}(t)} \dd{t} = (\dd{\hat{W}(t)})^k &= 0.
+      \end{align}
+      
+\end{itembox}
+\textbf{Prf.}\\
+$\xi_{\Delta t}$ の 4 次のモーメントは、
+\begin{align}
+\left\langle \xi_{\Delta t}^{4} \right\rangle 
+&= \left\langle \left( \hat{W}(t + \Delta t) - \hat{W}(t) \right)^4 \right\rangle \notag \\
+&= \iint dx dx' (x' - x)^4 P(\hat{W}(t + \Delta t) = x', \hat{W}(x) = x) \notag \\
+&= \iint dx dx' (x' - x)^4 P(\hat{W}(t + \Delta t) = x' | \hat{W}(t) = x) P(\hat{W}(t) = x) \notag \\
+& \quad (\because \omega \equiv x' - x,\ dx' = d\omega) \notag \\
+&= \int dx \int d\omega \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} P(\hat{W}(t) = x) \notag \\
+&= \int d\omega \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} \quad (\because \text{規格化})\notag \\
+&= \frac{1}{\sqrt{2\pi \Delta t}} \cdot \frac{3}{4} \sqrt{(2\Delta t)^5 \pi} \quad (\because \text{ガウス積分}) \notag \\
+&= 3 \Delta t^2
+\end{align}
+
+また、$\xi_{\Delta t}$ の 2 次のモーメントは、
+\begin{align}
+\left\langle \xi_{\Delta t}^2 \right\rangle 
+&= \int d\omega \, \omega^2 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} \notag \\
+&= \frac{1}{\sqrt{2\pi \Delta t}} \cdot \frac{1}{2} \sqrt{(2\Delta t)^3 \pi} \notag \\
+&= \Delta t
+\end{align}
+
+よって、
+\begin{align}
+\left\langle \left( \xi_{\Delta t}^2 - \Delta t \right)^2 \right\rangle 
+&= \left\langle \xi_{\Delta t}^4 - 2\xi_{\Delta t}^2 \Delta t + (\Delta t)^2 \right\rangle \notag \\
+&= 3 (\Delta t)^2 - 2 (\Delta t)^2 + (\Delta t)^2 \notag \\
+&= 2 (\Delta t)^2
+\end{align}
+
+また、
+\begin{align}
+  D_{\Delta t} := \sum_{n=0}^{N-1} f(n \Delta t) \Delta t - \int_0^{\tau} dt f(t)
+\end{align}
+とする。このとき、
+\begin{align}
+&\lim_{\Delta t \to 0} 
+\left\langle 
+\left( 
+\sum_{n=0}^{N-1} (\hat{\xi}_{\Delta t}(n\Delta t))^2 f(n\Delta t) 
+- \int_0^{\tau} dt f(t) 
+\right)^2 
+\right\rangle
+\\
+&= \lim_{\Delta t \to 0} 
+\left\langle 
+\left( 
+\sum_{n=0}^{N-1} \left( \hat{\xi}_{\Delta t}(n\Delta t)^2 - \Delta t \right) f(n\Delta t) + D_{\Delta t}
+\right)^2 
+\right\rangle \notag \\
+&\quad (\because \langle \hat{\xi}_{\Delta t}(n\Delta t) \hat{\xi}_{\Delta t}(n'\Delta t) \rangle = 0 \quad (n \ne n')) \notag \\
+&= \lim_{\Delta t \to 0} 
+\sum_{n=0}^{N-1} 
+\left\langle 
+\left( \hat{\xi}_{\Delta t}(n\Delta t)^2 - \Delta t \right)^2 
+\right\rangle 
+f(n\Delta t)^2 + O(D_{\Delta t}) \notag \\
+&= \lim_{\Delta t \to 0} 
+2 (\Delta t)^2 \sum_{n=0}^{N-1} f(n\Delta t)^2 + O(D_{\Delta t}) \notag \\
+&= \lim_{\Delta t \to 0} 
+O(\Delta t^2) \times O(\Delta t^{-1}) + O(D_{\Delta t}) \notag \\
+&= \lim_{\Delta t \to 0} 
+O(\Delta t) + O(D_{\Delta t}) \notag \\
+&= 0
+\end{align}
+がいえる。
+
+また、同様にして、
+\begin{align}
+\lim_{\Delta t \to 0} 
+\left\langle 
+\left( \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(n \Delta t) \Delta t f(n \Delta t) \right)^2 
+\right\rangle 
+&= \lim_{\Delta t \to 0} 
+\sum_{n=0}^{N-1} 
+\left\langle \hat{\xi}_{\Delta t}(n \Delta t)^2 \right\rangle 
+(\Delta t)^2 f(n \Delta t)^2 \\
+&= \lim_{\Delta t \to 0} 
+O(\Delta t^3) \times O(\Delta t^{-1})  \\
+&= 0 
+\end{align}
+および
+\begin{align}
+\lim_{\Delta t \to 0}
+\left\langle
+\left( \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(n \Delta t)^k f(n \Delta t) \right)^2
+\right\rangle
+&= \lim_{\Delta t \to 0}
+\sum_{n=0}^{N-1}
+\left\langle \hat{\xi}_{\Delta t}(n \Delta t)^k \right\rangle f(n \Delta t)^2 \\
+&= \lim_{\Delta t \to 0}
+O(\Delta t^{k/2}) \times O(\Delta t^{-1}) \\
+&= 0
+\end{align}
+が成り立つ。\qed\\
+
+\subsubsection{確率微分方程式と確率積分}
+
+\end{document}
