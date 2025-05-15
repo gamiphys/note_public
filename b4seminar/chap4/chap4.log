@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  10 MAY 2025 14:02
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  15 MAY 2025 20:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -714,18 +714,27 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 
 [2]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 121.
+(Font)              scaled to size 6.47278pt on input line 141.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 127.
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 163.
+(Font)              scaled to size 5.5481pt on input line 147.
 
 
 [3]
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 183.
+
 
 [4]
 
-[5] (./chap4.aux)
+[5]
+
+[6]
+
+[7]
+
+[8]
+
+[9] (./chap4.aux)
  ***********
 pLaTeX2e <2023-02-14u04>+1, based on
 LaTeX2e <2024-11-01> patch level 2
@@ -735,12 +744,12 @@ Package rerunfilecheck Info: File `chap4.out' has not changed.
 (rerunfilecheck)             Checksum: B7C531805E9C036286970B182A80E1B7;236.
  ) 
 Here is how much of TeX's memory you used:
- 23141 strings out of 473836
- 427985 string characters out of 5734547
- 831583 words of memory out of 5000000
- 45984 multiletter control sequences out of 15000+600000
+ 23144 strings out of 473836
+ 428024 string characters out of 5734547
+ 834659 words of memory out of 5000000
+ 45987 multiletter control sequences out of 15000+600000
  578829 words of font info for 130 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,15n,93p,542b,467s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,15n,93p,542b,493s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap4.dvi (5 pages, 24996 bytes).
+Output written on chap4.dvi (9 pages, 49508 bytes).
