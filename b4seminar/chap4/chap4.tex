@@ -64,7 +64,7 @@ Wiener過程が確かに存在することを直感的に確かめる。一次�
 とする。初期条件を$P(x,0)=\delta_{x,0}$とすると、時刻$t$における$x$の期待値は常に0である。
 このとき、拡散定数は、
 \begin{align}
-    D &:= \frac{d\langle x^2 \rangle}{dt} \\
+    D &:= \frac{\dd{\langle x^2 \rangle}}{\dd{t}} \\
   &= \sum_{x} \frac{ x^2 P(x,t + \Delta t) - P(x,t)}{\Delta t} \\
   &= \sum_{x} \frac{x^2}{\Delta t} \left[ P_{x-a \rightarrow a} P(x - a, t) + P_{x + a \rightarrow a} P(x + a, t) - P(x,t) \right] \\
   &= \sum_{x} \frac{x^2}{\Delta t} \left[ \frac{1}{2} P(x - a, t) + \frac{1}{2} P(x + a, t) - P(x,t) \right] \\
@@ -76,11 +76,31 @@ Wiener過程が確かに存在することを直感的に確かめる。一次�
 
 このとき、確率分布は、中心極限定理により、ガウス分布に収束する。
 \begin{itembox}[l]{\textbf{Recall.中心極限定理}}
-    $N$個の独立同一分布の確率変数$X_i$の平均値は、$N \to \infty$で、平均$\mu$、分散$\sigma^2/N$の正規分布に収束する。
-    ただし、$\mu$は$X_i$の平均、$\sigma^2$は$X_i$の分散である。
+  $n$個の独立同一分布の確率変数$X_i$の平均値は、$n \to \infty$で、平均$\mu$、分散$\sigma^2/n$の正規分布に従う。
+  ただし、$\mu$は$X_i$の平均、$\sigma^2$は$X_i$の分散である。
 
 \end{itembox}
-TODO:証明つける
+同じことであるが、$S_n = \sum_{i=1}^n X_i$とすると、$S_n$は平均$\mu n$、分散$\sigma^2 n$の正規分布に従う。
+これを用いると、
+\begin{align}
+  P(x, t) 
+  &= \frac{1}{\sqrt{2\pi a^2 n}} \exp\left[ -\frac{x^2}{2 a^2 n} \right] \\
+  &\because a^2 / \Delta t = 1,\ t = n \Delta t \\
+  &\Rightarrow a^2 n = t \\
+  &= \frac{1}{\sqrt{2\pi t}} \exp\left[ -\frac{x^2}{2t} \right]
+\end{align}
+が得られる。
+また，
+\begin{align}
+  P(x, t + \Delta t | x', t)
+  &= P(x, \Delta t | x', 0) \tag{4.1} \\
+  &= \int \dd{x''}\, P(x - x', \Delta t | x'', 0)\, \delta(x'') \\
+  &= \int \dd{x''}\, P(x - x', \Delta t | x'', 0)\, P(x'', 0) \\
+  &= P(x - x', \Delta t) \\
+  &= \frac{1}{\sqrt{2\pi \Delta t}} \exp\left[ -\frac{(x - x')^2}{2 \Delta t} \right]
+\end{align}
+となり、Wiener過程の定義式と一致する。
+上の構成から、Wiener過程は、ランダムウォークを粗視化したときに得られるものであることがわかる。
 
 Wiener過程の極限として白色Gaussノイズを導入する。
 \begin{itembox}[l]{\textbf{Def.白色Gaussノイズ}}
@@ -110,7 +130,6 @@ Wiener過程の極限として白色Gaussノイズを導入する。
 \begin{align}
     \dd{\hat{W}(t)} = \hat{\xi}(t) \dd{t}
 \end{align}
-と表す。
 
 (\ref{eq:xi_correlation})より、より、$\ev{\hat{\xi}(t) \hat{\xi}(t')} = k\delta(t-t')$と仮定する。
 以下、この係数$k$の値を決める。
@@ -160,7 +179,7 @@ Wiener過程の極限として白色Gaussノイズを導入する。
       \right)^2
     \right\rangle &= 0,
   \end{align}
-      ここで \( N := \tau / \Delta t \), \( k \geq 3 \) とする。これらの関係式は形式的には次のように書ける：
+      ここで \( N := \tau / \Delta t \), \( k \geq 3 \) とする。これらの関係式は形式的には次のように書ける。
       
       \begin{align}
         (\dd{\hat{W}(t)})^2 &= \dd{t}, \\
@@ -173,11 +192,11 @@ $\xi_{\Delta t}$ の 4 次のモーメントは、
 \begin{align}
 \left\langle \xi_{\Delta t}^{4} \right\rangle 
 &= \left\langle \left( \hat{W}(t + \Delta t) - \hat{W}(t) \right)^4 \right\rangle \notag \\
-&= \iint dx dx' (x' - x)^4 P(\hat{W}(t + \Delta t) = x', \hat{W}(x) = x) \notag \\
-&= \iint dx dx' (x' - x)^4 P(\hat{W}(t + \Delta t) = x' | \hat{W}(t) = x) P(\hat{W}(t) = x) \notag \\
-& \quad (\because \omega \equiv x' - x,\ dx' = d\omega) \notag \\
-&= \int dx \int d\omega \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} P(\hat{W}(t) = x) \notag \\
-&= \int d\omega \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} \quad (\because \text{規格化})\notag \\
+&= \iint \dd{x} \dd{x'} (x' - x)^4 P(\hat{W}(t + \Delta t) = x', \hat{W}(x) = x) \notag \\
+&= \iint \dd{x} \dd{x'} (x' - x)^4 P(\hat{W}(t + \Delta t) = x' | \hat{W}(t) = x) P(\hat{W}(t) = x) \notag \\
+& \quad (\because \omega \equiv x' - x,\ \dd{x'} = \dd{\omega}) \notag \\
+&= \int \dd{x} \int \dd{\omega} \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} P(\hat{W}(t) = x) \notag \\
+&= \int \dd{\omega} \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} \quad (\because \text{規格化})\notag \\
 &= \frac{1}{\sqrt{2\pi \Delta t}} \cdot \frac{3}{4} \sqrt{(2\Delta t)^5 \pi} \quad (\because \text{ガウス積分}) \notag \\
 &= 3 \Delta t^2
 \end{align}
@@ -185,7 +204,7 @@ $\xi_{\Delta t}$ の 4 次のモーメントは、
 また、$\xi_{\Delta t}$ の 2 次のモーメントは、
 \begin{align}
 \left\langle \xi_{\Delta t}^2 \right\rangle 
-&= \int d\omega \, \omega^2 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} \notag \\
+&= \int \dd{\omega} \, \omega^2 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} \notag \\
 &= \frac{1}{\sqrt{2\pi \Delta t}} \cdot \frac{1}{2} \sqrt{(2\Delta t)^3 \pi} \notag \\
 &= \Delta t
 \end{align}
@@ -200,7 +219,7 @@ $\xi_{\Delta t}$ の 4 次のモーメントは、
 
 また、
 \begin{align}
-  D_{\Delta t} := \sum_{n=0}^{N-1} f(n \Delta t) \Delta t - \int_0^{\tau} dt f(t)
+  D_{\Delta t} := \sum_{n=0}^{N-1} f(n \Delta t) \Delta t - \int_0^{\tau} \dd{t} f(t) \label{eq:D_delta}
 \end{align}
 とする。このとき、
 \begin{align}
@@ -208,7 +227,7 @@ $\xi_{\Delta t}$ の 4 次のモーメントは、
 \left\langle 
 \left( 
 \sum_{n=0}^{N-1} (\hat{\xi}_{\Delta t}(n\Delta t))^2 f(n\Delta t) 
-- \int_0^{\tau} dt f(t) 
+- \int_0^{\tau} \dd{t} f(t) 
 \right)^2 
 \right\rangle
 \\
@@ -228,12 +247,12 @@ f(n\Delta t)^2 + O(D_{\Delta t}) \notag \\
 &= \lim_{\Delta t \to 0} 
 2 (\Delta t)^2 \sum_{n=0}^{N-1} f(n\Delta t)^2 + O(D_{\Delta t}) \notag \\
 &= \lim_{\Delta t \to 0} 
-O(\Delta t^2) \times O(\Delta t^{-1}) + O(D_{\Delta t}) \notag \\
-&= \lim_{\Delta t \to 0} 
 O(\Delta t) + O(D_{\Delta t}) \notag \\
 &= 0
 \end{align}
-がいえる。
+がいえる。\footnote{
+  $N\Delta t = \tau$を用いた。
+}
 
 また、同様にして、
 \begin{align}
@@ -246,7 +265,7 @@ O(\Delta t) + O(D_{\Delta t}) \notag \\
 \left\langle \hat{\xi}_{\Delta t}(n \Delta t)^2 \right\rangle 
 (\Delta t)^2 f(n \Delta t)^2 \\
 &= \lim_{\Delta t \to 0} 
-O(\Delta t^3) \times O(\Delta t^{-1})  \\
+O(\Delta t^2)\\
 &= 0 
 \end{align}
 および
@@ -259,11 +278,10 @@ O(\Delta t^3) \times O(\Delta t^{-1})  \\
 \sum_{n=0}^{N-1}
 \left\langle \hat{\xi}_{\Delta t}(n \Delta t)^k \right\rangle f(n \Delta t)^2 \\
 &= \lim_{\Delta t \to 0}
-O(\Delta t^{k/2}) \times O(\Delta t^{-1}) \\
+O(\Delta t^{k/2-1})\\
 &= 0
 \end{align}
 が成り立つ。\qed\\
-%TODO fのオーダーよくわかってない
 
 この教科書の以降では、単純な2乗 \((\hat{\xi}_{\Delta \tau}(t))^2\) を意味するのではなく、以下のように形式的に \(\hat{\xi}_{\Delta \tau}^2(t)\) と記述する。
 \begin{align}
@@ -271,7 +289,6 @@ O(\Delta t^{k/2}) \times O(\Delta t^{-1}) \\
 \end{align}
 ここで \(N_{\Delta \tau} := \Delta \tau / \Delta t\) は、アンサンブル平均を取ることなく \(\Delta \tau\) に収束する。
 %TODO: 上のやつは後で確認する。
-
 \subsubsection{確率微分方程式と確率積分}
 \textbf{特異点}\\
 Wiener過程における微分や積分について考える。
@@ -279,11 +296,11 @@ Wiener過程はほとんどいたるところで特異点を持つため、取�
 $f(t,\hat{W}(t))$のような、Wiener過程に陽に依存する量を考える。
 このとき、$f(t,\hat{W}(t))$の$\hat{W}(t)$に関する積分は以下のように定義される。
 \begin{align}
-\int_0^\tau d\hat{W}(t)\, f(t, \hat{W}(t)) := \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) f(t_n, \hat{W}_{\Delta t}(t'_n)) 
+\int_0^\tau \dd{\hat{W}(t)}\, f(t, \hat{W}(t)) := \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) f(t_n, \hat{W}_{\Delta t}(t'_n)) 
 \end{align}
 ここで、$t_n = n\Delta t$とし、$t_{n}'=t_{n} + \alpha \Delta t\quad (0\leq \alpha \leq 1)$とする。
 現時点では、$\alpha$の任意性を残しておく。また、離散化したWiener過程を以下のように定義する。
-TODO上の日本語微妙そう
+%TODO上の日本語微妙そう
 \begin{align}
 \hat{W}_{\Delta t}(t_n) &:= \sum_{m=0}^{n-1} \hat{\xi}_{\Delta t}(t_m) \\
 \hat{W}_{\Delta t}(t'_n) &:= \hat{W}_{\Delta t}(t_n) + \alpha \hat{\xi}_{\Delta t}(t_n)
@@ -293,7 +310,7 @@ TODO上の日本語微妙そう
 しかし、Wiener過程の積分では、$\alpha$の値によって積分結果が異なってしまう。
 これを見るために、$f(t,\hat{W}(t)) = \hat{W}(t)$としてみる。このとき、
 \begin{align}
-\left\langle \int_0^\tau d\hat{W}(t) \hat{W}(t) \right\rangle 
+\left\langle \int_0^\tau \dd{\hat{W}(t)} \hat{W}(t) \right\rangle 
 = \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) \left( \hat{W}_{\Delta t}(t_n) + \alpha \hat{\xi}_{\Delta t}(t_n) \right)
 = \alpha \tau
 \end{align}
@@ -303,7 +320,7 @@ TODO上の日本語微妙そう
 例えば、以下のような決定論的な微分方程式を考えてみる。
 
 \begin{align}
-\frac{dx(t)}{dt} = x(t)\delta(t - 1)
+\dv{x}{t} = x(t)\delta(t - 1)
 \end{align}
 初期条件 $x(0) = 1$ のもとで、デルタ関数の積には任意性が現れる。
 $t = 1$ における積の取り扱いが時間発展に影響を与え、
@@ -319,24 +336,25 @@ $t = 1$ における積の取り扱いが時間発展に影響を与え、
 となり、$\alpha$の値によって解が異なることがわかる。
 
 \textbf{Ito積とStratonovich積}\\
-二つの重要な積のルールを導入する。初めは$\alpha = 0$に対応するものを考える。
+二つの重要な積のルールを導入する。
+すなわち、$\alpha$の値を定めてみる。
+初めは$\alpha = 0$に対応するものを考える。
 これはIto積と呼ばれる。
 \begin{itembox}[l]{\textbf{Def.Ito積}}
-    伊藤積分（Itô積分）は、積の記号 “\(\cdot\)” を用いて以下のように定義される：
+    伊藤積分（Itô積分）は、積の記号 “\(\cdot\)” を用いて以下のように定義される。
+    \begin{align}
+    \int_0^\tau \dd{\hat{W}(t)} \cdot f(t, \hat{W}(t)) := \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) f(t_n, \hat{W}_{\Delta t}(t_n))
+    \end{align}
+    \end{itembox}
+    また、$\alpha =1/2$に対応するものを考える。
+    これはStratonovich積と呼ばれる。
+    \begin{itembox}[l]{\textbf{Def.Stratonovich積}}
+      Stratonovich積分は、積の記号 “\(\circ\)” を用いて、以下のように定義される。
 
-\begin{align}
-\int_0^\tau d\hat{W}(t) \cdot f(t, \hat{W}(t)) := \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) f(t_n, \hat{W}_{\Delta t}(t_n))
-\end{align}
-\end{itembox}
-また、$\alpha =1/2$に対応するものを考える。
-これはStratonovich積と呼ばれる。
-\begin{itembox}[l]{\textbf{Def.Stratonovich積}}
-    Stratonovich積分は、積の記号 “\(\circ\)” を用いて、以下のように定義される：
-
-\begin{align}
-\int_0^\tau d\hat{W}(t) \circ f(t, \hat{W}(t)) := \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) f\left( t_n, \hat{W}_{\Delta t} \left( \frac{t_n + t_{n+1}}{2} \right) \right)
-\end{align}
-\end{itembox}
+    \begin{align}
+    \int_0^\tau \dd{\hat{W}(t)} \circ f(t, \hat{W}(t)) := \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) f\left( t_n, \hat{W}_{\Delta t} \left( \frac{t_n + t_{n+1}}{2} \right) \right)
+    \end{align}
+    \end{itembox}
 Ito積の定義は時間順序に重点を置いている。
 というのも、新しいノイズ$\hat{\xi}_{\Delta t}(t)$が生成され、$f$に段階的に作用する。
 ただし、$\hat{\xi}_{\Delta t}(t)$はこのノイズが生成される直前の関数に作用する。
@@ -357,24 +375,26 @@ Ito積とStratonovich積は相互変換可能である。実際、
 \(\Delta t \to 0,\ N \to \infty\) の極限を取ると、
 
 \begin{align}
-d\hat{W}(t) \circ f(t, \hat{W}(t)) = d\hat{W}(t) \cdot f(t, \hat{W}(t)) + \frac{1}{2} dt \pdv{f(t, W)}{W} \biggr|_{W = \hat{W}(t)}
+\dd\hat{W}(t) \circ f(t, \hat{W}(t)) = \dd\hat{W}(t) \cdot f(t, \hat{W}(t)) + \frac{1}{2} \dd t \pdv{f(t, W)}{W} \biggr|_{W = \hat{W}(t)}
 \end{align}
 となる。
 
-hoge
-
+Ito積が持つ重要な性質として、非予測性が挙げられる。
 \begin{itembox}[l]{\textbf{Thm.Ito積の非予測性}}
   \begin{align}
-\left\langle \int_0^\tau d\hat{W}(t) \cdot f(t, \hat{W}(t)) \right\rangle
-= \int_0^\tau \left\langle d\hat{W}(t) \right\rangle \left\langle f(t, \hat{W}(t)) \right\rangle = 0
+\left\langle \int_0^\tau \dd{\hat{W}(t)} \cdot f(t, \hat{W}(t)) \right\rangle
+= \int_0^\tau \left\langle \dd{\hat{W}(t)} \right\rangle \left\langle f(t, \hat{W}(t)) \right\rangle = 0
 \end{align}
 \end{itembox}
 \textbf{Prf.}\\
-hoge \qed\\
+1つ目の等式は、$f$の引数が$\hat{W}(t),t$であることと、$\dd{\hat{W}(t)}$が$\hat{W}(t),t$に依存しないことから従う。
+二本目の等号は、$\hat{W}(t)$の期待値が0であることから従う。
+\qed\\
 
+また、Stratonovich積は、以下の性質を満たす。
 \begin{itembox}[l]{\textbf{Thm.Stratonovich積における連鎖律}}
   \begin{align}
-df(t, \hat{W}(t)) = \pdv{f}{t} dt + \pdv{f}{\hat{W}} \circ d\hat{W}(t)
+\dd{f(t, \hat{W}(t))} = \pdv{f}{t} \dd{t} + \pdv{f}{\hat{W}} \circ \dd{\hat{W}(t)}
 \end{align}
 \end{itembox}
 これは、正確には以下の意味である。
@@ -387,19 +407,20 @@ df(t, \hat{W}(t)) = \pdv{f}{t} dt + \pdv{f}{\hat{W}} \circ d\hat{W}(t)
 f(t + \Delta t, \hat{W}_{\Delta t}(t) + \hat{\xi}_{\Delta t}(t)) &=
 f + \pdv{f}{t} \Delta t + \pdv{f}{\hat{W}_{\Delta t}} \biggr|_{\hat{W}_{\Delta t}(t)} \hat{\xi}_{\Delta t}(t) \notag \\
 &\quad + \frac{1}{2} \pdv[2]{f}{\hat{W}_{\Delta t}} \biggr|_{\hat{W}_{\Delta t}(t)} \hat{\xi}_{\Delta t}(t)^2 + o(\Delta t) \\
-&= f + \pdv{f}{t} \Delta t + \pdv{f}{\hat{W}_{\Delta t}} \biggr|_{\hat{W}_{\Delta t}(t) + \hat{\xi}_{\Delta t}(t)/2} \hat{\xi}_{\Delta t}(t) + o(\Delta t)
+&= f + \pdv{f}{t} \Delta t + \pdv{f}{\hat{W}_{\Delta t}} \biggr|_{\hat{W}_{\Delta t}(t) + \hat{\xi}_{\Delta t}(t)/2} \hat{\xi}_{\Delta t}(t) + o(\Delta t)\\
+\because \text{Taylor展開の逆} \notag
 \end{align}
 \qed\\
 
 一方で、Stratonovich積分は非予測性を満たさない。
 
 \begin{align}
-\left\langle \int_0^\tau d\hat{W}(t) \circ f(t, \hat{W}(t)) \right\rangle \ne 0
+\left\langle \int_0^\tau \dd{\hat{W}(t)} \circ f(t, \hat{W}(t)) \right\rangle \ne 0
 \end{align}
 
 また、Ito積は連鎖律を満たさない。
 \begin{align}
-df(t, \hat{W}(t)) \ne \pdv{f}{t} dt + \pdv{f}{\hat{W}} \cdot d\hat{W}(t)
+\dd{f(t, \hat{W}(t))} \ne \pdv{f}{t} \dd{t} + \pdv{f}{\hat{W}} \cdot \dd{\hat{W}(t)}
 \end{align}
 Ito積分への連鎖律の拡張はItoの補題と呼ばれ、後の章で述べる。
 
