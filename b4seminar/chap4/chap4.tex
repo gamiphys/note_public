@@ -44,20 +44,20 @@
 
 \setcounter{section}{3}
 \section{連続空間における確率過程}
-前節では、離散状態に対する確率過程について述べたが、今回は連続時間の確率過程を考える。
+前節では、離散状態に対する確率過程について述べたが、今回は連続状態の確率過程を考える。
 \subsection{数学的基礎}
 \subsubsection{Wiener過程}
 標準的な連続空間のMarkov過程として、Wiener過程が知られている。
 \begin{itembox}[l]{\textbf{Def.Wiener過程}}
     Wiener過程$\hat{W}(t)$は、
     \begin{align}
-        P(\hat{W}(t+\Delta t)=x \mid \hat{W}(t)=x') = \frac{1}{\sqrt{2\pi \Delta t}} \exp(-\frac{(x-x')^2}{2\Delta t})\\
-        P(x,0)=\delta(x)
+        P(\hat{W}(t+\Delta t)=x \mid \hat{W}(t)=x')& = \frac{1}{\sqrt{2\pi \Delta t}} \exp(-\frac{(x-x')^2}{2\Delta t})\\
+        P(x,0)&=\delta(x)
     \end{align}
     を満たす確率過程である。
 \end{itembox}
 Wiener過程が確かに存在することを直感的に確かめる。一次元格子におけるランダムウォークを考える。格子定数を$a$、時間間隔を$\Delta \tau$とする。
-各界のステップでは、確率$1/2$で右に$a$、$1/2$で左に$a$移動するものとする。すなわち、
+各回のステップでは、確率$1/2$で右に$a$、$1/2$で左に$a$移動するものとする。すなわち、
 \begin{align}
     T_{x \to x+a} = T_{x \to x-a} = \frac{1}{2}
 \end{align}
@@ -66,7 +66,7 @@ Wiener過程が確かに存在することを直感的に確かめる。一次�
 \begin{align}
     D &:= \frac{\dd{\langle x^2 \rangle}}{\dd{t}} \\
   &= \sum_{x} \frac{ x^2 P(x,t + \Delta t) - P(x,t)}{\Delta t} \\
-  &= \sum_{x} \frac{x^2}{\Delta t} \left[ P_{x-a \rightarrow a} P(x - a, t) + P_{x + a \rightarrow a} P(x + a, t) - P(x,t) \right] \\
+  &= \sum_{x} \frac{x^2}{\Delta t} \left[ P_{x-a \rightarrow x} P(x - a, t) + P_{x + a \rightarrow x} P(x + a, t) - P(x,t) \right] \\
   &= \sum_{x} \frac{x^2}{\Delta t} \left[ \frac{1}{2} P(x - a, t) + \frac{1}{2} P(x + a, t) - P(x,t) \right] \\
   &= \frac{1}{\Delta t} \left[ \frac{1}{2} \sum_{x} x^2 P(x - a, t) + \frac{1}{2} \sum_{x} x^2 P(x + a, t) - \sum_{x} x^2 P(x,t) \right] \\
   &= \frac{1}{\Delta t} \left[ \frac{1}{2} \sum_{x'} (x' + a)^2 P(x', t) + \frac{1}{2} \sum_{x''} (x'' - a)^2 P(x'', t) - \sum_{x} x^2 P(x,t) \right] \\
@@ -74,7 +74,7 @@ Wiener過程が確かに存在することを直感的に確かめる。一次�
   &= \frac{a^2}{\Delta t} 
 \end{align}
 
-このとき、確率分布は、中心極限定理により、ガウス分布に収束する。
+このとき、確率分布は中心極限定理によりガウス分布に収束する。
 \begin{itembox}[l]{\textbf{Recall.中心極限定理}}
   $n$個の独立同一分布の確率変数$X_i$の平均値は、$n \to \infty$で、平均$\mu$、分散$\sigma^2/n$の正規分布に従う。
   ただし、$\mu$は$X_i$の平均、$\sigma^2$は$X_i$の分散である。
@@ -92,24 +92,25 @@ Wiener過程が確かに存在することを直感的に確かめる。一次�
 が得られる。
 また，
 \begin{align}
-  P(x, t + \Delta t | x', t)
-  &= P(x, \Delta t | x', 0) \tag{4.1} \\
-  &= \int \dd{x''}\, P(x - x', \Delta t | x'', 0)\, \delta(x'') \\
-  &= \int \dd{x''}\, P(x - x', \Delta t | x'', 0)\, P(x'', 0) \\
+  P(x, t + \Delta t | x', t) 
+  &= P(x, \Delta t | x', 0) \quad \text{(Markov性)} \\
+  &=  P(x - x', \Delta t | 0, 0) \quad \text{(並進不変性)} \\
+  &=\int \dd{x''}\, P(x - x', \Delta t | x'', 0)\, \delta(x'')  \\
+  &= \int \dd{x''}\, P(x - x', \Delta t | x'', 0)\, P(x'', 0) \quad \text{(初期条件)} \\
   &= P(x - x', \Delta t) \\
   &= \frac{1}{\sqrt{2\pi \Delta t}} \exp\left[ -\frac{(x - x')^2}{2 \Delta t} \right]
 \end{align}
 となり、Wiener過程の定義式と一致する。
-上の構成から、Wiener過程は、ランダムウォークを粗視化したときに得られるものであることがわかる。
+上の構成から、Wiener過程は、ランダムウォークを粗視化したときに得られるものであることがわかる。\\
 
 Wiener過程の極限として白色Gaussノイズを導入する。
 \begin{itembox}[l]{\textbf{Def.白色Gaussノイズ}}
-    白色ガウスノイズは、以下のように与えられる。
+    白色Gaussノイズは、以下のように与えられる。
     \begin{align}
         \hat{\xi}(t) = \lim_{\Delta t \to 0} \frac{\hat{W}(t+\Delta t) - \hat{W}(t)}{\Delta t}
     \end{align}
 \end{itembox}
-また、のちの便宜のため、時間$\Delta t$の間で離散化した白色ガウスノイズを
+また、後の便宜のため、時間$\Delta t$の間で離散化した白色ガウスノイズを
 \begin{align}
     \hat{\xi}_{\Delta t}(t) \coloneq \hat{W}(t+\Delta t) - \hat{W}(t)
 \end{align}
@@ -120,7 +121,7 @@ Wiener過程の極限として白色Gaussノイズを導入する。
     \ev{\hat{\xi}(t) \hat{\xi}(t')} &= 0 \quad (t \neq t') \label{eq:xi_correlation} \\
 \end{align}
 が成り立つ。第一式は、Wiener過程の期待値が0であることと期待値の線形性から従う。
-また、Wiener過程は時間に依らないことから、時間相関がないことから第二式が成り立つ。
+また、Markov性により時間相関がないことから第二式が成り立つ。
 
 また、Wiener過程を
 \begin{align}
@@ -156,8 +157,8 @@ Wiener過程の極限として白色Gaussノイズを導入する。
 \begin{align}
     (\dd{\hat{W}(t)})^2 = \dd{t}
 \end{align}
-が成り立つ。より正確には、$(\dd{\hat{W}(t)})^2$による積分は、二乗平均の極限の意味で普通の時間積分と同等である。
-  \footnote{%
+を満たす。正確には、$(\dd{\hat{W}(t)})^2$による積分は、二乗平均の極限の意味で、通常の時間積分と同等である。
+  \footnote{
 \(\lim_{\Delta t \to 0} g_{\Delta t} = g\) が平均二乗収束の意味で成り立つとは、  
 \[
 \lim_{\Delta t \to 0} \left\langle (g_{\Delta t} - g)^2 \right\rangle = 0
@@ -192,7 +193,7 @@ $\xi_{\Delta t}$ の 4 次のモーメントは、
 \begin{align}
 \left\langle \xi_{\Delta t}^{4} \right\rangle 
 &= \left\langle \left( \hat{W}(t + \Delta t) - \hat{W}(t) \right)^4 \right\rangle \notag \\
-&= \iint \dd{x} \dd{x'} (x' - x)^4 P(\hat{W}(t + \Delta t) = x', \hat{W}(x) = x) \notag \\
+&= \iint \dd{x} \dd{x'} (x' - x)^4 P(\hat{W}(t + \Delta t) = x', \hat{W}(t) = x) \notag \\
 &= \iint \dd{x} \dd{x'} (x' - x)^4 P(\hat{W}(t + \Delta t) = x' | \hat{W}(t) = x) P(\hat{W}(t) = x) \notag \\
 & \quad (\because \omega \equiv x' - x,\ \dd{x'} = \dd{\omega}) \notag \\
 &= \int \dd{x} \int \dd{\omega} \, \omega^4 \frac{1}{\sqrt{2\pi \Delta t}} e^{-\omega^2/(2\Delta t)} P(\hat{W}(t) = x) \notag \\
@@ -283,12 +284,12 @@ O(\Delta t^{k/2-1})\\
 \end{align}
 が成り立つ。\qed\\
 
-この教科書の以降では、単純な2乗 \((\hat{\xi}_{\Delta \tau}(t))^2\) を意味するのではなく、以下のように形式的に \(\hat{\xi}_{\Delta \tau}^2(t)\) と記述する。
-\begin{align}
-\hat{\xi}_{\Delta \tau}^2(t) := \sum_{n=0}^{N_{\Delta \tau} - 1} \left( \hat{\xi}_{\Delta t}(t + n\Delta t) \right)^2
-\end{align}
-ここで \(N_{\Delta \tau} := \Delta \tau / \Delta t\) は、アンサンブル平均を取ることなく \(\Delta \tau\) に収束する。
-%TODO: 上のやつは後で確認する。
+% この教科書の以降では、単純な2乗 \((\hat{\xi}_{\Delta \tau}(t))^2\) を意味するのではなく以下のように形式的に \(\hat{\xi}_{\Delta \tau}^2(t)\) と記述する。
+% \begin{align}
+% \hat{\xi}_{\Delta \tau}^2(t) := \sum_{n=0}^{N_{\Delta \tau} - 1} \left( \hat{\xi}_{\Delta t}(t + n\Delta t) \right)^2
+% \end{align}
+% ここで \(N_{\Delta \tau} := \Delta \tau / \Delta t\) は、アンサンブル平均を取ることなく \(\Delta \tau\) に収束する。
+% %TODO: 上のやつは後で確認する。
 \subsubsection{確率微分方程式と確率積分}
 \textbf{特異点}\\
 Wiener過程における微分や積分について考える。
@@ -300,18 +301,18 @@ $f(t,\hat{W}(t))$のような、Wiener過程に陽に依存する量を考える
 \end{align}
 ここで、$t_n = n\Delta t$とし、$t_{n}'=t_{n} + \alpha \Delta t\quad (0\leq \alpha \leq 1)$とする。
 現時点では、$\alpha$の任意性を残しておく。また、離散化したWiener過程を以下のように定義する。
-%TODO上の日本語微妙そう
+
 \begin{align}
 \hat{W}_{\Delta t}(t_n) &:= \sum_{m=0}^{n-1} \hat{\xi}_{\Delta t}(t_m) \\
 \hat{W}_{\Delta t}(t'_n) &:= \hat{W}_{\Delta t}(t_n) + \alpha \hat{\xi}_{\Delta t}(t_n)
 \end{align}
 ここで、どのように$\alpha$を選ぶかの問題が生じる。
-普通の積分では、$\Delta \to 0$の極限をとれば、$\alpha$の値に関係なく一意に積分が定まる。
+普通の積分では、$\Delta t \to 0$の極限をとれば、$\alpha$の値に関係なく一意に積分が定まる。
 しかし、Wiener過程の積分では、$\alpha$の値によって積分結果が異なってしまう。
 これを見るために、$f(t,\hat{W}(t)) = \hat{W}(t)$としてみる。このとき、
 \begin{align}
 \left\langle \int_0^\tau \dd{\hat{W}(t)} \hat{W}(t) \right\rangle 
-= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \hat{\xi}_{\Delta t}(t_n) \left( \hat{W}_{\Delta t}(t_n) + \alpha \hat{\xi}_{\Delta t}(t_n) \right)
+= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \ev{\hat{\xi}_{\Delta t}(t_n) \left( \hat{W}_{\Delta t}(t_n) + \alpha \hat{\xi}_{\Delta t}(t_n) \right)}
 = \alpha \tau
 \end{align}
 となり、明らかに$\alpha$の値によって積分結果が異なる。\footnote{第一項が消えることは、$\hat{W}_{\Delta t}(t_n)$が$\hat{\xi}_{\Delta t}(t_n)$にの項を持たないことから従う。和の範囲を見よ。}
@@ -333,7 +334,7 @@ $t = 1$ における積の取り扱いが時間発展に影響を与え、
 \begin{align}
   x(t) = 1 + \frac{1}{1 - \alpha} \quad (t > 1)
 \end{align}
-となり、$\alpha$の値によって解が異なることがわかる。
+となり、$\alpha$の値によって解が異なることがわかる。\\
 
 \textbf{Ito積とStratonovich積}\\
 二つの重要な積のルールを導入する。
@@ -358,7 +359,7 @@ $t = 1$ における積の取り扱いが時間発展に影響を与え、
 Ito積の定義は時間順序に重点を置いている。
 というのも、新しいノイズ$\hat{\xi}_{\Delta t}(t)$が生成され、$f$に段階的に作用する。
 ただし、$\hat{\xi}_{\Delta t}(t)$はこのノイズが生成される直前の関数に作用する。
-言い換えれば、Ito積によって与えられる確率過程$\hat{X}(t) = \int_{0}^{\tau} d\hat{W}(t) \cdot f(t, \hat{W}(t))$はマルチンゲールである。
+言い換えれば、Ito積によって与えられる確率過程$\hat{X}(t) = \int_{0}^{\tau} \dd \hat{W}(t) \cdot f(t, \hat{W}(t))$はマルチンゲールである。
 \footnote{期待値が時間に依存しないということ。}
 一方、Stratonovich積は平均に重点を置いている。
 すなわち、ノイズ$\hat{\xi}_{\Delta t}(t)$は、$f$に作用する直前と直後の平均に作用する。
@@ -366,6 +367,7 @@ Ito積の定義は時間順序に重点を置いている。
 Ito積とStratonovich積は相互変換可能である。実際、
 \begin{align}
 &\quad \hat{\xi}_{\Delta t}(t_n) f\left( t_n, \hat{W}_{\Delta t} \left( \frac{t_n + t_{n+1}}{2} \right) \right)\\
+&= \hat{\xi}_{\Delta t}(t_n) f\left( t_n, \hat{W}_{\Delta t}(t_n) + \frac{\Delta t}{2} \pdv{\hat{W}(t_{n})}{t}  (t_n) \right)  \\
 &= \hat{\xi}_{\Delta t}(t_n) f\left( t_n, \hat{W}_{\Delta t}(t_n) + \frac{1}{2} \hat{\xi}_{\Delta t}(t_n) \right) \\
 &= \hat{\xi}_{\Delta t}(t_n) \left[ f(t_n, \hat{W}_{\Delta t}(t_n)) + \frac{1}{2} \hat{\xi}_{\Delta t}(t_n) \pdv{f(t_n, W)}{W} \biggr|_{W = \hat{W}_{\Delta t}(t_n)} + o(\Delta t) \right] \\
 &= \hat{\xi}_{\Delta t}(t_n) f(t_n, \hat{W}_{\Delta t}(t_n)) + \frac{1}{2} \hat{\xi}_{\Delta t}^2(t_n) \pdv{f(t_n, W)}{W} \biggr|_{W = \hat{W}_{\Delta t}(t_n)} + o(\Delta t) \\

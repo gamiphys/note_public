@@ -1,0 +1,575 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+\begin{document}
+
+\title{B4ゼミ\# 7}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+\setcounter{section}{4}
+\setcounter{subsection}{1}
+実際の物理系における確率過程を見る。
+前回の復習として、確率微分方程式およびFokker-Planck方程式まとめておく。
+以下のような確率過程を考える。
+\begin{align}
+\dv{\hat{x}}{t} &= a(\hat{x}(t), t) + b(\hat{x}(t), t) \cdot \hat{\xi}(t), \\
+\dv{\hat{x}}{t} &= a(\hat{x}(t), t) + b(\hat{x}(t), t) \circ \hat{\xi}(t),
+\end{align}
+この確率微分方程式に対応するFokker-Planck方程式は以下のように表される。
+\begin{align}
+\dv{P(x,t)}{t} 
+= \left[
+    -\pdv{x} a(x,t) 
+    + \frac{1}{2} \pdv[2]{x} b(x,t)^2 
+\right] P(x,t)
+\quad \text{(Itô型)} \\
+\end{align}
+
+
+
+\subsection{Langevin系の描像}
+\subsubsection{Langevin方程式}
+underdamped Langevin方程式とよばれる、ノイズ入りの運動方程式を考える。
+物理的には、水槽の中に入ったコロイド粒子が水槽中の水分子から受ける力をモデル化したものである。
+
+\begin{itembox}[l]{\textbf{Def.underdamped Langevin方程式}}
+    underdamped Langevin方程式は、以下のように表される。\footnote{今回は乗法的ノイズがないので、Itô積とストラトノビッチ積は同じになる。}
+\begin{align}
+    \dv{\hat{p}}{t} &= -\frac{\gamma}{m} \hat{p} + F(\hat{x}, t) + \sqrt{2\gamma T} \, \hat{\xi}(t), \label{eq:underdamped_langevin} \\
+    \dv{\hat{x}}{t} &= \frac{\hat{p}}{m} 
+\end{align}
+ここで、$\hat{p}$は粒子の運動量、$\hat{x}$は位置、$F(\hat{x},t)$は外力、$\gamma$は摩擦係数、$T$は温度、$\hat{\xi}(t)$は白色ガウスノイズである。
+\end{itembox}
+ここで、ノイズの強さを$\sqrt{2\gamma T}$とした。このように定めれば、定常分布はカノニカル分布となる。
+以下、このことを確認する。
+仮にノイズの係数を$b$として外力がポテンシャル$U(x,t)$により与えられる場合、確率微分方程式は
+\begin{align}
+\dv{\hat{p}}{t} &= -\frac{\gamma}{m} \hat{p} - \pdv{U(\hat{x}, t)}{x} + b \hat{\xi}(t), \\
+\dv{\hat{x}}{t} &= \frac{\hat{p}}{m}
+\end{align}
+のようになる。これに対応するFokker-Planck方程式は以下のように表される。
+\begin{align}
+\pdv{t} P(x, p, t) 
+= \left[
+    - \pdv{x} \frac{p}{m} 
+    + \pdv{p} \left( \frac{\gamma p}{m} + \pdv{U(x,t)}{x} \right) 
+    + \frac{b^2}{2} \pdv[2]{p}
+\right] P(x, p, t)
+\end{align}
+
+この定常分布は
+\begin{align}
+P_{\text{st}}(x, p, t) \propto \exp \left[ -\frac{2\gamma}{b^2} \left( \frac{p^2}{2m} + U(x, t) \right) \right]
+\end{align}
+となる。\footnote{手書きのメモで確認する。}
+したがって、たしかにノイズの強さを$\sqrt{2\gamma T}$と定めれば、定常分布はカノニカル分布となる。
+
+一般の力$F(x,t)$に対しては、Fokker-Planck方程式は
+\begin{align}
+\pdv{t} P(x, p, t) 
+= \left[
+    - \pdv{x} \frac{p}{m} 
+    + \pdv{p} \left( \frac{\gamma p}{m} - F(x, t) \right) 
+    + \gamma T \pdv[2]{p}
+\right] P(x, p, t)
+\end{align}
+のようになる。これはKramers方程式とも呼ばれる。\\
+
+もし系$X$が、外部と相互作用していない系$Y$と接しているとき、
+bathと$X$との相互作用は$Y$がない時と同じ形であらわされる。特に、そのダイナミクスは
+\begin{align}
+\pdv{t} P(x, p_x, y, p_y, t) 
+= & \left[
+    - \pdv{x} \frac{p_x}{m}
+    + \pdv{p_x} \left( \frac{\gamma p_x}{m} - F_x(x, t) + \pdv{U_{\text{int}}(x, y, t)}{x} \right)
+    + \gamma T \pdv[2]{p_x}
+\right. \nonumber \\
+& \left.
+    - \pdv{y} \frac{p_y}{m}
+    + \pdv{p_y} \left( -F_y(y, t) + \pdv{U_{\text{int}}(x, y, t)}{y} \right)
+\right] P(x, p_x, y, p_y, t)
+\end{align}
+ここで、\( U_{\mathrm{int}}(x, y, t) \)、\( F_X(x, t) \)、および \( F_Y(y, t) \) は、それぞれ相互作用エネルギー、X系に対する力、Y系に対する力を表している。
+複合系の定常分布は再びカノニカル分布となる。\footnote{手書きのメモで確認する。}
+言い換えれば、系Xに作用する演算子が他の結合された系Yを平衡化させる。\footnote{量子系ではこうなるとは限らないようである。}
+
+もう一度初めのunderdamped Langevin方程式を考える。
+$\frac{m}{\gamma} $の影響が我々の時間スケール$\Delta t$に対して十分小さいとき、この方程式を書き換えることができる。
+元の方程式を書き直すと
+\begin{align}
+    m\dv[2]{\hat{x}}{t} + \gamma \dv{\hat{x}}{t} &= F(\hat{x},t) + \sqrt{2\gamma T} \, \hat{\xi}(t)
+\end{align}
+となる。これの左辺の第一項を落とすことができる。
+
+\begin{itembox}[l]{\textbf{Def.Overdamped Langevin方程式}}
+    overdamped Langevin方程式は、以下のように表される。
+\begin{align}
+    \gamma \dv{\hat{x}}{t} &= F(\hat{x},t) + \sqrt{2\gamma T} \, \hat{\xi}(t)
+\end{align}
+\end{itembox}
+これに対応するFokker-Planck方程式は
+\begin{align}
+\dv{t} P(x, t) 
+= -\pdv{x} \left( \frac{1}{\gamma} F(x, t) P(x, t) \right) 
++ \pdv[2]{x} \left( \frac{T}{\gamma} P(x, t) \right)
+\end{align}
+となる。ここで、以下のように確率流を定義する。
+\begin{itembox}[l]{\textbf{Def.確率流}}
+    確率流は、以下のように定義される。
+\begin{align}
+    J(x,t) &= \frac{1}{\gamma} F(x,t) P(x,t) - \pdv{x} \left( \frac{T}{\gamma} \pdv{P(x,t)}{x} \right)
+\end{align}
+\end{itembox}
+このとき、確率分布は連続の式
+\begin{align}
+    \dv{P(x,t)}{t} = -\pdv{x} J(x,t)
+\end{align}
+を満たす。\\
+
+特に
+摩擦係数 $\gamma$ や温度 $T$ が空間的に変調している場合、ノイズが乗法的になるため積の規則に注意する必要がある。
+温度が空間的に変調している場合、オーバーダンプLangevin方程式における積の規則は Itô積でなければならないことが知られている。\footnote{ここでは導出しない。}
+
+\begin{align}
+\gamma(\hat{x}) \dv{\hat{x}}{t} = - \pdv{U(\hat{x}, t)}{x} + \sqrt{2\gamma(\hat{x})T(\hat{x})} \cdot \hat{\xi}(t)
+\end{align}
+
+% このことは、underdamped Langevin eq.に対する特異摂動から導かれる。
+この積のルールにする直感的理由は、温度の影響は移動する前のところに依存するためである。\footnote{要するに、bathからの影響でjumpして移動するのだが、jumpをするのは移動する前のところである}\\
+
+摩擦係数が空間的に変調している場合、overdamped Langevin eq.における積の規則は反Itô積であるべきであることが知られている。これは記号 $\circledcirc$ で表される。その場合の方程式は次のようになる。
+\begin{align}
+\gamma(\hat{x}) \odot  \dv{\hat{x}}{t}
+= - \pdv{U(\hat{x}, t)}{x}
++ \sqrt{2\gamma(\hat{x})T(\hat{x})} \odot  \hat{\xi}(t)
+\end{align}
+
+ここで、反Itô積は $\alpha = 1$ の積の規則として定義される。
+% この表現も、アンダーダンプLangevin方程式の特異摂動から導かれる。
+この積のルールにする直感的理由は、摩擦の効き方は移動先に依存するため、移動先によって積を決める必要があることからである。
+
+\subsubsection{Langevin描像の実験的な妥当性}
+物理現象のうち、underdampedまたはoverdampedのLangevin eq.によって記述されるものについて議論する。Langevin記述の妥当性を損なう重要な要因の一つは、非マルコフ効果である。この効果においてはノイズがホワイトノイズではなくなり、過去の状態に依存するようになる。
+
+非常に高い時間分解能の観測下では非マルコフ効果を検出できるが、多くの場合、Langevin記述は長時間スケールにおける有効な描写として利用できる。実際、overdamped Langevin eq.は多くのメゾスコピック系の実験結果をよく再現することが知られている。overdampedな記述が導かれる物理的な根拠はいくつか存在する。
+
+1つの根拠は、慣性による変位の典型的な長さ $\langle \hat{p} \rangle / \gamma$ が、ポテンシャルエネルギー $U(x,t)$ や他の空間的変調量によって決まる典型的な空間スケールよりも十分に小さい場合である。この場合、運動はoverdampedのLangevin eq.によって有効に記述できる。
+（例えば、我々の実験系において時間分解能が慣性時間スケール $m/\gamma$ よりも短い場合、時間の粗視化を行い、慣性の小さい影響を無視する。）
+
+別の起源は、ダイナミクスの粗視化である。この場合、観測される量は、平均的なドリフトとその周囲の小さな揺らぎとして記述される。この機構は、巨視的および中間スケール系において、系のサイズ $V$ に基づいた展開として現れることが知られている。
+
+系の体積を $V$、を 示量変数を$A$ とし、その密度 $a := A/V$ のダイナミクスを考えると、中心極限定理により、$a$ のダイナミクスは平均ドリフトとオーダー $O(1/\sqrt{V})$ のノイズ、さらに $V$ の高次項で与えられる。このような起源を持つLangevin eq.は、非線形物理において頻繁に観測される。これらのLangevin系では、慣性効果は現れない。
+
+underdamped領域の存在自体も自明ではない。underdamped領域が、overdamped領域（最も粗視化された記述）と非マルコフ領域（最も詳細な記述）の間に存在するかどうかは、系や状態の詳細に依存する。
+
+高時間分解能の測定装置を用いた実験では、以下のような興味深い結果が報告されている。室温の水中における直径 $3$〜$4\,\mathrm{\mu m}$ のシリカビーズおよびバリウムチタン酸ビーズの系では、underdamped領域は存在しない。この設定では、非マルコフ的な流体力学的効果が $2$〜$10\,\mu\mathrm{s}$ のスケールで観測され、これは慣性スケール $1$〜$12\,\mu\mathrm{s}$ と同程度である。
+
+この非マルコフ性の効果は、液体の非圧縮性およびメモリを持つ応力(Basset力)によって引き起こされることが知られている。
+
+\subsection{Langevin系における熱}
+Brown粒子を系とするようなLangevin系においては、トラジェクトリにわたる熱を定義することができる。
+系が外力の無いようなunderdamped Langevin方程式に従うときを考える。
+エネルギー保存により、熱の放出は系がbathに与える仕事と等しい。
+したがって、熱の表式配下のように書ける。
+\begin{align}
+\dd\hat{Q} &= \dd{\hat{x}(t)} \times_\alpha F_{\text{bath}}(\hat{x}, \hat{p}, t) 
+= \dd{\hat{x}(t)} \times_\alpha \left( \frac{\gamma}{m} \hat{p}(t) - \sqrt{2\gamma T} \hat{\xi}(t) \right)
+\end{align}
+$F_{\text{bath}}$は、(\ref{eq:underdamped_langevin})の右辺のうち、熱浴によって引き起こされる力である、抵抗とノイズを符号反転したものである。\footnote{符号反転は作用反作用から。}
+$\dd{\hat{x}}$がノイズを含むことから積のルールに気を付ける必要がある。
+このルールは熱力学との整合性を保つように決めるべきである。
+ポテンシャルがないような場合を考える。この時、仕事がないことになるから熱の変化は運動エネルギーの変化に等しい。
+熱と運動エネルギー変化をそれぞれ計算してみる。\\
+熱について
+\begin{align}
+\hat{Q} &= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \frac{1}{m} \left( 
+\hat{p}(t_n) + \alpha \left[ -\frac{\gamma}{m} \hat{p}(t_n) \Delta t + \sqrt{2\gamma T} \hat{\xi}_{\Delta t}(t_n) \right]
+\right) \notag \\
+& \quad \cdot \left( \frac{\gamma}{m} \hat{p}(t_n) \Delta t - \sqrt{2\gamma T} \hat{\xi}_{\Delta t}(t_n) \right) \notag \\
+&= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \left( 
+\frac{\gamma}{m^2} \hat{p}(t_n)^2 \Delta t - \frac{2 \alpha \gamma T}{m} \Delta t
+\right) + o(\Delta t)
+\end{align}
+
+運動エネルギーについて
+\begin{align}
+\Delta \hat{K} &= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \frac{1}{2m} 
+\left( \hat{p}(t_{n+1})^2 - \hat{p}(t_n)^2 \right) \notag \\
+&= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \frac{1}{2m} \left( 
+\left[ \hat{p}(t_n) - \frac{\gamma}{m} \hat{p}(t_n) \Delta t + \sqrt{2\gamma T} \hat{\xi}_{\Delta t}(t_n) \right]^2 
+- \hat{p}(t_n)^2 \right) \notag \\
+&= \lim_{\Delta t \to 0} \sum_{n=0}^{N-1} \frac{1}{2m} 
+\left( -\frac{2 \gamma}{m} \hat{p}(t_n)^2 \Delta t + 2\gamma T \Delta t \right)
+\end{align}
+
+いま、$\Delta K + Q = 0$であるから、$\alpha = \frac{1}{2}$とすることができる。
+すなわち、積のルールとしてはStratonovich積を用いればよいことになる。
+以上の議論から、熱や仕事の定義をまとめる。
+
+\begin{itembox}[l]{\textbf{Def.underdamped Langevin系における熱}}
+    underdamped Langevin系における熱は、以下のように定義される。
+    \begin{align}
+\hat{Q} := \int_0^\tau \dd{t} \, \frac{\hat{p}(t)}{m} \circ 
+\left( \frac{\gamma}{m} \hat{p}(t) - \sqrt{2\gamma T} \hat{\xi}(t) \right)
+\end{align}
+
+\end{itembox}
+
+\begin{itembox}[l]{\textbf{Def.underdamped Langevin系における仕事}}
+    underdamped Langevin系における仕事は、以下のように定義される。
+    \begin{align}
+\hat{W}(t) := \int_0^t \dd{t} \, \pdv{U(\hat{x}; \lambda(t))}{\lambda} \dv{\lambda(t)}{t}
+\end{align}
+\end{itembox}
+
+Overdamped Langevin系においても$\alpha = \frac{1}{2}$とすることができる。
+ポテンシャルエネルギーがあるが、それが時間に依らない場合を考える。
+このとき、熱の変化は
+\begin{align}
+\hat{Q} &= \int \left( \gamma \frac{d\hat{x}}{dt} - \sqrt{2\gamma T} \, \hat{\xi}(t) \right) \times_{\alpha} d\hat{x} \notag \\
+&= - \int \frac{\partial U(\hat{x})}{\partial x} \times_{\alpha} d\hat{x} \notag \\
+&= - \int \left[ \frac{\partial U(x)}{\partial x} \cdot dx + \alpha \frac{\partial^2 U(x)}{\partial x^2} (2\gamma T) dt \right] \notag \\
+&= - \int \left[ \frac{\partial U(x)}{\partial x} \circ dx - \frac{1}{2} \frac{\partial^2 U(x)}{\partial x^2} (2\gamma T) dt + \alpha \frac{\partial^2 U(x)}{\partial x^2} (2\gamma T) dt \right] \notag \\
+&= - \int dU + \left( \frac{1}{2} - \alpha \right) \int \frac{\partial^2 U(x)}{\partial x^2} (2\gamma T) dt \notag \\
+&= U(\hat{x}_i) - U(\hat{x}_f) + \left( \frac{1}{2} - \alpha \right) \int \frac{\partial^2 U(\hat{x})}{\partial x^2} 2\gamma T \, dt  
+\end{align}
+したがって、$\alpha = \frac{1}{2}$とすることができる。\footnote{Stratonovich積で連鎖律を使えることが効いている。}
+\begin{itembox}[l]{\textbf{Def.overdamped Langevin系における熱}}
+    overdamped Langevin系における熱は、以下のように定義される。
+    \begin{align}
+\dd{\hat{Q}} := - \pdv{U(\hat{x})}{x} \circ \dd{\hat{x}} 
+= F_{\text{bath}} \circ \dd{\hat{x}} 
+= \left( \gamma \dv{\hat{x}}{t} - \sqrt{2\gamma T} \hat{\xi}(t) \right) \circ \dd{\hat{x}}
+\end{align}
+
+\end{itembox}
+
+\subsection{エントロピー生成と局所平均速度}
+状態が離散的だった時と同じように、エントロピー生成を定義することができる。
+すなわち、系のエントロピーはシャノンエントロピーとして、
+\begin{align}
+    \sigma = H(\tau) - H(0) + \beta Q
+\end{align}
+と定義される。
+
+また、Overdamped Langevin系においては、局所平均速度と呼ばれる量を用いることで、平均のエントロピー生成率を便利な表式に書き換えることができる。
+まず、局所平均速度を定義する。\footnote{U. Seifert, Rep. Prog. Phys. 75, 126001 (2012) や白石先生の教科書では以下のように定義されている。\\
+確率的粒子系を考える。速度 \( v \) の位置 \( x \) による条件付き確率分布を \( P(v \mid x) \) とする。このとき、局所的な平均速度は、位置 \( x \) における速度の平均として定義される：
+\begin{align}
+    v(x) := \int dv \cdot v \, P(v \mid x) 
+\end{align}
+今回はこの定義にしても冗長なだけだったので以下の定義を用いることにした。
+}
+\begin{itembox}[l]{\textbf{Def.局所平均速度}}
+    局所平均速度は以下のように定義される。
+\begin{align}
+    v(x,t) := \frac{J(x,t)}{P(x,t)} 
+\end{align}
+\end{itembox}
+
+overdamped Langevin系において、局所平均速度は以下のように表される。
+\begin{align}
+    v(x) = -\frac{1}{\gamma} \left( -F(x) + T \frac{1}{P(x)} \pdv{P(x)}{x} \right)
+\end{align}
+
+
+これを用いて、エントロピー生成率を以下のように書き換えることができる。
+\begin{align}
+\dot{\sigma} &= \int \dd{x} \, \frac{\gamma v(x)^2 P(x)}{T}
+\end{align}
+$(\because)$\\
+系のエントロピー変化について、
+\begin{align}
+    \dv{H(t)}{t}
+    &= - \dv{t} \int \dd{x} \, P(x,t) \ln P(x,t) \\
+    &= - \int \dd{x} \, \frac{\partial P(x,t)}{\partial t} \ln P(x,t)\\
+    &=  \int \dd{x} \left( \pdv{x} J(x,t) \right)  \ln P(x,t)\quad \text{(連続の式)} \\
+    &= - \int \dd{x} \, J(x,t) \pdv{x} \ln P(x,t) \quad \text{(部分積分)} \\
+    &= - \int \dd{x} \, \frac{J(x,t)}{P(x,t)} \qty(\pdv{x} \ln P(x,t)) P(x,t) \\
+    &= - \int \dd{x} \, v(x) \qty(\pdv{x} \ln P(x,t)) P(x,t) \\
+    &= \expval{ - v(x) \cdot \pdv{x} \ln P(x,t) }_t
+\end{align}
+となる。
+
+確率的な熱については
+\begin{align}
+    \dd{\hat{Q}} &= F(x,t) \circ \dd{\hat{x}} \\
+       &=  F(x,t) \cdot \dd{\hat{x}} + \frac{1}{2} \left( \frac{2T}{\gamma} \right) \pdv{ F(x,t)}{x} \dd{t} \quad \text{(積の変換則)} \\
+       &=  F(x,t) \cdot \left( \frac{1}{\gamma} F(x,t) \dd{t} + \sqrt{\frac{2T}{\gamma}} \dd{\hat{W}} \right) + \frac{T}{\gamma} \pdv{F(x,t)}{x} \dd{t} \\
+       &= \frac{1}{\gamma} F(x,t)^2 \dd{t} + \sqrt{\frac{2T}{\gamma}} F(x,t) \cdot \dd{\hat{W}} + \frac{T}{\gamma} \pdv{F(x,t)}{x} \dd{t}
+    \end{align}
+のようになる。
+これを用いて平均の熱の変化率は、
+    \begin{align}
+       \dv{Q}{t} 
+       &= \int \dd{x} \left( \frac{1}{\gamma} F(x,t)^2 + \frac{T}{\gamma} \pdv{F(x,t)}{x} \right) P(x,t) \quad \text{(Itô積の非予測性)} \\
+       &= \int \dd{x} F(x,t) \frac{1}{\gamma} \left( F(x,t) P(x,t) - T \pdv{P(x,t)}{x} \right) \quad \text{(部分積分)} \\
+       &= \int \dd{x} F(x,t) v(x) P(x,t)
+    \end{align}
+となる。
+以上より、エントロピー生成率は以下のように表される。
+\begin{align}
+    \dot{\sigma}(t)
+    &= \int \dd{x} \left( - v(x) \pdv{x} \ln P(x,t) + \frac{1}{T} F(x,t) v(x) \right) P(x,t) \\
+    &= \int \dd{x} \left( -T \pdv{x} P(x,t) + F(x,t) P(x,t) \right) \frac{1}{T} v(x) \\
+    &= \int \dd{x} \frac{ \gamma {v(x)}^2 P(x,t) }{ T }
+\end{align}
+このとき、右辺は明らかに非負であるから、これは第二法則を表していることもわかる。
+\footnote{
+他にも、例えばWasserstein距離を用いたSpeed limitの議論において便利な表式だったりする。
+}
+以上の結果をまとめておく。
+\begin{itembox}[l]{\textbf{Thm.overdamped Langevin系におけるエントロピー生成率}}
+    overdamped Langevin系におけるエントロピー生成率は、以下のように表される。
+    \begin{align}
+\dot{\sigma} = \int \dd{x} \, \frac{\gamma v(x)^2 P(x)}{T}
+\end{align}
+\end{itembox}
+
+\subsection{多次元の場合}
+多次元の場合も同様に議論できる。以下では、証明なしでその拡張の結果を見ていく。
+$M$個の確率変数$\vb{\hat{x}} = (\hat{x}_1, \hat{x}_2, \ldots, \hat{x}_M)$を考える。
+このときIto型のLangevin方程式は以下のように表される。
+\begin{align}
+\frac{d}{dt} \hat{\bm{x}}(t) &= \bm{a}(\hat{\bm{x}}(t), t) + \sqrt{2\bm{D}(\hat{\bm{x}}, t)} \cdot \hat{\bm{\xi}}(t),
+\end{align}
+
+ここで、$\bm{D}(\hat{\bm{x}}, t)$ は $M \times M$ の拡散行列で、実対称かつ半正定値である。$\hat{\bm{\xi}}(t)$ は $M$ 次元のノイズベクトルで、各成分は独立であり、
+\[
+\langle \hat{\xi}_i(t) \hat{\xi}_j(s) \rangle = \delta_{ij} \delta(t - s)
+\]
+を満たす。$\sqrt{2\bm{D}(\hat{\bm{x}}, t)} \cdot \hat{\bm{\xi}}(t)$ は Itô の意味での行列とベクトルの積であり、$\bm{B} := \sqrt{2\bm{D}(\hat{\bm{x}}, t)}$ とおくと、$i$ 成分は
+\[
+(B \cdot \hat{\bm{\xi}})_i = \sum_j B_{ij} \hat{\xi}_j
+\]
+で与えられる。
+
+\vspace{1em}
+\begin{align}
+\frac{\partial}{\partial t} P(\vb{x}, t) &= \nabla \cdot \left( -\vb{a}(\vb{x}, t) + \nabla \cdot \vb{D}(\vb{x}, t) \right) P(\vb{x}, t) =: -\nabla \cdot \vb{J}(\vb{x}, t),
+\end{align}
+
+ここで、確率流 $\vb{J}(\vb{x}, t)$ を以下のように定義した：
+\begin{align}
+\vb{J}(\vb{x}, t) = \left( \vb{a}(\vb{x}, t) - \nabla \cdot \vb{D}(\vb{x}, t) \right) P(\vb{x}, t).
+\end{align}
+
+項 $\nabla \cdot \vb{D}(\vb{x}, t) P(\vb{x}, t)$ は略記であり、その $i$ 成分は次で与えられる：
+\begin{align}
+(\nabla \cdot \vb{D} P)_i := \sum_j D_{ij} \frac{\partial P}{\partial x_j} + \left( \sum_j \frac{\partial D_{ij}}{\partial x_j} \right) P
+\end{align}
+
+局所平均速度は単純に以下で与えられる：
+\begin{align}
+\vb{v}(\vb{x}, t) = \frac{1}{P(\vb{x}, t)} \vb{J}(\vb{x}, t). 
+\end{align}
+この局所平均速度を用いると、エントロピー生成率は次のように表される：
+\begin{align}
+\dot{\sigma} = \int d\vb{x} \, \left( \vb{v}^{\top}(\vb{x}, t) \vb{D}^{-1}(\vb{x}, t) \vb{v}(\vb{x}, t) \right) P(\vb{x}, t), 
+\end{align}
+
+\subsection{離散化と連続極限}
+これまでは連続空間について考えていたが、これは離散的な確率分布の連続極限をとることでも議論できる。
+とくに、適切な詳細つり合いを課すことによりまったく同じFokker-Planck方程式を得ることができる。
+以下ではその粗視化による方法を見ていく。
+
+\subsubsection{演算子の分解}
+Fokker-Planck方程式において、確率分布に作用する微分演算子たちを、ハミルトン力学に従う部分と熱浴によって引き起こされる部分に分解する。
+Kramers方程式は$M$ 個の粒子と $K$ 個の熱浴を持つunderdamped Langevin systemに対して、$\nu$ 番目の熱浴の逆温度を $\beta^\nu$ とすると、次のように表される：
+\begin{align}
+\frac{\partial P(X, t)}{\partial t} 
+= \sum_{j=1}^{M} \sum_{\nu=1}^{K} \Bigg[ 
+  -\frac{\partial}{\partial x_j} \frac{p_j}{m_j}
+  + \frac{\partial}{\partial p_j} \left( \frac{\gamma^\nu(x_j) p_j}{m_j} - F(X, t) \right)
+  + \frac{\gamma^\nu(x_j)}{\beta^\nu} \frac{\partial^2}{\partial p_j^2}
+\Bigg] P(X, t)
+\end{align}
+この方程式は、$j$ 番目の粒子と $\nu$ 番目の熱浴に対応する、ハミルトン部分と確率的（熱浴による）部分に分解することができる：
+\begin{align}
+\mathcal{L}^0 &:= \sum_{j=1}^{M} \left[
+  -\frac{\partial}{\partial x_j} \frac{p_j}{m_j}
+  - \frac{\partial}{\partial p_j} F(X, t)
+\right]
+\\
+\mathcal{L}^{\nu}_j &:= \frac{\partial}{\partial p_j} \frac{\gamma^\nu(x_j) p_j}{m_j}
++ \frac{\gamma^\nu(x_j)}{\beta^\nu} \frac{\partial^2}{\partial p_j^2}
+\end{align}
+ここで $X$ は $2M$ 個の変数からなるベクトル $(x_1, p_1, \dots, x_M, p_M)$ を表す。粒子が特定の領域内でのみ熱浴とエネルギー交換を行うとき、その領域の外では粒子の力学は $\mathcal{L}^0$ によって与えられる。
+Kramers演算子はこれらの演算子の線形結合として書かれるため、これらの演算子を個別に離散化する。
+
+\subsubsection{確率的部分の離散化}
+ここでは、確率的部分 $\mathcal{L}^{\nu, i}$ を、粒子 $i$ における運動量 $p$ 空間上の格子幅 $\varepsilon$ の格子に離散化する。
+$\mathcal{L}^{\nu, i}$ は運動量 $p$ のみに作用し、位置 $x$ には作用しない点に注意する。
+運動量 $p$ の遷移レートを次のように定義する：
+\begin{align}
+P_{p \to p \pm \varepsilon} := \frac{\gamma}{\beta \varepsilon^2}
+\exp\left( -\frac{\beta}{4m} \left( (p \pm \varepsilon)^2 - p^2 \right) \right).
+\end{align}
+
+この遷移レートは、詳細つり合い条件を明らかに満たす。
+$\varepsilon$ に関して遷移レートをテイラー展開すると、次のようになる：\footnote{教科書には誤植があるので注意が必要。}
+\begin{align}
+P_{p \to p \pm \varepsilon} &= A \left(1 \mp \frac{\beta}{2m} \varepsilon p - \frac{\beta}{4m} \varepsilon^2
++ \frac{\beta^2}{8m^2} \varepsilon^2 p^2 + \mathcal{O}(\varepsilon^3) \right), \\
+P_{p \pm \varepsilon \to p} &= A \left(1 \pm \frac{\beta}{2m} \varepsilon p + \frac{\beta}{4m} \varepsilon^2
++ \frac{\beta^2}{8m^2} \varepsilon^2 p^2 + \mathcal{O}(\varepsilon^3) \right),
+\end{align}
+ここで $A := \frac{\gamma}{\beta \varepsilon^2}$ と定義した。
+このとき、master方程式は次のようになる：
+
+\begin{align}
+\frac{d}{dt} P(p) &= -P(p)\left(P_{p \to p+\varepsilon} + P_{p \to p - \varepsilon}\right)
++ P(p + \varepsilon) P_{p + \varepsilon \to p}
++ P(p - \varepsilon) P_{p - \varepsilon \to p} \notag \\
+&= A \left(1 + \frac{\beta^2}{8m^2} \varepsilon^2 p^2 \right)\left( P(p + \varepsilon) + P(p - \varepsilon) - 2P(p) \right) \notag \\
+&\quad + A \frac{\beta}{2m} \varepsilon p \left( P(p + \varepsilon) - P(p - \varepsilon) \right) \notag \\
+&\quad + A \frac{\beta}{4m} \varepsilon^2 \left( P(p + \varepsilon) + P(p - \varepsilon) + 2P(p) \right)
++ \mathcal{O}(\varepsilon).
+\end{align}
+確率分布の部分をTaylor展開して$\varepsilon \to 0$ の極限をとることで、Kramers方程式の確率的部分に対応するFokker-Planck方程式を得ることができる。
+\begin{align}
+\frac{d}{dt} P(p) &= \frac{\gamma}{\beta} \frac{\partial^2 P(p)}{\partial p^2}
++ \frac{\gamma p}{m} \frac{\partial P(p)}{\partial p}
++ \frac{\gamma}{m} P(p) \notag \\
+&= \frac{\partial}{\partial p} \left( \frac{\gamma p}{m} P(p) \right)
++ \frac{\gamma}{\beta} \frac{\partial^2 P(p)}{\partial p^2}.
+\end{align}
+
+overdamped Langevin方程式についても、同様の方法で離散化が可能である。
+$x$ の遷移率を次のように定める：
+\begin{align}
+P_{x \to x \pm \varepsilon} := \frac{1}{\beta \gamma \varepsilon^2}
+\exp\left( \pm \frac{\beta \varepsilon}{2} F\left( \frac{x + (x \pm \varepsilon)}{2} \right) \right),
+\end{align}
+
+ここで、$F$ の引数は $[x + (x \pm \varepsilon)]/2$ で評価される。
+この遷移レートを $\varepsilon$ に関してテイラー展開すると：
+
+\begin{align}
+P_{x \to x \pm \varepsilon}
+&= B \left(1 \pm \frac{\beta F(x) \varepsilon}{2}
++ \frac{\beta^2 F(x)^2 \varepsilon^2}{8}
++ \frac{\beta F'(x) \varepsilon^2}{4}
++ o(\varepsilon^2) \right), \\
+P_{x \pm \varepsilon \to x}
+&= B \left(1 \mp \frac{\beta F(x) \varepsilon}{2}
++ \frac{\beta^2 F(x)^2 \varepsilon^2}{8}
+- \frac{\beta F'(x) \varepsilon^2}{4}
++ o(\varepsilon^2) \right),
+\end{align}
+
+ここで $B := 1 / \beta \gamma \varepsilon^2$, および $F'(x) := \dv{F}{x}$ である。
+
+これらの遷移レートをmaster方程式に代入すると、
+
+\begin{align}
+\frac{d}{dt} P(x)
+&= -P(x)(P_{x \to x + \varepsilon} + P_{x \to x - \varepsilon})
++ P(x + \varepsilon) P_{x + \varepsilon \to x}
++ P(x - \varepsilon) P_{x - \varepsilon \to x} \notag \\
+&= B \left( 1 + \frac{\beta^2 F(x)^2 \varepsilon^2}{8} \right)
+\left( P(x + \varepsilon) + P(x - \varepsilon) - 2P(x) \right) \notag \\
+&\quad + B \frac{\beta F(x)}{2}\epsilon \left( P(x + \varepsilon) - P(x - \varepsilon) \right)
+- B P(x) \varepsilon^2 \beta F'(x) + \mathcal{O}(\varepsilon).
+\end{align}
+
+$\varepsilon \to 0$ の極限を取ることで、Fokker-Planck方程式を得ることができる。
+
+\begin{align}
+\frac{d}{dt} P(x)
+= -\frac{1}{\gamma} \frac{\partial}{\partial x} \left(F(x) P(x)\right)
++ \frac{1}{\beta \gamma} \frac{\partial^2 P(x)}{\partial x^2}.
+\end{align}
+\subsubsection{決定論的部分の離散化}
+次に、決定論的部分 $\mathcal{L}^0$ を $p$–$x$ 空間上の $\varepsilon \times \varepsilon'$ 格子に離散化する。
+簡単のため、ここでも粒子が1個の場合を考える。
+$p > 0$ および $F(x, p) > 0$ と仮定し、$(x, p)$ の遷移レートを次のように定義する：
+
+\begin{align}
+P_{(x, p) \to (x, p + \varepsilon)} := \frac{1}{\varepsilon} F(x, p), \\
+P_{(x, p) \to (x + \varepsilon', p)} := \frac{1}{\varepsilon'} \frac{p}{m}.
+\end{align}
+
+逆遷移（$P_{(x, p + \varepsilon) \to (x, p)}$ および $P_{(x + \varepsilon', p) \to (x, p)}$）は起こらないものとする（すなわち、それらの遷移レートは 0 とする）。
+
+このとき、master方程式は以下のように書ける：
+
+\begin{align}
+\frac{d}{dt} P(x, p)
+&= -\left( P_{(x, p) \to (x, p + \varepsilon)} + P_{(x, p) \to (x + \varepsilon', p)} \right) P(x, p) \notag \\
+&\quad + P_{(x, p - \varepsilon) \to (x, p)} P(x, p - \varepsilon)
++ P_{(x - \varepsilon', p) \to (x, p)} P(x - \varepsilon', p) \notag \\
+&= \frac{1}{\varepsilon'} \frac{p}{m} \left( P(x, p - \varepsilon') - P(x, p) \right)
++ \frac{1}{\varepsilon} \left( F(x, p - \varepsilon) P(x, p - \varepsilon) - F(x, p) P(x, p) \right).
+\end{align}
+
+この式は、$\varepsilon, \varepsilon' \to 0$ の極限でリウヴィル方程式を再現する：
+
+\begin{align}
+\frac{d}{dt} P(x, p)
+= -\frac{p}{m} \frac{\partial}{\partial x} P(x, p)
+- \frac{\partial}{\partial p} \left( F(x, p) P(x, p) \right).
+\end{align}
+
+したがって、上記の遷移率による離散化は、$\mathcal{L}^0$ の時間発展を忠実に再現している。
+
+% 大数の法則により、確率過程であっても決定論的なリウヴィル力学を再現できる。
+% ハミルトン力学とその離散確率版との間で、確率分布や物理量の差は
+% $\mathcal{O}(\varepsilon, \varepsilon')$ であり、連続極限では無視できる。
+
+% 一方で、有限時間内での一致しか保証されず、
+% 長時間極限では異なるふるまいを見せる。
+% たとえば、離散化された確率力学では一意な定常分布（例：一様分布）に収束するが、
+% ハミルトン力学は多くの定常分布を持ち、初期分布によっては一様分布に収束しない。
+
+
+% \subsubsection{空間離散化と時間離散化}
+
+% 本節で示した離散化は、第4.1.1節で導入されたウィーナー過程の離散化とは異なる。
+% 第4.1.1節では、時間を $\Delta t$ 刻みで離散化し、空間は連続のまま扱った。
+% それに対し、本節では空間を $\varepsilon$ 刻みで離散化し、時間は連続のままでマルコフ過程を構成している。
+% この違いは表4.1にもまとめられている。
+
+% 本書の大部分では、連続時間かつ離散空間のケースを扱っている。
+% 重要な例外は第11章であり、ここではランジュバン過程の経路確率や
+% 一次元定常オーバーダンプ系の例を扱っている。
+% もう一つの例外は第18.2節であり、ここではオーバーダンプ系における
+% 最小エントロピー生成による高速状態変換について議論する。
+
+\end{document}

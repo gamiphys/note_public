@@ -1,10 +1,10 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  19 MAY 2025 14:23
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  9 JUN 2025 10:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**chap4.tex
-(./chap4.tex
+**chap42.tex
+(./chap42.tex
 pLaTeX2e <2023-02-14u04>+1, based on
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -622,8 +622,8 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
 \Hy@SectionHShift=\skip64
-) (./chap4.aux)
-\openout1 = `chap4.aux'.
+) (./chap42.aux)
+\openout1 = `chap42.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
 LaTeX Font Info:    ... okay on input line 38.
@@ -648,9 +648,9 @@ LaTeX Font Info:    ... okay on input line 38.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
 LaTeX Font Info:    ... okay on input line 38.
 Package hyperref Info: Link coloring OFF on input line 38.
- (./chap4.out) (./chap4.out)
+ (./chap42.out) (./chap42.out)
 \@outlinefile=\write4
-\openout4 = `chap4.out'.
+\openout4 = `chap42.out'.
 
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 (Font)              scaled to size 15.9785pt on input line 44.
@@ -676,53 +676,59 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 7.39746pt on input line 44.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 5.5481pt on input line 44.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 50.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 50.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 50.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 50.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 50.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 46.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 46.
+(Font)              scaled to size 6.47278pt on input line 62.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 62.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 46.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 46.
+(Font)              scaled to size 11.09619pt on input line 66.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 48.
-LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 49.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 49.
+(Font)              scaled to size 9.24683pt on input line 67.
 LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT2/gt/m/n' tried instead on input line 51.
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 71.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 51.
+(Font)              scaled to size 9.24683pt on input line 71.
 LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY2/gt/m/n' tried instead on input line 51.
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 71.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 51.
+(Font)              scaled to size 9.24683pt on input line 71.
+LaTeX Font Info:    Font shape `JT2/mc/m/it' in size <7> not available
+(Font)              Font shape `JT2/mc/m/n' tried instead on input line 72.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 72.
+LaTeX Font Info:    Font shape `JY2/mc/m/it' in size <7> not available
+(Font)              Font shape `JY2/mc/m/n' tried instead on input line 72.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 52.
+(Font)              scaled to size 6.47278pt on input line 72.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 5.5481pt on input line 72.
+LaTeX Font Info:    Font shape `JT2/mc/m/it' in size <6> not available
+(Font)              Font shape `JT2/mc/m/n' tried instead on input line 72.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 5.5481pt on input line 72.
+LaTeX Font Info:    Font shape `JY2/mc/m/it' in size <6> not available
+(Font)              Font shape `JY2/mc/m/n' tried instead on input line 72.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 52.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 52.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 52.
+(Font)              scaled to size 5.5481pt on input line 72.
 
 
 [1
 
 ]
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 102.
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 102.
-
 
 [2]
 
 [3]
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 167.
-
 
 [4]
 
@@ -736,22 +742,26 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 
 [9]
 
-[10] (./chap4.aux)
+[10]
+
+[11]
+
+[12] (./chap42.aux)
  ***********
 pLaTeX2e <2023-02-14u04>+1, based on
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `chap4.out' has not changed.
-(rerunfilecheck)             Checksum: B7C531805E9C036286970B182A80E1B7;236.
+Package rerunfilecheck Info: File `chap42.out' has not changed.
+(rerunfilecheck)             Checksum: 5D0A8AE76DBBDB1ED9E5834E221EFD2E;632.
  ) 
 Here is how much of TeX's memory you used:
- 23145 strings out of 473836
- 428036 string characters out of 5734547
- 833699 words of memory out of 5000000
- 45988 multiletter control sequences out of 15000+600000
- 578829 words of font info for 130 fonts, out of 8000000 for 9000
+ 23143 strings out of 473836
+ 428018 string characters out of 5734547
+ 835082 words of memory out of 5000000
+ 45985 multiletter control sequences out of 15000+600000
+ 578348 words of font info for 126 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,15n,93p,542b,475s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,93p,543b,475s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap4.dvi (10 pages, 53348 bytes).
+Output written on chap42.dvi (12 pages, 72080 bytes).
