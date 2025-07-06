@@ -55,11 +55,11 @@
 \end{align}
 \end{itembox}
 
-たとえば、コインC（表が出る確率が $1/2$）と、コインB（表が出る確率が $2/3$）との間の
-カルバック–ライブラー発散は以下のように計算される：
+たとえば、コインA（表が出る確率が $1/2$）と、コインB（表が出る確率が $2/3$）との間の
+KLダイバージェンスは以下のように計算される。
 
 \begin{align}
-D(\text{coin C} \| \text{coin B}) 
+D(\text{coin A} \| \text{coin B}) 
 = \frac{1}{2} \ln \frac{1/2}{2/3} + \frac{1}{2} \ln \frac{1/2}{1/3}
 = 0.058 \dots. 
 \end{align}
@@ -92,7 +92,7 @@ D(p \| q) = 0 \Leftrightarrow p = q
 これらの証明のためにはJensenの不等式を用いる。
 
 \begin{itembox}[l]{\textbf{Thm.Jensenの不等式}}
-    $f(x)$ が狭義に下に凸な関数であるとき、次の不等式が成り立つ：
+    $f(x)$ が狭義に下に凸な関数であるとき、次の不等式が成り立つ。
 
 \begin{align}
 \sum_{i=1}^n a_i f(x_i) \geq f\left( \sum_{i=1}^n a_i x_i \right)
@@ -107,7 +107,7 @@ $n$ に関する数学的帰納法で示す。
 $n = 2$ の場合は、これは狭義に凸な関数の定義そのものである。
 
 次に、$n = k$ のとき不等式が成り立つと仮定し、$n = k + 1$ のときも成り立つことを示す。  
-$n \leq k$ のときの仮定を2回用いて、次のように書ける：
+$n \leq k$ のときの仮定を2回用いて、次のように書ける。
 
 \begin{align}
 \sum_{i=1}^{k+1} a_i f(x_i)
@@ -123,14 +123,14 @@ $n \leq k$ のときの仮定を2回用いて、次のように書ける：
 
 よって、$n = k + 1$ のときも不等式は成り立つ。
 
-さらに、等号が成り立つのは以下の2条件が同時に満たされるときに限る：
+さらに、等号が成り立つのは以下の2条件が同時に満たされるときに限る。
 \begin{align}
 x_1 &= \dots = x_k \\
 \frac{\sum_{i=1}^{k} a_i x_i}{\sum_{i=1}^{k} a_i} &= x_{k+1}
 \end{align}
 以上より、$n = k + 1$ の場合も不等式が成り立つことが示された。\qed\\
 
-$\ln(x)$ は $x$ に関する狭義な凹関数であるので、Jensenの不等式を $\ln(x)$ に適用することで、以下の不等式が得られる：
+$\ln(x)$ は $x$ に関する狭義な凹関数であるので、Jensenの不等式を $\ln(x)$ に適用することで、以下の不等式が得られる。
 
 \begin{align}
 - D(p \| q)
@@ -150,7 +150,7 @@ D(p \| q) \geq 0
 この不等式が等号となるのは、すべての $j$ に対して $p_j = q_j$ が成り立つとき、かつそのときに限る。\footnote{ここで確率の規格化を考えていることに注意。}$\qed$\\
 
 \begin{itembox}[l]{\textbf{Thm.KLダイバージェンスの単調性}}
-    2つの確率分布 $p, q$ が、同じマルコフ時間発展方程式に従ってそれぞれ $p', q'$ に時間発展するならば、次が成り立つ：
+    2つの確率分布 $p, q$ が、同じマルコフ時間発展方程式に従ってそれぞれ $p', q'$ に時間発展するならば、次が成り立つ。
 \begin{align}
 D(p \| q) \geq D(p' \| q')
 \end{align}
@@ -158,14 +158,14 @@ D(p \| q) \geq D(p' \| q')
 すなわち、マルコフ過程において二つの分布はKLダイバージェンスの意味で近づく。\\
 \textbf{Prf.}  \\
 まず、条件付きKLダイバージェンスを定義する。
-確率分布 $P$ から $Q$ に対する条件付きKLダイバージェンスは次で定義される：
+確率分布 $P$ から $Q$ に対する条件付きKLダイバージェンスは次で定義される。
 \begin{align}
 D(P(x | y) \| Q(x | y)) := \sum_y P(y) \sum_x P(x | y)
 \ln \frac{P(x | y)}{Q(x | y)}
 \end{align}
 これは非負である（各 $y$ に対して、Jensenの不等式より、
 $\sum_x P(x | y) \ln (P(x | y)/Q(x | y)) \geq 0$ だから）。
-また、以下の連鎖律が成り立つ：
+また、以下の連鎖律が成り立つ。
 \begin{align}
 D(P(x, y) \| Q(x, y)) = D(P(y) \| Q(y)) + D(P(x | y) \| Q(x | y))
 \end{align}
@@ -188,7 +188,7 @@ $Q(x^i, x^f)$ を同様に定義する。
 P(x^f) = \sum_{x^i} K(x^f | x^i) P(x^i), \quad
 Q(x^f) = \sum_{x^i} K(x^f | x^i) Q(x^i)
 \end{align}
-すなわち、遷移確率に関して次が成り立つ：
+すなわち、遷移確率に関して次が成り立つ。
 \begin{align}
 P(x^f | x^i) = Q(x^f | x^i) = K(x^f | x^i)
 \end{align}
@@ -221,7 +221,7 @@ D(P(x^i) \| Q(x^i)) \geq D(P(x^f) \| Q(x^f))
 KLダイバージェンスの単調性の重要な応用の一つは「縮約性」である。
 周辺状態への縮約 $(x_i, y_j) \to x_i$ がマルコフ過程であるから
 TODOこのこと確認
-KLダイバージェンスは常に減少することが以下のように表される：
+KLダイバージェンスは常に減少することが以下のように表される。
 
 \begin{align}
 D(P(x_i, y_j) \| Q(x_i, y_j)) \geq D(P(x_i) \| Q(x_i))
@@ -230,7 +230,7 @@ D(P(x_i, y_j) \| Q(x_i, y_j)) \geq D(P(x_i) \| Q(x_i))
 ここで、$P(x_i) := \sum_j P(x_i, y_j)$, $Q(x_i) := \sum_j Q(x_i, y_j)$ と定義する。
 
 なお、KLダイバージェンスはすべての距離の公理を満たすわけではない。
-距離関数 $d(x, y)$ に期待される公理は以下の4つである：
+距離関数 $d(x, y)$ に期待される公理は以下の4つである。
 
 \begin{itemize}
   \item \textbf{非負性}：$d(x, y) \geq 0$
@@ -272,25 +272,23 @@ $\sum_i p_i = \sum_i q_i$ を満たす一般の非負ベクトルに対しても
 
 \subsubsection{Phase volume}
 
-ゆらぎ定理は、位相体積の変化に関する関係式としても理解できる。
-この解釈は Evans, Cohen, Morriss によって指摘され、Kawai, Parrondo, van den Broeck によって精緻化された枠組みの中で議論されている。
-
+ゆらぎの定理は、位相体積の変化に関する関係式としても理解できる。
 ここでは、その基本的なアイデアを紹介する。
 
-ゆらぎ定理と位相体積の関係を理解するために、$0 \leq t \leq \tau$ の時間区間における決定論的力学系を考える。
+ゆらぎの定理と位相体積の関係を理解するために、$0 \leq t \leq \tau$ の時間区間における決定論的な力学系を考える。
 全系の初期状態 $w^{\mathrm{tot}}(0)$ から終状態 $w^{\mathrm{tot}}(\tau)$ への写像を $M$ とする。
-時刻 $t$ における状態 $w^{\mathrm{tot}}$ の位相密度を $\rho(w^{\mathrm{tot}}, t)$ とし、参照分布を $\rho^{\mathrm{ref}}(w^{\mathrm{tot}})$ とする。
+時刻 $t$ における状態 $w^{\mathrm{tot}}$s の位相密度を $\rho(w^{\mathrm{tot}}, t)$ とし、参照分布を $\rho^{\mathrm{ref}}(w^{\mathrm{tot}})$ とする。
 
-DFTの場合、参照分布は以下のように定義される\footnote{記号がわかりにくいが、要するにsystemと$\nu$個のbathの直積をとっているだけである。}
+DFTの場合、参照分布は以下のように定義される\footnote{記号がわかりにくいが、要するに系と$\nu$個の熱浴の直積をとっているだけである。}
 \begin{align}
 \rho_t^{\mathrm{ref}}\left(w \otimes \bigotimes_{\nu} w^{\mathrm{B}, \nu}\right)
 := \rho(w, t) \otimes \bigotimes_{\nu} \rho^{\mathrm{can}, \nu}(w^{\mathrm{B}, \nu})
 \end{align}
 
-ここで $\rho^{\mathrm{can}, \nu}$ は $\nu$ 番目のbathのカノニカル分布である。
+ここで $\rho^{\mathrm{can}, \nu}$ は $\nu$ 番目の熱浴のカノニカル分布である。
 
 力学系がLiouvilleの定理に従って位相体積を保存するとすれば、
-エントロピー生成は以下のように位相空間密度の比の対数で定義される：
+エントロピー生成は以下のように位相空間密度の比の対数で定義される。
 
 \begin{align}
 \hat{\sigma} = \ln \frac{\rho(w^{\mathrm{tot}}, 0)}{\rho_t^{\mathrm{ref}}(M(w^{\mathrm{tot}}))}
@@ -298,80 +296,74 @@ DFTの場合、参照分布は以下のように定義される\footnote{記号�
 
 この表現は、エントロピー生成が参照分布と比べて、位相密度がどれだけ縮小または拡大したかを定量化している。
 
-\bigskip
-
-浴の参照分布をカノニカル分布とすることで、位相密度の変化は以下のようにエネルギー変化と関係づけられる：
+熱浴の参照分布をカノニカル分布とすることで、位相密度の変化は以下のようにエネルギー変化と関係づけられる。
 
 \begin{align}
 \Delta E^{\nu} := E^{\nu}(w^{\mathrm{B}, \nu}(\tau)) - E^{\nu}(w^{\mathrm{B}, \nu}(0))
 \end{align}
 
-このとき、以下が成り立つ：
+このとき、以下が成り立つ。
 
 \begin{align}
 \frac{\rho^{\mathrm{ref}, \mathrm{B}}(w^{\mathrm{B}}(\tau))}{\rho^{\mathrm{ref}, \mathrm{B}}(w^{\mathrm{B}}(0))}
 = e^{-\sum_{\nu} \beta^{\nu} \Delta E^{\nu}}
 \end{align}
 
-ここで $\rho^{\mathrm{ref}, \mathrm{B}}$ は浴の参照分布であり、$w^{\mathrm{B}}(t)$ は時刻 $t$ における浴の状態である。
+ここで $\rho^{\mathrm{ref}, \mathrm{B}}$ は熱浴の参照分布であり、$w^{\mathrm{B}}(t)$ は時刻 $t$ における浴の状態である。
 
-この解釈は確率的力学系にも拡張可能である。
-確率的力学系は、決定論的力学の coarse-graining（粗視化）として理解されるからである。
-
-\bigskip
-
-この観点は、IFT（Integral Fluctuation Theorem）とJarzynski等式の違いも明らかにする。
+この観点は、IFTとJarzynski等式の違いも明らかにする。
 IFTでは、順過程の終状態の分布を参照分布とし、Jarzynski等式ではカノニカル分布を参照分布とする。
 すなわち、両者の違いは参照分布の選び方にある。
+次節ではIFTの場合を詳しく見ていく。
 
-さらに、今回の理解は、ミクロな可逆性に依らないことに注意する。
-これは、摩擦のあるミクロな決定論的系に対しても、IFT型の等式が
-位相体積の圧縮と摩擦による熱放出の両方を考慮することで回復されることを示唆している。
+% さらに、今回の理解は、ミクロな可逆性に依らないことに注意する。
+% これは、摩擦のあるミクロな決定論的系に対しても、IFT型の等式が
+% 位相体積の圧縮と摩擦による熱放出の両方を考慮することで回復されることを示唆している。
 
-\subsubsection{決定論的な場合（Deterministic Case）}
+\subsubsection{決定論的な場合}
 
-$0 \leq t \leq \tau$ において、決定論的な力学系を考える（セクション 5.3.2 参照）。
-$w^{\mathrm{tot}}$ を系と浴から成る複合系の状態、$M$ を初期状態 $w^{\mathrm{tot}}(0)$ から終状態 $w^{\mathrm{tot}}(\tau)$ への写像とする。
+$0 \leq t \leq \tau$ において、決定論的な力学系を考える。
+$w^{\mathrm{tot}}$ を系と熱浴から成る複合系の状態、$M$ を初期状態 $w^{\mathrm{tot}}(0)$ から終状態 $w^{\mathrm{tot}}(\tau)$ への写像とする。
 
-初期分布として、浴の分布はカノニカル分布、系の分布は任意とする。
-このとき、エントロピー生成は系の確率分布の変化と、浴への熱放出（浴のエネルギー増加）によって与えられる。
-
-後向き過程における初期分布 $P^{\dagger}(w^{\mathrm{tot}}, 0)$ は、系の分布が時間反転された前向き過程の終状態の分布 $P(\tilde{w}, \tau)$、浴の分布はカノニカル分布とする。
-
-このとき、決定論的な平均エントロピー生成は次のようにKLダイバージェンスの形式で表される：
-この関係はゆらぎ定理のほぼ直接的な帰結であり、数式的には以下のように確認される：
+順過程の初期分布を、
+\begin{align}
+    P(w^{\mathrm{tot}}, 0) := P(w, 0) \prod_{\nu} P^{\mathrm{can}, \nu}(w^{\mathrm{B}, \nu}, 0)
+\end{align}
+とし、逆過程の初期分布を
+\begin{align}
+    P^{\dagger}(w^{\mathrm{tot}}, 0) := P^{\dagger}(\bar{w},0) \prod_{\nu} P^{\mathrm{can}, \nu\dagger}(\bar{w}^{\mathrm{B}, \nu}, 0)
+\end{align}
+とする。
+このとき、決定論的な平均エントロピー生成は次のようにKLダイバージェンスの形式で表される。
 \begin{itembox}[l]{\textbf{Thm.平均エントロピー生成（決定論的場合）}}
     \begin{align}
 \langle \hat{\sigma} \rangle
-= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, 0)\, \ln \frac{P(M(w^{\mathrm{tot}}), \tau)}{P^†(\tilde{M}(w^{\mathrm{tot}}), 0)}
-= D(P(w^{\mathrm{tot}}, \tau) \| P^†(\tilde{w}^{\mathrm{tot}}, \tau - t))
+= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, 0)\, \ln \frac{P(M(w^{\mathrm{tot}}), \tau)}{P^{\dagger}(\tilde{M}(w^{\mathrm{tot}}), 0)}
+= D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t))
 \end{align}
 
-ここで、$\tilde{M}(w^{\mathrm{tot}})$ は $M(w^{\mathrm{tot}})$ の時間反転、また
-
+ここで、$\tilde{M}(w^{\mathrm{tot}})$ は $M(w^{\mathrm{tot}})$ の時間反転、であり、
 \begin{align}
-D(P(w^{\mathrm{tot}}, \tau) \| P^†(\tilde{w}^{\mathrm{tot}}, \tau - t))
-:= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, \tau) \ln \frac{P(w^{\mathrm{tot}}, \tau)}{P^†(\tilde{w}^{\mathrm{tot}}, \tau - t)}
+D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t))
+:= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, \tau) \ln \frac{P(w^{\mathrm{tot}}, \tau)}{P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t)}
 \end{align}
-と定義する。
+である。
 \end{itembox}
-二本目の等号を確かめる。
-まず $F(M(w^{\mathrm{tot}})) := \ln \frac{P(M(w^{\mathrm{tot}}), \tau)}{P^†(\tilde{M}(w^{\mathrm{tot}}), 0)}$ とおけば、
+一本目の等号はゆらぎの定理とまったく同じである。\footnote{
+    決定論的な力学系においては、
+    \begin{align}
+         P(w^{\mathrm{tot}}, 0) &= P(M(w^{\mathrm{tot}}), \tau) 
+    \end{align}
+    となることを用いている。
 
-\[
-\int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, 0) F(M(w^{\mathrm{tot}})) 
-= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, \tau) F(w^{\mathrm{tot}})
-\]
-
-が成り立つため、右辺のKLダイバージェンス形式と一致する。
-
-\bigskip
+}
+また、二本目の等号も、Liouvilleの定理により積分測度を保存することを利用すれば示せる。\\
 
 この式は、サイクル過程のエネルギー変換効率についても興味深い示唆を与える。
 2つの異なる温度 $\beta_H^{-1}$, $\beta_L^{-1}$ の熱浴と系からなる複合系を考える（$\beta_H < \beta_L$）。
 
-初期分布を任意な系の分布と2つの浴のカノニカル分布の積とすると、
-時間反転性より $P^†(\tilde{w}, 0) = P(w, \tau)$ が成り立つ。
+初期分布を任意な系の分布と2つの熱浴のカノニカル分布の積とすると、
+時間反転性より $P^{\dagger}(\tilde{w}, 0) = P(w, \tau)$ が成り立つ。
 
 このとき、平均エントロピー生成は
 
@@ -379,94 +371,82 @@ D(P(w^{\mathrm{tot}}, \tau) \| P^†(\tilde{w}^{\mathrm{tot}}, \tau - t))
 \langle \hat{\sigma} \rangle = -\beta_H Q_H + \beta_L Q_L
 \]
 
-で与えられる。ただし、$Q_H$ は高温浴からの吸熱量、$Q_L$ は低温浴への放熱量。
+で与えられる。ただし、$Q_H$ は高温熱浴からの吸熱量、$Q_L$ は低温熱浴への放熱量。
 
-したがって、熱機関の効率 $\eta$ は次のように書ける：
+したがって、熱機関の効率 $\eta$ は次のように書ける。
 
 \begin{align}
-\eta
-:= \frac{W}{Q_H}
-= 1 - \frac{Q_L}{Q_H}
-= 1 - \frac{1}{Q_H} \langle \hat{\sigma} \rangle + \frac{\beta_H}{\beta_L} \\
-= 1 - \frac{\beta_H}{\beta_L}
-\frac{D(P(w, \tau) \| P(\tilde{w}, 0))}{\beta_L Q_H}
+    \eta := \frac{W}{Q_H}
+    &= 1 - \frac{Q_L}{Q_H}
+    = 1 - \frac{1}{Q_H} \frac{\langle \hat{\sigma} \rangle + \beta_H Q_H}{\beta_L} \notag \\
+    &= 1 - \frac{\beta_H}{\beta_L}
+    - \frac{D(P(w; \tau) \| P(\bar{w}; 0))}{\beta_L Q_H}.
 \end{align}
 
-\subsubsection{確率的な場合（Stochastic Case）}
+\subsubsection{確率的な場合}
 
 確率的マルコフ過程においては、軌道の確率とその時間反転軌道の確率とのKLダイバージェンスが、
 正味のエントロピー生成を表す。
 
-\begin{itembox}[l]{\textbf{Thm.平均エントロピー生成（確率的場合）}}
-    確率的マルコフ過程において、平均エントロピー生成は次のようにKLダイバージェンスの形式で表される：
+\begin{itembox}[l]{\textbf{Thm.平均エントロピー生成（確率的）}}
+    確率的マルコフ過程において、平均エントロピー生成は次のようにKLダイバージェンスの形式で表される。
 \begin{align}
 \langle \hat{\sigma} \rangle
-= \int d\Gamma\, P(\Gamma)\, \ln \frac{P(\Gamma)}{P^†(\tilde{\Gamma})}
-= D(P(\Gamma) \| P^†(\tilde{\Gamma}))
+= \int d\Gamma\, P(\Gamma)\, \ln \frac{P(\Gamma)}{P^{\dagger}(\tilde{\Gamma})}
+= D(P(\Gamma) \| P^{\dagger}(\tilde{\Gamma}))
 \end{align}
 ここで、$\Gamma$ は系の軌道、$P(\Gamma)$ はその確率、$\tilde{\Gamma}$ は時間反転された軌道を表す。
 \end{itembox}
 \textbf{Prf.} \\
-
-式の対数項を熱項とエントロピー項に分解する：
-
+式の対数項を熱項とエントロピー項に分解する。
 \begin{align}
-\ln \frac{P(\Gamma)}{P^†(\tilde{\Gamma})}
-= \ln \frac{P(\Gamma(\tau)) P(w(0))}{P^†(\Gamma^†(\tau)) P(w(\tau))}
+\ln \frac{P(\Gamma)}{P^{\dagger}(\tilde{\Gamma})}
+= \ln \frac{P(\Gamma(\tau)) P(w(0))}{P^{\dagger}(\Gamma^{\dagger}(\tau)) P(w(\tau))}
 = \sum_\nu \beta_\nu \hat{Q}_\nu + \hat{s}(w(\tau); \tau) - \hat{s}(w(0); 0)
 \end{align}
 
-両辺のアンサンブル平均を取れば、式(5.45)の形式が得られる。$\qed$
+両辺のアンサンブル平均を取れば目的の式が得られる。\qed\\
 
-\bigskip
-
-セクション 3.3 で述べたように、エントロピー生成率は遷移確率のKLダイバージェンスでも書ける：
+Sect.3.3で述べたように、エントロピー生成率は遷移確率のKLダイバージェンスでも書ける。
 
 \begin{align}
 \dot{\sigma} 
-= \sum_{w, w'} p_w\, p_{w \to w'}\, \ln \frac{p_w\, p_{w \to w'}}{p_{w'}\, p^†_{w' \to w}}
-= D(p_w\, p_{w \to w'} \| p_{w'}\, p^†_{w' \to w})
+= \sum_{w, w'} p_w\, p_{w \to w'}\, \ln \frac{p_w\, p_{w \to w'}}{p_{w'}\, p^{\dagger}_{w' \to w}}
+= D(p_w\, p_{w \to w'} \| p_{w'}\, p^{\dagger}_{w' \to w})
 \end{align}
 
-これを時間で積分することで、もう一つの平均エントロピー生成の表現が得られる：
-
+これを時間で積分することで、もう一つの平均エントロピー生成の表現が得られる。
 \begin{align}
-\sigma = \int dt\, D(p_w(t)\, p_{w \to w'}(t) \| p_{w'}(t)\, p^†_{w' \to w}(t - \tau))
+\sigma = \int dt\, D(p_w(t)\, p_{w \to w'}(t) \| p_{w'}(t)\, p^{\dagger}_{w' \to w}(t - \tau))
 \end{align}
 
-このようにして、エントロピー生成とその生成率は、それぞれ軌道空間および遷移空間におけるKLダイバージェンスとして記述できる。
+このようにして、エントロピー生成とその生成率は、それぞれ経路確率および遷移確率によるKLダイバージェンスとして記述できる。
 
-これらの表現は、KLダイバージェンスの単調性や非負性を利用することで、
-たとえば熱機関における効率の下限を与えるために利用される。
-実際、第16章では、この枠組みを用いて有限出力の熱機関に対する効率の最大値を導出する。
+\subsubsection{絶対的不可逆性}
 
-\subsubsection{絶対的不可逆性（Absolute Irreversibility）}
-
-IFT（積分型ゆらぎ定理）とKLダイバージェンスによるエントロピー生成の表現は、多くの場合において同等な意味を持つが、
+IFTとKLダイバージェンスによるエントロピー生成の表現は、多くの場合において同等な意味を持つが、
 特異な状況では一致しないことがある。その代表例が「絶対的不可逆過程」である。
 この現象は、位相空間密度に基づくエントロピー生成の理解とも関連する。
-
-\bigskip
 
 \textbf{例：壁の除去}
 
 典型的な例として、中央に可動壁を持つ箱を考える。
 粒子を箱の左側に配置し、右側は真空とする。
-$t = 0$ で壁を除去し、粒子の運動を観察する（図 Fig.5.8a 参照）。
+$t = 0$ で壁を除去し、粒子の運動を観察する。
 
 この操作はミクロな意味で絶対的に不可逆である。
-なぜなら、壁を除去した後のある状態は、物理的に到達可能な初期状態には存在しないからである（図 Fig.5.8b）。
+なぜなら、壁を除去した後のある状態は、物理的に到達可能な初期状態には存在しないからである。
 このため、IFTの証明において、逆過程を構成するときに、すべての終状態（またはすべての経路）を考慮できない。
+\footnote{IFTの証明では、任意の順過程に対して対応する逆過程が存在することを仮定していた。}
 
-\bigskip
 
-この特異性を明確にするため、以下のような2状態マルコフ遷移過程を考える：
+この特異性を明確にするため、以下のような2状態マルコフ遷移過程を考える。
 
 状態 $w_1, w_2$ を持ち、エネルギー $E_1 = 0$, $E_2$ の2状態系において、
 初期分布を $p_1(0) = 1 - \varepsilon$, $p_2(0) = \varepsilon$ とする。
 
 これが $0 \leq t \leq \infty$ の間に平衡分布 $p^{\mathrm{eq}}$ へ緩和する過程を考える。
-2つのケースを比較する：
+2つのケースを比較する。
 
 \begin{itemize}
   \item[(1)] $\varepsilon \to 0$ の極限
@@ -482,9 +462,7 @@ $t = 0$ で壁を除去し、粒子の運動を観察する（図 Fig.5.8a 参�
 
 となり、特異性を持たない。
 
-\bigskip
-
-一方で、IFTにおいては、軌道エントロピー（stochastic entropy）の寄与が以下のように特異性を持つ：
+一方で、IFTにおいては、軌道エントロピー（stochastic entropy）の寄与が以下のように特異性を持つ。
 
 \begin{align}
 \lim_{\varepsilon \to 0}
@@ -494,7 +472,7 @@ p_2(0) \ln \frac{p_2(0)}{p_2^{\mathrm{eq}}}
 
 ここでは、熱や遷移確率の項は省略している。
 
-したがって、絶対的不可逆性が存在する場合、IFTは元の形では成り立たない：
+したがって、絶対的不可逆性が存在する場合、IFTは元の形では成り立たない。
 
 \begin{align}
 \langle e^{-\hat{\sigma}} \rangle \neq 1
@@ -502,16 +480,16 @@ p_2(0) \ln \frac{p_2(0)}{p_2^{\mathrm{eq}}}
 
 \subsection{強結合系における熱力学量}
 
-決定論的な場合では、系と浴の相互作用ハミルトニアンが弱いと仮定してきた。  
-ここでは、系が浴と強く相互作用する場合を考える。
+決定論的な場合では、系と熱浴の相互作用ハミルトニアンが弱いと仮定してきた。  
+ここでは、系が熱浴と強く相互作用する場合を考える。
 
-系と浴の複合系の全ハミルトニアンは次のように表される。
+系と熱浴の複合系の全ハミルトニアンは次のように表される。
 \begin{align}
 H_{\text{tot}}(x, y) = H_{\text{S}}(x) + H_{\text{SB}}(x, y) + H_{\text{B}}(y)
 \end{align}
 
-ここで、$x, y$ はそれぞれ系と浴の状態を表す。
-$H_{\text{S}}$ と $H_{\text{B}}$ はそれぞれ系とbathのハミルトニアン、$H_{\text{SB}}$ は相互作用ハミルトニアンである。
+ここで、$x, y$ はそれぞれ系と熱浴の状態を表す。
+$H_{\text{S}}$ と $H_{\text{B}}$ はそれぞれ系と熱浴のハミルトニアン、$H_{\text{SB}}$ は相互作用ハミルトニアンである。
 $H_{\text{S}}$ のみ時間依存性を持ち、その他の項は時間に依存しないと仮定する。
 相互作用を丸め込んだ有効ハミルトニアン$H^{\mathrm{eff}}(x)$ を定義する。
 複合系のカノニカル分布における周辺分布が、有効ハミルトニアン に対するカノニカル分布と一致するように定義する。すなわち、
@@ -526,7 +504,7 @@ Z_{\text{tot}} &:= \int dx\, dy\, e^{-\beta(H_{\text{S}}(x) + H_{\text{SB}}(x,y)
 Z_{\text{S}} &:= \int dx\, e^{-\beta H^{\mathrm{eff}}(x)}
 \end{align}
 
-また、bathの相互作用なしのカノニカル平均は次で定義される：
+また、熱浴の相互作用なしのカノニカル平均は次で定義される。
 
 \begin{align}
 \langle A \rangle_{\text{B}}^{\mathrm{eq}} := \frac{1}{Z_{\text{B}}} \int dy\, A\, e^{-\beta H_{\text{B}}(y)}, \quad
@@ -542,13 +520,13 @@ H^{\mathrm{eff}}(x) := H_{\text{S}}(x) - \frac{1}{\beta} \ln \left( \left\langle
 この定義により、系の平衡分布 $p^{\mathrm{eq}}(x)$ が先の式を満たすことが確認できる。\footnote{初等的な計算。手書きの
 メモで確認する。}
 
-次に、自由エネルギーとエントロピーを定義する：
+次に、自由エネルギーとエントロピーを定義する。
 
 \begin{align}
 F_X := - \frac{1}{\beta} \ln Z_X \qquad (X = \text{S}, \text{B}, \text{tot})
 \end{align}
 
-これらを用いて、エントロピーを以下のように定義する：
+これらを用いて、エントロピーを以下のように定義する。
 
 \begin{align}
 S_X := \beta^2 \frac{\partial F_X}{\partial \beta}
@@ -573,7 +551,7 @@ E^{\mathrm{eff}}(x) := H^{\mathrm{eff}}(x) + \beta \frac{\partial H^{\mathrm{eff
 F_{\text{S}} = E_{\text{S}} - \frac{S_{\text{S}}}{\beta}
 \end{align}
 \end{itembox}
-エネルギーやエントロピーの加法性を確認するため、自由エネルギーの和を計算する：
+エネルギーやエントロピーの加法性を確認するため、自由エネルギーの和を計算する。
 
 \begin{align}
 F_{\text{S}} + F_{\text{B}} &= -\frac{1}{\beta} \ln Z_{\text{S}} Z_{\text{B}} \\
@@ -586,13 +564,13 @@ F_{\text{S}} + F_{\text{B}} &= -\frac{1}{\beta} \ln Z_{\text{S}} Z_{\text{B}} \\
 よって、自由エネルギーの加法性 $F_{\text{S}} + F_{\text{B}} = F_{\text{tot}}$ が成り立つ。
 
 $0 \leq t \leq \tau$ の過渡過程を考える。  
-始状態と終状態の差を $\Delta$ で表すことにし、単一の軌道上でのエネルギー保存則に基づき仕事を定義する：
+始状態と終状態の差を $\Delta$ で表すことにし、単一の軌道上でのエネルギー保存則に基づき仕事を定義する。
 
 \begin{align}
 W := -\Delta H_{\text{tot}} := -H_{\text{tot}}(x(\tau), y(\tau)) + H_{\text{tot}}(x(0), y(0))
 \end{align}
 
-有効エネルギー（式 5.62）の定義に基づき、系から放出される熱は次のように定義される：
+有効エネルギー（式 5.62）の定義に基づき、系から放出される熱は次のように定義される。
 
 \begin{align}
 Q := -W - \Delta E^{\mathrm{eff}} = \Delta [H_{\text{tot}} - E^{\mathrm{eff}}]
@@ -603,7 +581,7 @@ Q := -W - \Delta E^{\mathrm{eff}} = \Delta [H_{\text{tot}} - E^{\mathrm{eff}}]
 
 さらに、第2法則の帰結としてのゆらぎ定理も回復できる。
 
-初期時刻における複合系の分布を以下のようにとる：
+初期時刻における複合系の分布を以下のようにとる。
 
 \begin{align}
 p^0(x, y) := p_{\text{S}}^0(x)\, p_{\text{B}}^{\mathrm{eq}}(y | x)
@@ -615,10 +593,10 @@ p^0(x, y) := p_{\text{S}}^0(x)\, p_{\text{B}}^{\mathrm{eq}}(y | x)
 p_{\text{B}}^{\mathrm{eq}}(y | x) := \frac{1}{Z_{\text{B}} \left\langle e^{-\beta H_{\text{SB}}(x,y)} \right\rangle_{\text{B}}^{\mathrm{eq}}} e^{-\beta H_{\text{SB}}(x,y)} e^{-\beta H_{\text{B}}(y)}
 \end{align}
 
-（$Z_{\text{B}}$ は浴の分配関数）。
+（$Z_{\text{B}}$ は熱浴の分配関数）。
 TODO式のお気持ち確認
 
-また、有効エントロピーを次のように定義する：
+また、有効エントロピーを次のように定義する。
 
 \begin{align}
 s^{\mathrm{eff}}(x)
@@ -638,7 +616,7 @@ s^{\mathrm{eff}}(x)
 \textbf{Prf.}\\
 時間 $t = \tau$ における系の周辺分布を $p_S^\tau(x) := \int dy\, p^\tau(x, y)$ と定義する。
 
-次の関係式に注意する：
+次の関係式に注意する。
 
 \begin{align}
 \ln p_B^{\mathrm{eq}}(y | x) &= -\beta \left( H_{SB}(x, y) + H_B(y) \right) - \ln Z_B 
@@ -646,7 +624,7 @@ s^{\mathrm{eff}}(x)
 &= -\beta (H_{\mathrm{tot}}(x, y) - H^{\mathrm{eff}}(x)) - \ln Z_B,
 \end{align}
 
-これより、以下が得られる：
+これより、以下が得られる。
 
 \begin{align}
 -\Delta s^{\mathrm{eff}} - \beta Q 
@@ -656,7 +634,7 @@ s^{\mathrm{eff}}(x)
 
 これは任意の単一軌道 $\Gamma$ に対して成り立つ。
 
-DFTの式(5.9)と同様に、以下が得られる：
+DFTの式(5.9)と同様に、以下が得られる。
 
 \begin{align}
 \left\langle e^{- ( \Delta s^{\mathrm{eff}} + \beta Q )} \right\rangle 
@@ -665,7 +643,7 @@ DFTの式(5.9)と同様に、以下が得られる：
 &= 1,
 \end{align}
 
-ここで、測度変換の関係 $dx(0) dy(0) = dx(\tau) dy(\tau)$ を用いた。\qed\\
+ここで、 $dx(0) dy(0) = dx(\tau) dy(\tau)$ を用いた。\qed\\
 
 
 \end{document}
