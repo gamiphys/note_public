@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  6 JUL 2025 12:10
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  6 JUL 2025 20:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -726,21 +726,21 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 
 [9]
 LaTeX Font Info:    Font shape `JT2/mc/m/it' in size <7> not available
-(Font)              Font shape `JT2/mc/m/n' tried instead on input line 549.
+(Font)              Font shape `JT2/mc/m/n' tried instead on input line 545.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 549.
+(Font)              scaled to size 6.47278pt on input line 545.
 LaTeX Font Info:    Font shape `JY2/mc/m/it' in size <7> not available
-(Font)              Font shape `JY2/mc/m/n' tried instead on input line 549.
+(Font)              Font shape `JY2/mc/m/n' tried instead on input line 545.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 549.
+(Font)              scaled to size 6.47278pt on input line 545.
 LaTeX Font Info:    Font shape `JT2/mc/m/it' in size <6> not available
-(Font)              Font shape `JT2/mc/m/n' tried instead on input line 549.
+(Font)              Font shape `JT2/mc/m/n' tried instead on input line 545.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 549.
+(Font)              scaled to size 5.5481pt on input line 545.
 LaTeX Font Info:    Font shape `JY2/mc/m/it' in size <6> not available
-(Font)              Font shape `JY2/mc/m/n' tried instead on input line 549.
+(Font)              Font shape `JY2/mc/m/n' tried instead on input line 545.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 549.
+(Font)              scaled to size 5.5481pt on input line 545.
 
 
 [10]
@@ -767,4 +767,4 @@ Here is how much of TeX's memory you used:
  934 hyphenation exceptions out of 8191
  84i,16n,93p,542b,475s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap5.dvi (13 pages, 66180 bytes).
+Output written on chap5.dvi (13 pages, 66192 bytes).

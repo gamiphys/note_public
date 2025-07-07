@@ -220,7 +220,7 @@ D(P(x^i) \| Q(x^i)) \geq D(P(x^f) \| Q(x^f))
 
 KLダイバージェンスの単調性の重要な応用の一つは「縮約性」である。
 周辺状態への縮約 $(x_i, y_j) \to x_i$ がマルコフ過程であるから
-TODOこのこと確認
+%TODOこのこと確認
 KLダイバージェンスは常に減少することが以下のように表される。
 
 \begin{align}
@@ -338,14 +338,14 @@ $w^{\mathrm{tot}}$ を系と熱浴から成る複合系の状態、$M$ を初期
 \begin{itembox}[l]{\textbf{Thm.平均エントロピー生成（決定論的場合）}}
     \begin{align}
 \langle \hat{\sigma} \rangle
-= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, 0)\, \ln \frac{P(M(w^{\mathrm{tot}}), \tau)}{P^{\dagger}(\tilde{M}(w^{\mathrm{tot}}), 0)}
-= D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t))
+= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, 0)\, \ln \frac{P(M(w^{\mathrm{tot}}), \tau)}{P^{\dagger}(\bar{M}(w^{\mathrm{tot}}), 0)}
+= D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\bar{w}^{\mathrm{tot}}, \tau - t))
 \end{align}
 
-ここで、$\tilde{M}(w^{\mathrm{tot}})$ は $M(w^{\mathrm{tot}})$ の時間反転、であり、
+ここで、$\bar{M}(w^{\mathrm{tot}})$ は $M(w^{\mathrm{tot}})$ の時間反転、であり、
 \begin{align}
-D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t))
-:= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, \tau) \ln \frac{P(w^{\mathrm{tot}}, \tau)}{P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t)}
+D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\bar{w}^{\mathrm{tot}}, \tau - t))
+:= \int dw^{\mathrm{tot}}\, P(w^{\mathrm{tot}}, \tau) \ln \frac{P(w^{\mathrm{tot}}, \tau)}{P^{\dagger}(\bar{w}^{\mathrm{tot}}, \tau - t)}
 \end{align}
 である。
 \end{itembox}
@@ -363,7 +363,7 @@ D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t))
 2つの異なる温度 $\beta_H^{-1}$, $\beta_L^{-1}$ の熱浴と系からなる複合系を考える（$\beta_H < \beta_L$）。
 
 初期分布を任意な系の分布と2つの熱浴のカノニカル分布の積とすると、
-時間反転性より $P^{\dagger}(\tilde{w}, 0) = P(w, \tau)$ が成り立つ。
+時間反転性より $P^{\dagger}(\bar{w}, 0) = P(w, \tau)$ が成り立つ。
 
 このとき、平均エントロピー生成は
 
@@ -392,15 +392,15 @@ D(P(w^{\mathrm{tot}}, \tau) \| P^{\dagger}(\tilde{w}^{\mathrm{tot}}, \tau - t))
     確率的マルコフ過程において、平均エントロピー生成は次のようにKLダイバージェンスの形式で表される。
 \begin{align}
 \langle \hat{\sigma} \rangle
-= \int d\Gamma\, P(\Gamma)\, \ln \frac{P(\Gamma)}{P^{\dagger}(\tilde{\Gamma})}
-= D(P(\Gamma) \| P^{\dagger}(\tilde{\Gamma}))
+= \int d\Gamma\, P(\Gamma)\, \ln \frac{P(\Gamma)}{P^{\dagger}(\bar{\Gamma})}
+= D(P(\Gamma) \| P^{\dagger}(\bar{\Gamma}))
 \end{align}
-ここで、$\Gamma$ は系の軌道、$P(\Gamma)$ はその確率、$\tilde{\Gamma}$ は時間反転された軌道を表す。
+ここで、$\Gamma$ は系の軌道、$P(\Gamma)$ はその確率、$\bar{\Gamma}$ は時間反転された軌道を表す。
 \end{itembox}
 \textbf{Prf.} \\
 式の対数項を熱項とエントロピー項に分解する。
 \begin{align}
-\ln \frac{P(\Gamma)}{P^{\dagger}(\tilde{\Gamma})}
+\ln \frac{P(\Gamma)}{P^{\dagger}(\bar{\Gamma})}
 = \ln \frac{P(\Gamma(\tau)) P(w(0))}{P^{\dagger}(\Gamma^{\dagger}(\tau)) P(w(\tau))}
 = \sum_\nu \beta_\nu \hat{Q}_\nu + \hat{s}(w(\tau); \tau) - \hat{s}(w(0); 0)
 \end{align}
@@ -463,17 +463,13 @@ $t = 0$ で壁を除去し、粒子の運動を観察する。
 となり、特異性を持たない。
 
 一方で、IFTにおいては、軌道エントロピー（stochastic entropy）の寄与が以下のように特異性を持つ。
-
 \begin{align}
-\lim_{\varepsilon \to 0}
-p_2(0) \ln \frac{p_2(0)}{p_2^{\mathrm{eq}}}
-= p_2^{\mathrm{eq}} \neq 0
+\lim_{\varepsilon \to 0} p_2(0) e^{ -\ln p_2(0) + \ln p_w^{\mathrm{eq}}(\infty) }
+= p_w^{\mathrm{eq}}(\infty) \ne 0,
 \end{align}
+ただし、ここでは、熱や遷移確率の項は省略している。$\epsilon =0$の場合はこれは0になる。
 
-ここでは、熱や遷移確率の項は省略している。
-
-したがって、絶対的不可逆性が存在する場合、IFTは元の形では成り立たない。
-
+このような寄与があるため、絶対的不可逆性が存在する場合はIFTは元の形では成り立たない。
 \begin{align}
 \langle e^{-\hat{\sigma}} \rangle \neq 1
 \end{align}
@@ -570,7 +566,7 @@ $0 \leq t \leq \tau$ の過渡過程を考える。
 W := -\Delta H_{\text{tot}} := -H_{\text{tot}}(x(\tau), y(\tau)) + H_{\text{tot}}(x(0), y(0))
 \end{align}
 
-有効エネルギー（式 5.62）の定義に基づき、系から放出される熱は次のように定義される。
+有効エネルギーの定義に基づき、系から放出される熱は次のように定義される。
 
 \begin{align}
 Q := -W - \Delta E^{\mathrm{eff}} = \Delta [H_{\text{tot}} - E^{\mathrm{eff}}]
@@ -593,8 +589,9 @@ p^0(x, y) := p_{\text{S}}^0(x)\, p_{\text{B}}^{\mathrm{eq}}(y | x)
 p_{\text{B}}^{\mathrm{eq}}(y | x) := \frac{1}{Z_{\text{B}} \left\langle e^{-\beta H_{\text{SB}}(x,y)} \right\rangle_{\text{B}}^{\mathrm{eq}}} e^{-\beta H_{\text{SB}}(x,y)} e^{-\beta H_{\text{B}}(y)}
 \end{align}
 
-（$Z_{\text{B}}$ は熱浴の分配関数）。
-TODO式のお気持ち確認
+（$Z_{\text{B}}$ は熱浴の分配関数）である。
+%TODO式のお気持ち確認
+%多分相互作用のカノニカル分布とbathのカノニカル分布の積みたいなイメージ
 
 また、有効エントロピーを次のように定義する。
 
@@ -634,7 +631,7 @@ s^{\mathrm{eff}}(x)
 
 これは任意の単一軌道 $\Gamma$ に対して成り立つ。
 
-DFTの式(5.9)と同様に、以下が得られる。
+DFTの式と同様に、以下が得られる。
 
 \begin{align}
 \left\langle e^{- ( \Delta s^{\mathrm{eff}} + \beta Q )} \right\rangle 
