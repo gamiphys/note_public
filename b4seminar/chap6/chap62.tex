@@ -1,0 +1,406 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+\begin{document}
+\title{B4ゼミ\#11}
+\author{大上由人}
+\date{\today}
+\maketitle
+\section{揺動散逸定理}
+% \subsection{周波数0の場合}
+% 前回のゼミで得た、周波数0の場合の揺動散逸定理の復習をする。\\
+% \begin{itembox}[l]{\textbf{Thm.揺動散逸定理}}
+%     IFTを満たす確率的な系で、示量変数$X$をもつ二つの熱浴と接触している。
+%         平衡状態での$X$のカレントの自己相関関数$\ev{\hat{J}(t)\hat{J}(0)}_0$は、$t$が大きくなるにつれ、急速に0に緩和すると仮定する。\\
+%         このとき、平衡状態における揺動と、共役変数が変化したときの$X$のカレントの応答は、
+%         \begin{equation}
+%         \int_{0}^{\infty} \dd t \ev{\hat{J}(t)\hat{J}(0)}_0 = \pdv{\Delta \Pi_X} \ev{\hat{J}}_0|_{\Delta \Pi_X = 0} =T\pdv{\Delta P_X} \ev{\hat{J}}_0|_{\Delta P_X = 0}
+%         \end{equation}
+%         のように書ける。ただし、$\ev{\quad}_0$は平衡状態におけるアンサンブル平均を表し、$\ev{\quad}$は$\Delta \Pi_X$により駆動される非平衡定常状態でのアンサンブル平均を表す。
+%     \end{itembox}
+%     \textbf{Prf}\\
+%     $0 \leq t \leq \tau$間のエントロピー生成は、
+%     \begin{equation}
+%         \hat{\sigma} = \Delta \Pi_X \int_{0}^{\tau} \dd t \hat{J}(t) 
+%     \end{equation}
+%     により書くことができる。(証明略)これと、IFTにより、
+%     \begin{align}
+%         1=\ev{e^{-\hat{\sigma}}}&=1-\ev{\Delta \Pi_X \int_{0}^{\tau} \dd t \hat{J}(t)} + \frac{1}{2}\ev{\Delta \Pi_X ^2 \int_{0}^{\tau} \dd t' \int_{0}^{\tau} \dd t \hat{J}(t')\hat{J}(t)} + O(\Delta \Pi_X ^3)\\
+%     \end{align}
+%     を得る。ここで、
+%     \begin{equation}
+%         \ev{\hat{A}}_{\Delta \Pi_X} = \ev{\hat{A}}_0 + \left.\pdv{\Delta \Pi_X} \ev{\hat{A}}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X + O(\Delta \Pi_X ^2)
+%     \end{equation}
+%     と展開できるので、これを上の式に代入し、$\Delta \Pi_X$の一次の項と二次の項を比較する。\\
+%     $\Delta \Pi_X$の一次の項について、
+%     \begin{align}
+%         \ev{\int_{0}^{\tau} \dd t \hat{J}(t)}_0 =0
+%     \end{align}
+%     が成り立つ。また、二次の項について、
+%     \begin{equation}
+%         \label{eq:1}
+%         \ev{\frac{1}{2}\int_{0}^{\tau} \dd t' \int_{0}^{\tau} \dd t \hat{J}(t')\hat{J}(t)}_0 = \left. \pdv{\Delta \Pi_X} \ev{\int_{0}^{\tau} \dd t \hat{J}(t)}\right|_{\Delta \Pi_X = 0}
+%     \end{equation}
+% が成り立つ。(\ref{eq:1})式の両辺に$\frac{1}{\tau}$をかけ、$\tau \to \infty$の極限を取ると、
+% \begin{align}
+%     \underset{\tau \to \infty}{\text{lim}} \frac{1}{\tau} \ev{\frac{1}{2}\int_{0}^{\tau} dt' \int_{0}^{\tau} dt \hat{J}(t')\hat{J}(t)}_0 
+%     &=\underset{\tau \to \infty}{\text{lim}} \frac{1}{\tau} \left.\pdv{\Delta \Pi_X} \ev{\int_{0}^{\tau} dt \hat{J}(t)}\right|_{\Delta \Pi_X = 0}\\
+%     &=\underset{\tau \to \infty}{\text{lim}} \frac{1}{\tau} \int_{0}^{\infty} dt''(\tau - t'')\ev{\hat{J}(t'')\hat{J}(0)}_0\\
+%     &\simeq \int_{0}^{\infty} dt \ev{\hat{J}(t)\hat{J}(0)}_0
+% \end{align}
+% また、
+% \begin{align}
+%     \int_{0}^{\infty} \dd t \ev{\hat{J}(t)\hat{J}(0)}_0 &= \frac{1}{\tau}\left.\pdv{\Delta \Pi_X} \ev{\int_{0}^{\tau} \dd t \hat{J}(t)}\right|_{\Delta \Pi_X = 0}\\
+%     &= \left.\pdv{\Delta \Pi_X} \ev{\hat{J}(0)}\right|_{\Delta \Pi_X = 0}
+% \end{align}
+% が成り立つ(ここで、時間平均がアンサンブル平均に置き換わる、エルゴードの定理を用いている)。\footnote{メモ:ここの計算の詳細はiPadのメモ機能のところにスクショがある。}\\
+% $\pdv{\Delta \Pi_X} =T\pdv{\Delta P_X}$であることを用いると、
+% \begin{equation}
+%     \int_{0}^{\infty} \dd t \ev{\hat{J}(t)\hat{J}(0)}_0 = T\left.\pdv{\Delta P_X} \ev{\hat{J}(0)}\right|_{\Delta P_X = 0}
+% \end{equation}
+% を得る。\hfill \qedsymbol
+
+% \subsection{有限周波数の場合}
+% 有限周波数の場合のFDTを扱う。いま、bath1とbath2の示強変数が、
+% \begin{equation}
+%     \Pi_X ^2 (t) = \Pi_X ^1 + \epsilon \sin(\omega t)
+% \end{equation}
+% となっているとする。このとき、エントロピー生成は以下のように書ける。
+% \begin{equation}
+%     \hat{\sigma} = \epsilon \int_{0}^{\tau} \dd t \hat{J}(t) \sin(\omega t)
+% \end{equation}
+% ただし、$\Delta \hat{s}$の項は、後で無視するので消去した。\\
+% ($\because$)\\
+% bath1について、
+% \begin{align}
+%     \pdv{S_1}{t} &= \pdv{S_1}{X} \pdv{X}{t}\\
+%     &= \pdv{S_1}{X} \int \dd V \pdv{x}{t}\\
+%     &= \pdv{S_1}{X} \int \dd \vb{S} \cdot (\vb{-j})\\
+%     &= -\pdv{S_1}{X}  \hat{J}(t)\\
+% \end{align}
+% となる。両辺積分することで、
+% \begin{align}
+%     S_1(\tau) - S_1(0) &= -\int_{0}^{\tau}  \pdv{S_1}{X} (-\hat{J}(t))\dd t\\
+%     &= -\int_{0}^{\tau}  \Pi_X ^1 \hat{J}(t) \dd t
+% \end{align}
+% bath2についても同様にして、
+% \begin{equation}
+%     S_2(\tau) - S_2(0) = \int_{0}^{\tau}  \Pi_X ^2 \hat{J}(t) \dd t
+% \end{equation}
+% を得る。\\
+% よって、
+% \begin{align}
+%     (S_1(\tau) + S_2(\tau)) - (S_1(0) + S_2(0)) &= \int_{0}^{\tau}  (\Pi_X ^2 - \Pi_X ^1) \hat{J}(t) \dd t\\
+%     &= \epsilon \int_{0}^{\tau}  \sin(\omega t) \hat{J}(t) \dd t
+% \end{align}
+% となる。\hfill \qedsymbol
+% \\
+% 以下、この式を用いて、有限周波数の場合のFDTを導く。\\
+
+% \begin{itembox}[l]{\textbf{Thm.有限周波数の場合のFDT}}
+%     IFTを満たす確率的な系で、周波数$\omega$による揺動と、共役変数が変化したときの$X$のカレントの応答は、
+%     \begin{equation}
+%         \underset{\tau \to \infty}{\text{lim}}\frac{1}{\tau} \ev{\left(\int_{0}^{\tau} \dd t \hat{J}(t)\sin(\omega t)\right)^2}_0 = 2\underset{\tau \to 0}{\text{lim}} \left. \pdv{\epsilon} \ev{\frac{1}{\tau} \int_{0}^{\tau} \dd t \hat{J}(t)\sin(\omega t)}\right|_{\epsilon = 0}
+%     \end{equation}
+%     のように書ける。
+% \end{itembox}
+% \textbf{Prf}\\
+% 周波数が0のときの証明をまねする。IFTを用いてから、$\epsilon$について展開することで、
+% \begin{align}
+%     1=\ev{e^{-\hat{\sigma}}}&=1-\ev{\epsilon \int_{0}^{\tau} \dd t \hat{J}(t) \sin(\omega t)} + \frac{1}{2}\ev{\epsilon^2 \int_{0}^{\tau} \dd t' \int_{0}^{\tau} \dd t \hat{J}(t')\hat{J}(t) \sin(\omega t')\sin(\omega t)} + O(\epsilon^3)\\
+% \end{align}
+% を得る。ここで、
+% \begin{equation}
+%     \ev{\hat{A}}_{\epsilon} = \ev{\hat{A}}_0 + \left. \pdv{\epsilon} \ev{\hat{A}}\right| _{\epsilon = 0} \epsilon + O(\epsilon^2)
+% \end{equation}
+% と展開して、上の式に代入すると、$\epsilon$の二次の項を比較することにより、
+% \begin{align}
+%     \frac{1}{2}\ev{\int_{0}^{\tau} \dd t' \int_{0}^{\tau} \dd t \hat{J}(t')\hat{J}(t) \sin(\omega t')\sin(\omega t)}_0 &= \left. \pdv{\epsilon} \ev{\int_{0}^{\tau} \dd t \hat{J}(t) \sin(\omega t)}\right|_{\epsilon = 0}
+% \end{align}
+% であるから、両辺$\frac{1}{\tau}$をかけ、$\tau \to \infty$の極限を取ると、
+% \begin{align}
+%     \underset{\tau \to \infty}{\text{lim}}\frac{1}{\tau} \ev{\left(\int_{0}^{\tau} \dd t \hat{J}(t)\sin(\omega t)\right)^2}_0 &= 2\underset{\tau \to 0}{\text{lim}} \left. \pdv{\epsilon} \ev{\frac{1}{\tau} \int_{0}^{\tau} \dd t \hat{J}(t)\sin(\omega t)}\right|_{\epsilon = 0}
+% \end{align}
+% を得る。\hfill \qedsymbol
+
+記号を思い出しておく。
+\begin{itemize}
+    \item $\hat{J}_{X}$: 示量変数$X$のカレント$\pdv{X}{t}$
+    \item $\Pi_X$: $X$の共役変数
+    \item $\Delta \Pi_X = \Pi_X ^2 - \Pi_X ^1$: bath1とbath2の$\Pi_X$の差
+    \item $\hat{\mathcal{J}} = \int_0 ^{\tau} dt \hat{J}(t)$: 時間積分されたカレント
+    \item $\ev{\cdot}$: $\Delta \Pi_X$により駆動される非平衡定常状態でのアンサンブル平均
+    \item $\ev{\cdot}_0$: 平衡状態におけるアンサンブル平均
+\end{itemize}
+
+\subsection{高次における関係}
+磁場$B$が存在する下でのアンサンブル平均を$\ev{\cdot}^B$と表す。
+このもとで、IFTから導かれる高次の関係を示す。
+\begin{itembox}[l]{\textbf{Thm.時間積分されたカレントの高次の関係}}
+    磁場中の$\hat{\mathcal{J}}$は、以下の高次における関係を満たす:
+    \begin{align}
+        \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^+\right|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^+\right|_{\Delta \Pi_X = 0}
+    \end{align}
+    ただし、$\ev{\cdot}^+ = \frac{1}{2}(\ev{\cdot}^B + \ev{\cdot}^{-B})$である。
+\end{itembox}
+\textbf{Prf}\\
+FDTを導出する途中の展開をより高次まで行うと、
+\begin{align}
+    1=\ev{e^{-\hat{\sigma}}}&= 1-\ev{\hat{\mathcal{J}}}^B \Delta \Pi_X + \frac{1}{2}\ev{\hat{\mathcal{J}}^2}^B \Delta \Pi_X ^2- \frac{1}{6}\ev{\hat{\mathcal{J}}^3}^B \Delta \Pi_X ^3 + O(\Delta \Pi_X ^4)\\
+    &=1-\qty(\ev{\hat{\mathcal{J}}}^B_0 \Delta \Pi_X + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^B \right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^2 + \frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^B \right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^3 )\\
+    &+ \frac{1}{2}\qty(\ev{\hat{\mathcal{J}}^2}^B_0 \Delta \Pi_X ^2 + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^B\right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^3)- \frac{1}{6}\qty(\ev{\hat{\mathcal{J}}^3}^B_0 \Delta \Pi_X ^3) + O(\Delta \Pi_X ^4)
+\end{align}
+となる。ここで、$\hat{\mathcal{J}}$は、
+\begin{equation}
+    \hat{\mathcal{J}} = \int_{0}^{\tau} dt \hat{J}(t)
+\end{equation}
+である。同様の手順を踏むことで、$B$を$-B$としたときの展開は、
+\begin{align}
+    1=\ev{e^{-\hat{\sigma}}}&= 1-\ev{\hat{\mathcal{J}}}^{-B} \Delta \Pi_X + \frac{1}{2}\ev{\hat{\mathcal{J}}^2}^{-B} \Delta \Pi_X ^2- \frac{1}{6}\ev{\hat{\mathcal{J}}^3}^{-B} \Delta \Pi_X ^3 + O(\Delta \Pi_X ^4)\\
+    &=1-\left(\ev{\hat{\mathcal{J}}}^{-B}_0 \Delta \Pi_X + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^{-B}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^2 + \frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^{-B}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^3 \right)\\
+    &+ \frac{1}{2}\qty(\ev{\hat{\mathcal{J}}^2}^{-B}_0 \Delta \Pi_X ^2 + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^{-B}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^3)- \frac{1}{6}\left(\ev{\hat{\mathcal{J}}^3}^{-B}_0 \Delta \Pi_X ^3\right) + O(\Delta \Pi_X ^4)
+\end{align}
+となる。\\
+ここで、期待値の時間反転対称性から、
+\begin{align}
+    \ev{\hat{\mathcal{J}}^3}^B = -\ev{\hat{\mathcal{J}}^3}^{-B}
+\end{align}
+が成り立つことを用いて、上の二式を両辺足して、$\Delta \Pi_X$の三次の項を比較すると、
+\begin{align*}
+    0=&\frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^B\right|_{\Delta \Pi_X = 0} - \frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^{-B}\right|_{\Delta \Pi_X = 0}\\
+    &+\frac{1}{2} \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^B\right|_{\Delta \Pi_X = 0} + \frac{1}{2}\left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^{-B}\right|_{\Delta \Pi_X = 0} -\frac{1}{6}\ev{\hat{\mathcal{J}}^3}^B_0 - \frac{1}{6}\ev{\hat{\mathcal{J}}^3}^{-B}_0\\
+\end{align*}
+すなわち、
+\begin{align}
+    \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^B\right|_{\Delta \Pi_X = 0} + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^{-B}\right|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^B\right|_{\Delta \Pi_X = 0} + \left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^{-B}\right|_{\Delta \Pi_X = 0}
+\end{align}
+を得る。新たに、$\ev{\cdot}^+ = \frac{1}{2}(\ev{\cdot}^B + \ev{\cdot}^{-B})$と定義すると、
+\begin{align}
+    \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^+\right|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^+\right|_{\Delta \Pi_X = 0}
+\end{align}
+が成り立つ。\hfill \qedsymbol\\
+
+また、以下も成り立つ。
+\begin{itembox}[l]{\textbf{Thm.高次における関係(2)}}
+    IFTを満たす系について、以下が成り立つ:
+    \begin{align}
+        2\left.\pdv{\Delta \Pi_X} \int_0 ^{\infty} \dd t \ev{\Delta \hat{J}(t) \Delta \hat{J}(0)}^+\right|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\Delta \hat{J}}^+\right|_{\Delta \Pi_X = 0}
+    \end{align}
+\end{itembox}
+\textbf{Prf}\\
+$\hat{\mathcal{J}}$を$J$を用いて表すことで、
+\begin{align}
+    \pdv{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \hat{J}(t')\hat{J}(t)}^+|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t \hat{J}(t)}^+\right|_{\Delta \Pi_X = 0}
+\end{align}
+が成り立つ。ここで、左辺の被積分関数について、$\Delta \hat{J} = \hat{J} - \ev{\hat{J}}$として展開すると、
+\begin{align}
+    \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \hat{J}(t')\hat{J}(t)}^+ &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t (\Delta \hat{J}(t') +{J}(t'))(\Delta \hat{J}(t) +{J}(t))}^+\\
+    &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t')\Delta \hat{J}(t)}^+ \\
+    &+ 2\ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t'){J}(t)}^+\\
+    &+ \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t {J}(t') {J}(t)}^+
+\end{align}
+となる。ここで、第二項について、
+\begin{align}
+    2\ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t') {J}(t)}^+ &= 2\int_0 ^{\tau} \int_0 ^{\tau} \dd t' \dd t J(t) \ev{\Delta \hat{J}(t')}^+\\
+    &= 0
+\end{align}
+である。というのも、$\ev{\Delta \hat{J}(t')}^+ = 0$であるからである。よって、
+\begin{align}
+    \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \hat{J}(t')\hat{J}(t)}^+ &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t (\Delta \hat{J}(t') +{J}(t'))(\Delta \hat{J}(t) +{J}(t))}^+\\
+    &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t')\Delta \hat{J}(t)}^+ \\
+    &+ \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t {J}(t'){J}(t)}^+
+\end{align}
+となる。ここで、この最後の式の第二項は、$\Delta \Pi_X=0$で、$\Delta \Pi_X$について微分することで0になる。これは、$\int_0 ^{\tau} \dd t \ev{\hat{J}(t))^2}$が、$\Delta \Pi_X$についての偶関数であることからわかる。\\
+したがって、
+\begin{align} 
+    \left.\pdv{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t')\Delta \hat{J}(t)}^+\right|_{\Delta \Pi_X = 0} = \pdv[2]{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t \hat{J}(t)}^+|_{\Delta \Pi_X = 0}
+\end{align}
+が成り立つ。ここで、両辺$\frac{1}{\tau}$をかけ、$\tau \to \infty$の極限を取ると、前回のゼミと同様の変形をすることで、
+\begin{align}
+    2\left.\pdv{\Delta \Pi_X} \int_0 ^{\infty} \dd t \ev{\Delta \hat{J}(t) \Delta \hat{J}(0)}^+\right|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\Delta \hat{J}}^+\right|_{\Delta \Pi_X = 0}
+\end{align}
+を得る。\hfill \qedsymbol
+
+\subsection{従来の線形応答理論との違い}
+従来の線形応答理論では、カレントはバルク、すなわち系で測定されるのに対し、
+今回は、熱浴側で測定される。
+考える系によってはこの二つの定義の違いが効いてくる場合があるらしく、
+前者は巨視的な導体に、後者はメゾスコピック伝導に有効らしい。(多分系のサイズが大事)
+
+また、従来の線形応答理論における久保公式を得るためには
+別の定式化が必要となる。
+この場合は、単一の熱浴と外力$F(x,t)$を持つ系を考え、
+エントロピー生成を
+\begin{align}
+    \hat{\sigma} &= -\beta \int_0 ^{\tau} dt \int \dd{x} F(x,t) \hat{j}(x,t)
+\end{align}
+と定義すればよい。ここでは詳細な導出は追わない。
+
+\section{Onsagerの相反定理}
+二つの示量変数$X$と$Y$をもつ系を考える。対応する流れをそれぞれ$J_X$と$J_Y$とする。系が四つのbathと接触しているとする。
+そのうち二つが、$\Pi_X$に対応するものとし、残り二つが、$\Pi_Y$に対応するものとする。このとき、一般に、もし$\Pi_X$が$0$でないならば、$\Pi_Y=0$であっても、$J_Y=0$であるとは限らない。\\
+
+\begin{itembox}[l]{\textbf{Def.Onsager行列}}
+    Onsager行列$L$は、
+    \begin{equation}
+        L_{ij} = \left.\pdv{J_i}{\Delta \Pi_j}\right|_{\Delta \Pi_X=\Delta \Pi_Y=0} \quad (i,j = X,Y)
+    \end{equation}
+    で定義される。
+\end{itembox}
+このとき、
+\begin{align}
+    J_X &= L_{XX}\Delta\Pi_X + L_{XY}\Delta\Pi_Y\\
+    J_Y &= L_{YX}\Delta\Pi_X + L_{YY}\Delta\Pi_Y
+\end{align}
+と書ける。\\
+\begin{itembox}[l]{\textbf{Thm.Onsagerの相反定理}}
+    時間反転対称性を破るような場がないとする。このとき、$\Delta \Pi_Y$に対する$J_X$の応答は、$\Delta \Pi_X$に対する$J_Y$の応答と等しい。すなわち、
+    \begin{equation}
+        L_{XY} = L_{YX}
+    \end{equation}
+    が成り立つ。
+\end{itembox}
+\textbf{Prf}\\
+DFTを用いることで、
+\begin{align}
+    \ev{\hat{\mathcal{J}}_X} &= \int \dd \hat{\mathcal{J}}_X \int \dd \hat{\mathcal{J}}_Y \hat{\mathcal{J}}_X P(\hat{\mathcal{J}}_X, \hat{\mathcal{J}}_Y)\\
+    &= \int \dd \hat{\mathcal{J}}_X \int \dd \hat{\mathcal{J}}_Y (\hat{\mathcal{J}}_X P(-\hat{\mathcal{J}}_X, -\hat{\mathcal{J}}_Y))\exp(\hat{\mathcal{J}}_X \Delta \Pi_X + \hat{\mathcal{J}}_Y \Delta \Pi_Y)\\
+    &= -\int \dd \hat{\mathcal{J}}_X \int \dd \hat{\mathcal{J}}_Y \hat{\mathcal{J}}_X P(\hat{\mathcal{J}}_X, \hat{\mathcal{J}}_Y)\exp(-\hat{\mathcal{J}}_X \Delta \Pi_X - \hat{\mathcal{J}}_Y \Delta \Pi_Y)\\
+    &= -\sum_{k=1}^{\infty} \frac{\ev{\hat{\mathcal{J}}_X(-\hat{\mathcal{J}}_X\Delta \Pi_X-\hat{\mathcal{J}}_Y\Delta \Pi_Y)^{k-1}}}{(k-1)!}
+\end{align}
+が得られる(二行目でIFT,最後はテイラー展開)。ここで、
+\begin{align}
+    \pdv{\ev{\hat{\mathcal{J}}_X}}{\Delta \Pi_Y} &= -\pdv{\ev{\hat{\mathcal{J}}_X}}{\Delta \Pi_Y} - \pdv{\Delta \Pi_Y}\sum_{k=2}^{\infty} \frac{\ev{\hat{\mathcal{J}}_X(-\hat{\mathcal{J}}_X\Delta \Pi_X-\hat{\mathcal{J}}_Y\Delta \Pi_Y)^{k-1}}}{(k-1)!}\\
+    &= -\pdv{\ev{\hat{\mathcal{J}}_X}}{\Delta \Pi_Y} + \sum_{k=2}^{\infty} \frac{\ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y(-\hat{\mathcal{J}}_X\Delta \Pi_X-\hat{\mathcal{J}}_Y\Delta \Pi_Y)^{k-2}}}{(k-2)!}
+\end{align}
+となる。$\Delta \Pi_Y$の0次の項を比較することで、
+\begin{align}
+    \pdv{\ev{\hat{\mathcal{J}}_X}}{\Delta \Pi_Y} = -\pdv{\ev{\hat{\mathcal{J}}_X}}{\Delta \Pi_Y} + \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0
+\end{align}
+を得る。整理して、
+\begin{align}
+    2\pdv{\ev{\hat{\mathcal{J}}_X}}{\Delta \Pi_Y} = \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0
+\end{align}
+を得る。同様にして、
+\begin{align}
+    2\pdv{\ev{\hat{\mathcal{J}}_Y}}{\Delta \Pi_X} = \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0
+\end{align}
+を得る。これらを比較することで、
+\begin{align}
+    L_{XY} = L_{YX}
+\end{align}
+を得る。\hfill \qedsymbol
+
+\begin{itembox}[l]{\textbf{Thm.時間反転対称性を破る場があるときのOnsagerの相反定理}}
+    例えば、磁場中の系を考えると、Onsagerの相反定理は以下のように拡張される:
+    \begin{align}
+        L_{XY} (B) = L_{YX} (-B)
+    \end{align}
+\end{itembox}
+\textbf{Prf}\\
+磁場が時間反転対称性を破ることを考えると、DFTは、
+\begin{align}
+    P(\hat{\mathcal{J}}_X, \hat{\mathcal{J}}_Y;B) = P(-\hat{\mathcal{J}}_X, -\hat{\mathcal{J}}_Y;-B)\exp(\hat{\mathcal{J}}_X \Delta \Pi_X + \hat{\mathcal{J}}_Y \Delta \Pi_Y)
+\end{align}
+となる。このとき、
+\begin{align}
+    \label{eq:a}
+    L_{XY} (B) + L_{XY} (-B) = \frac{1}{\tau} \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0^{-B}
+\end{align}
+となる。\\
+(\ref{eq:a})の証明\\
+上で証明したOnsagerの相反定理の証明を参考にすると、
+\begin{align}
+    \ev{\hat{\mathcal{J}}_X} ^B &= \int \dd \hat{\mathcal{J}}_X \int \dd \hat{\mathcal{J}}_Y \hat{\mathcal{J}}_X P(\hat{\mathcal{J}}_X, \hat{\mathcal{J}}_Y;B)\\
+    &= \int \dd \hat{\mathcal{J}}_X \int \dd \hat{\mathcal{J}}_Y \hat{\mathcal{J}}_X P(-\hat{\mathcal{J}}_X, -\hat{\mathcal{J}}_Y;-B)\exp(\hat{\mathcal{J}}_X \Delta \Pi_X + \hat{\mathcal{J}}_Y \Delta \Pi_Y)\\
+    &= -\int \dd \hat{\mathcal{J}}_X \int \dd \hat{\mathcal{J}}_Y \hat{\mathcal{J}}_X P(\hat{\mathcal{J}}_X, \hat{\mathcal{J}}_Y;-B)\exp(-\hat{\mathcal{J}}_X \Delta \Pi_X - \hat{\mathcal{J}}_Y \Delta \Pi_Y)\\
+    &= -\sum_{k=1}^{\infty} \frac{\ev{\hat{\mathcal{J}}_X(-\hat{\mathcal{J}}_X\Delta \Pi_X-\hat{\mathcal{J}}_Y\Delta \Pi_Y)^{k-1}}^{-B}}{(k-1)!}
+\end{align}
+となる。ここで、
+\begin{align}
+    \pdv{\ev{\hat{\mathcal{J}}_X}^B}{\Delta \Pi_Y} &= -\pdv{\ev{\hat{\mathcal{J}}_X}^{-B}}{\Delta \Pi_Y} - \sum_{k=2}^{\infty} \frac{\ev{\hat{\mathcal{J}}_X\hat{\mathcal{J}}_Y(-\hat{\mathcal{J}}_X\Delta \Pi_X-\hat{\mathcal{J}}_Y\Delta \Pi_Y)^{k-2}}^{-B}}{(k-2)!}
+\end{align}
+となる。$\Delta \Pi_Y$の0次の項を比較することで、
+\begin{align}
+    \pdv{\ev{\hat{\mathcal{J}}_X}^B}{\Delta \Pi_Y} + \pdv{\ev{\hat{\mathcal{J}}_X}^{-B}}{\Delta \Pi_Y} = \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0^{-B}
+\end{align}
+を得る。したがって、
+\begin{align}
+    L_{XY} (B) + L_{XY} (-B) = \frac{1}{\tau} \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0^{-B}
+\end{align}
+を得る。\\
+%TODO:最後\tauで割る作業を確認する。(これ多分Jはアンサンブル平均で、それに\tauかけたものが\mathcal{J})に等しくなることを用いている\\
+また、
+\begin{align}
+    \label{74}
+    L_{XY} (-B) + L_{YX} (-B) = \frac{1}{\tau} \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}_0^{-B}
+\end{align}
+となる。\\
+(\ref{74})式の証明\\
+磁場が$-B$のときの系について、IFTを用いることにより、
+\begin{align}
+    1=\ev{e^{-\hat{\sigma}}}^{-B} &= \ev{\exp(-\mathcal{J}_X \Delta \Pi_X - \mathcal{J}_Y \Delta \Pi_Y)}^{-B}\\
+    &= 1-\ev{\mathcal{J}_X}^{-B} \Delta \Pi_X - \ev{\mathcal{J}_Y}^{-B} \Delta \Pi_Y \\
+    &\quad+ \frac{1}{2}\ev{\mathcal{J}_X^2}^{-B} \Delta \Pi_X^2 + \ev{\mathcal{J}_X \mathcal{J}_Y}^{-B} \Delta \Pi_X \Delta \Pi_Y \\
+    &\quad+ \frac{1}{2}\ev{\mathcal{J}_Y^2}^{-B} \Delta \Pi_Y^2 + O(\Delta \Pi^3)
+\end{align}
+を得る。ここで、
+\begin{align}
+    \ev{\hat{\mathcal{J}}_X}^{-B} = \ev{\hat{\mathcal{J}}_X}_0 + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}_X}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X +\left.\pdv{\Delta \Pi_Y} \ev{\hat{\mathcal{J}}_X}\right|_{\Delta \Pi_Y = 0} \Delta \Pi_Y + O(\Delta \Pi^2)
+\end{align}
+と、
+\begin{align}
+    \ev{\hat{\mathcal{J}}_Y}^{-B} = \ev{\hat{\mathcal{J}}_Y}_0 + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}_Y}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X +\left.\pdv{\Delta \Pi_Y} \ev{\hat{\mathcal{J}}_Y}\right|_{\Delta \Pi_Y = 0} \Delta \Pi_Y + O(\Delta \Pi^2)
+\end{align}
+および、
+\begin{align}
+    \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}^{-B} = \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}}_Y}^{-B}_0 +O(\Delta \Pi)
+\end{align}
+であるから、(76)式に代入して、$\Delta \Pi_X \Delta \Pi_Y$の項を比較することで、
+\begin{align}
+    \left.\pdv{\Delta \Pi_Y} \ev{\hat{\mathcal{J}_X}}^{-B}\right|_{\Delta \Pi_X = 0} + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}_Y}}^{-B}\right|_{\Delta \Pi_Y = 0} = \ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}_Y}}^{-B}_0
+\end{align}
+を得る。よって、
+\begin{align}
+    L_{XY} (-B) + L_{YX} (-B) = \frac{1}{\tau}\ev{\hat{\mathcal{J}}_X \hat{\mathcal{J}_Y}}^{-B}_0
+\end{align}
+を得る。\\
+
+
+この二式から、
+\begin{align}
+    L_{XY} (B) = L_{YX} (-B)
+\end{align}
+を得る。\hfill \qedsymbol
+\end{document}
