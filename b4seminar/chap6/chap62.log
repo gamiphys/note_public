@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  22 SEP 2025 12:46
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  10 OCT 2025 10:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -705,27 +705,32 @@ LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 9.24683pt on input line 170.
 
-Overfull \hbox (10.49608pt too wide) detected at line 183
-[]
- []
-
-
 
 [1
 
 ]
-Overfull \hbox (30.3892pt too wide) detected at line 193
+Overfull \hbox (10.49608pt too wide) detected at line 190
 []
  []
 
 
-Overfull \hbox (33.0917pt too wide) detected at line 207
+Overfull \hbox (30.3892pt too wide) detected at line 200
+[]
+ []
+
+
+Overfull \hbox (33.0917pt too wide) detected at line 214
 []
  []
 
 
 
 [2]
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 234.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 5.5481pt on input line 236.
+
 
 [3]
 
@@ -747,12 +752,12 @@ Package rerunfilecheck Info: File `chap62.out' has not changed.
 (rerunfilecheck)             Checksum: 25F32B8C7F2F50826B9BA60E8A9130A3;491.
  ) 
 Here is how much of TeX's memory you used:
- 23147 strings out of 473836
- 428129 string characters out of 5734547
- 841915 words of memory out of 5000000
- 45990 multiletter control sequences out of 15000+600000
- 578532 words of font info for 127 fonts, out of 8000000 for 9000
+ 23148 strings out of 473836
+ 428141 string characters out of 5734547
+ 842915 words of memory out of 5000000
+ 45991 multiletter control sequences out of 15000+600000
+ 578750 words of font info for 129 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,15n,93p,543b,473s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,15n,93p,543b,467s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on chap62.dvi (8 pages, 46484 bytes).
+Output written on chap62.dvi (8 pages, 48232 bytes).

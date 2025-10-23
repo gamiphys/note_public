@@ -1,0 +1,337 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+% コマンド定義
+\newcommand{\argmin}{\mathop{\mathrm{arg\,min}}\limits}
+\newcommand{\argmax}{\mathop{\mathrm{arg\,max}}\limits}
+
+\begin{document}
+
+\title{量子系における確率熱力学}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+Yoshimura-Maekawa-Nagayama-Itoおよび大賀さんのトークのスライドを参考に量子系の確率熱力学をまとめる。
+
+\section{GKSL方程式}
+GKSL方程式
+\begin{align}
+    \dv{\rho}{t} &= -i[H,\rho] + \sum_{\mu \in \mathcal{L}_{L}}D_{\mu}[\rho] \\
+    D_{\mu}[\rho] &= \sum_{\mu \in \mathcal{L}_{L}} [\gamma_{\mu}^{+} (L_{\mu} \rho L_{\mu}^{\dagger} - \frac{1}{2} \{L_{\mu}^{\dagger} L_{\mu}, \rho\}) 
+    + \gamma_{\mu}^{-} (L_{\mu}^{\dagger} \rho L_{\mu} - \frac{1}{2} \{L_{\mu} L_{\mu}^{\dagger}, \rho\})]
+\end{align}
+である。
+ただし、$\gamma_{\mu}^{\pm} \in \mathbb{R}$はパラメータ、$L_{\mu}$はjump op.である。
+また、$\mu \in \mathcal{L}_{L}$はjumpの添字である。
+Hamiltonianは
+\begin{align}
+    H = \sum_{\mu \in \mathcal{L}_{H}} (\zeta^*_{\mu} V_{\mu} + \zeta_{\mu} V_{\mu}^{\dagger})
+\end{align}
+と表される。
+また、$\mathcal{L} = \mathcal{L}_{L} \cup \mathcal{L}_{H}$とし、
+\footnote{
+    便宜のため$\mathcal{L}_{L} \cap \mathcal{L}_{H} = \emptyset$とする。
+}
+$S_{\mu}$を
+\begin{align}
+    S_{\mu} =
+    \begin{cases}
+        L_{\mu} & (\mu \in \mathcal{L}_{L}) \\
+        V_{\mu} & (\mu \in \mathcal{L}_{H})
+    \end{cases}
+\end{align}
+と定義する。
+
+\section{カレント}
+Observable currentと呼ばれる量を考える。\\
+\begin{itembox}[l]{\textbf{Def.Observable current}}
+    jumpに対応するObservable currentは
+    \begin{align}
+        Q_{\mu}(\rho) = \gamma_{\mu}^{+} \Tr[L_{\mu}^{\dagger} L_{\mu} \rho] - \gamma_{\mu}^{-} \Tr[L_{\mu} L_{\mu}^{\dagger} \rho]
+    \end{align}
+    で定義される。また、Hamiltonianに対応するObservable currentは
+    \begin{align}
+        Q_{\mu}(\rho) = \Tr[\rho(-i\zeta_{\mu} V_{\mu}^{\dagger} + i\zeta_{\mu}^* V_{\mu})]
+    \end{align}
+    で定義される。また、全Observable currentは
+    \begin{align}
+        \vec{Q}(\rho) = \{Q_{\mu}(\rho)\}_{\mu \in \mathcal{L}_{L} \cup \mathcal{L}_{H}}
+    \end{align}
+    と表される。
+\end{itembox}
+jumpに対応するObservable currentは単位時間当たりのjump $\mu$の正味の発生回数に対応する。
+また、Hamiltonianに対応するObservable currentは我々がよく知っているカレント(粒子流、電流など)に対応する。
+\footnote{
+    ほげほげ
+}
+
+また、Dynamical currentと呼ばれる量も考えることができる。
+\begin{itembox}[l]{\textbf{Def.Dynamical current}}
+    jumpに対応するDynamical currentは
+    \begin{align}
+        J_{\mu}(\rho) = \frac{1}{2}(\gamma_{\mu}^{+} L_{\mu}\rho - \gamma_{\mu}^{-} \rho L_{\mu})
+    \end{align}
+    で定義される。
+    また、Hamiltonianに対応するDynamical currentは
+    \begin{align}
+        J_{\mu}(\rho) = i\zeta_{\mu}(\Pi_{\mu}^{+}\rho + \rho \Pi_{\mu}^{-} - \Pi_{\mu}^{+} \rho \Pi_{\mu}^{-}) 
+    \end{align}
+    で定義される。
+    ただし、
+    $\Pi_{\mu}^{+}$は$\Im V_{\mu}$への射影演算子であり、
+    $\Pi_{\mu}^{-}$は$\Im V_{\mu}^{\dagger}$への射影演算子である。
+\end{itembox}
+これらはObservable currentよりも抽象的な定義であるが\footnote{
+    定義自体はGKSL方程式での最適輸送から持ち込んでいるらしい。要確認？
+}、これらは時間発展やObservable currentを表現するのに便利である。
+実際、以下の関係式を示すことができる。
+\begin{itembox}[l]{\textbf{Thm.}}
+    時間発展やObservable currentはDynamical currentを用いて以下のように表される。
+    \begin{align}
+        \dv{\rho}{t} &= \sum_{\mu \in \mathcal{L}} \left( [J_{\mu}(\rho), S_{\mu}^{\dagger}] - [J_{\mu}^{\dagger}(\rho), S_{\mu}] \right) \\
+        Q_{\mu}(\rho) &= \Tr[ J_{\mu}^{\dagger}(\rho) S_{\mu} ] + \Tr[ J_{\mu}(\rho) S_{\mu}^{\dagger} ]
+    \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+\begin{align}
+[J_{\mu}(\rho), V_{\mu}^{\dagger}]
+&= i \zeta_{\mu} 
+\left[ \Pi_{\mu}^{+} \rho (1 - \Pi_{\mu}^{-}) + \rho \Pi_{\mu}^{-} \right] V_{\mu}^{\dagger}
++ i V_{\mu}^{\dagger} \left[ \Pi_{\mu}^{+} \rho + (1 - \Pi_{\mu}^{+}) \rho V_{\mu}^{-} \right] \\
+&= i \zeta_{\mu} (\rho V_{\mu}^{\dagger} - V_{\mu}^{\dagger} \rho)\\
+&= i \zeta_{\mu} [\rho, V_{\mu}^{\dagger}] 
+1\end{align}
+を用いることで、
+\begin{align}
+[J_{\mu}(\rho), V_{\mu}^{\dagger}] - [J_{\mu}^{\dagger}(\rho), V_{\mu}]
+&= -i [\zeta_{\mu} V_{\mu}^{\dagger} + \zeta_{\mu}^{*} V_{\mu}, \rho]
+\end{align}
+が得られる。また、
+\begin{align}
+[J_{\mu}(\rho), L_{\mu}^{\dagger}]
+&= \frac{1}{2} \gamma_{\mu}^{+} (L_{\mu} \rho L_{\mu}^{\dagger} - L_{\mu}^{\dagger} L_{\mu} \rho)
++ \frac{1}{2} \gamma_{\mu}^{-} (L_{\mu}^{\dagger} \rho L_{\mu} - \rho L_{\mu} L_{\mu}^{\dagger}) 
+\end{align}
+を用いることで、
+\begin{align}
+[J_{\mu}(\rho), L_{\mu}^{\dagger}] - [J_{\mu}^{\dagger}(\rho), L_{\mu}]
+&= \gamma_{\mu}^{+} 
+\left( L_{\mu} \rho L_{\mu}^{\dagger} - \frac{1}{2} \{ \rho, L_{\mu}^{\dagger} L_{\mu} \} \right)
++ \gamma_{\mu}^{-}
+\left( L_{\mu}^{\dagger} \rho L_{\mu} - \frac{1}{2} \{ \rho, L_{\mu} L_{\mu}^{\dagger} \} \right)
+\end{align}
+が得られる。これらを合わせることで、時間発展の表式が得られる。\qed\\
+
+\section{内積構造}
+上で導いた時間発展の表式は双対構造を誘導する。
+dynamical currentの空間とエルミート演算子の空間のそれぞれで内積を導入する。
+dynamical currentの空間$\mathfrak{J}:= \text{opr}(H)^{\mathcal{L}} \ni \mathbb{A},\mathbb{B}$上の内積を
+\begin{align}
+    \ev{\mathbb{A} , \mathbb{B}} := \sum_{\mu \in \mathcal{L}} \qty(\Tr[ A_{\mu}^{\dagger} B_{\mu}] + \Tr[A_{\mu} B_{\mu}^{\dagger}]) \in \mathbb{R}
+\end{align} 
+で定義する。
+\footnote{
+    実数になってくれるのは$\Tr[X] = \Tr[X]^*$と$z+z^* \in \mathbb{R}$が成り立つため。
+}
+また、エルミート演算子の空間$\text{Herm(H)} \ni A,B$上の内積を
+\begin{align}
+    \ev{A, B} := \Tr[A B] \in \mathbb{R}
+\end{align}
+で定義する。
+
+ここで、グラディエント$\nabla_{\mathbb{S}} : \text{Herm}(H) \to \mathbb{J}$
+を、
+\begin{align}
+    \nabla_{\mathbb{S}} A &= \{[A, S_{\mu}]\}_{\mu \in \mathcal{L}}
+\end{align}
+と定義する。
+また、ダイバージェンス$\nabla^*_{\mathbb{S}} : \mathbb{J} \to \text{Herm}(H)$
+を、
+\begin{align}
+    \nabla^*_{\mathbb{S}} \mathbb{A}&=  \sum_{\mu \in \mathcal{L}} \qty([A_{\mu}, S_{\mu}^{\dagger}] - [A_{\mu}^{\dagger}, S_{\mu}])
+\end{align}
+と定義する。
+このとき、これらは双対であることが示される。\\
+$(\because)$\\
+\begin{align}
+    \ev{\nabla_{\mathbb{S}} A , \mathbb{B}} &= \sum_{\mu \in \mathcal{L}} \qty( \Tr[ [A, S_{\mu}]^{\dagger} B_{\mu}] + \Tr[ [A, S_{\mu}] B_{\mu}^{\dagger}]) \\
+    &= \sum_{\mu \in \mathcal{L}} \qty( \Tr[ S_{\mu}^{\dagger} A- AS_{\mu}^{\dagger}] B_{\mu} + \Tr[AS_{\mu} - S_{\mu} A] B_{\mu}^{\dagger}) \\
+    &= \sum_{\mu \in \mathcal{L}} \qty( \Tr[ A (B_{\mu} S_{\mu}^{\dagger} - S_{\mu}^{\dagger} B_{\mu})] + \Tr[ A (S_{\mu} B_{\mu}^{\dagger} - B_{\mu}^{\dagger} S_{\mu})]) \\
+    &= \Tr[ A \sum_{\mu \in \mathcal{L}} \qty( [B_{\mu}, S_{\mu}^{\dagger}] - [B_{\mu}^{\dagger}, S_{\mu}])] \\
+    &= \ev{A, \nabla^*_{\mathbb{S}} \mathbb{B}}
+\end{align}
+\qed\\
+
+このもとで、時間発展は
+\begin{align}
+    \dv{\rho}{t} &= \nabla^*_{\mathbb{S}} \mathbb{J}(\rho)
+\end{align}
+と表される。
+
+\section{詳細つり合い条件の下でのEPR}
+以下、局所詳細つりあい条件
+\begin{align}
+    k_{\text{B}} \ln \frac{\gamma_{\mu}^{+}}{\gamma_{\mu}^{-}} = \sigma_{\mu}
+\end{align}
+を仮定する。
+このとき、着目系/環境系/全体のEPRを以下のように定義する:
+\begin{align}
+    \dot{\sigma}_{\text{sys}} &= -k_{\text{B}} \Tr[ \dot{\rho}(t) \ln \rho(t)] \\
+    \dot{\sigma}_{\text{bath}} &= \sum_{\mu \in \mathcal{L}_{L}} \sigma_{\mu} Q_{\mu}(\rho(t)) \\
+    \dot{\sigma}_{\text{tot}} &= \dot{\sigma}_{\text{sys}} + \dot{\sigma}_{\text{env}}
+\end{align}
+また、Thermodynamic force op.を
+\begin{align}
+    F_{\mu}(\rho) 
+    \begin{cases}
+        0 & (\mu \in \mathcal{L}_{H}) \\
+        \sigma_{\mu} L_{\mu} + k_{\text{B}}[L_{\mu}, \ln \rho] & (\mu \in \mathcal{L}_{L})
+    \end{cases}
+\end{align}
+と定義する。
+このとき、
+\begin{align}
+    \dot{\sigma}_{\text{tot}} &= \ev{ \mathbb{J}(\rho) , \mathbb{F}(\rho) }
+\end{align}
+が成り立つ。\\
+$(\because)$\\
+\begin{align}
+    \dot{\sigma}_{\text{sys}} &= -k_{\text{B}} \Tr[ \dot{\rho}(t) \ln \rho(t)] \\
+    &= -k_{\text{B}} \Tr[ \nabla^*_{\mathbb{S}} \mathbb{J}(\rho) \ln \rho(t)] \\
+    &= -k_{\text{B}} \ev{ \nabla^*_{\mathbb{S}}  \mathbb{J}(\rho) , \ln \rho(t)} \\
+    &= -k_{\text{B}} \ev{  \mathbb{J}(\rho) , \nabla_{\mathbb{S}} \ln \rho(t)} \\
+    &= -k_{\text{B}} \sum_{\mu \in \mathcal{L}} \qty( \Tr[ J_{\mu}^{\dagger}(\rho) [\ln \rho, S_{\mu}] ] + \Tr[ J_{\mu}(\rho) [\ln \rho, S_{\mu}^{\dagger}] ]) \\
+    &= k_{\text{B}} \sum_{\mu \in \mathcal{L}_{L}} \qty( \Tr[ J_{\mu}^{\dagger}[L_{\mu}, \ln \rho] ] + \Tr[ J_{\mu}(\rho) [\ln \rho, L_{\mu}^{\dagger}] ]) 
+\end{align}
+が成り立つ。
+\footnote{ただし、
+\begin{align}
+    [J_{\mu}, V_{\mu}^{\dagger}] &\propto [\rho, V_{\mu}^{\dagger}]\\
+    [J_{\mu}, V_{\mu}] &\propto [\rho, V_{\mu}]\\
+    \Tr[\ln\rho [\rho, V_{\mu}^{\dagger}]] &= 0 \\
+    \Tr[\ln\rho [\rho, V_{\mu}]] &= 0
+\end{align}
+が成り立つため、Hamiltonian項は寄与しない。
+}
+
+また、
+\begin{align}
+    \dot{\sigma}_{\text{bath}} &= \sum_{\mu \in \mathcal{L}_{L}} \sigma_{\mu} Q_{\mu}(\rho(t)) \\
+    &= \sum_{\mu \in \mathcal{L}_{L}} \sigma_{\mu} \qty( \Tr[ J_{\mu}^{\dagger}(\rho) L_{\mu} ] + \Tr[ J_{\mu}(\rho) L_{\mu}^{\dagger} ]) 
+\end{align}
+を合わせることで、
+\begin{align}
+    \dot{\sigma}_{\text{tot}} &= \sum_{\mu \in \mathcal{L}_{L}} \qty( \Tr[ J_{\mu}^{\dagger}(\rho) (\sigma_{\mu} L_{\mu} + k_{\text{B}} [L_{\mu}, \ln \rho] ) ] + \Tr[ J_{\mu}(\rho) (\sigma_{\mu} L_{\mu}^{\dagger} + k_{\text{B}} [L_{\mu}^{\dagger}, \ln \rho] ) ]) \\
+    &= \ev{ \mathbb{J}(\rho) , \mathbb{F}(\rho) }
+\end{align}
+が成り立つ。
+\qed\\
+
+2つの超演算子$\mathbb{B}^{+}, \mathbb{B}^{-} $について、
+\begin{align}
+    (\mathcal{M}_{\mathbb{B}^{\pm}} )_{\mu} (\mathbb{A}) := \int_{0}^{1} \dd{s} (B_{\mu}^{-})^{s} A_{\mu} (B_{\mu}^{+})^{1-s}
+\end{align}
+を定義する。
+ここで、
+\begin{align}
+    B_{\mu}^{\pm} = \sum_{n} b_{n}^{\mu\pm} \ketbra{\chi_{n}^{\mu\pm}}
+\end{align}
+と展開すると、
+\begin{align}
+[\mathcal{M}_{\mathbb{B}^{\pm}}(\mathbb{A})]_{\mu}
+&=
+\sum_{n m}
+\frac{b_{n}^{\mu -} - b_{m}^{\mu +}}
+{\ln (b_{n}^{\mu -} / b_{m}^{\mu +})}
+\mel{\chi_{n}^{\mu -}}{A_{\mu}}{\chi_{m}^{\mu +}}
+\ket{\chi_{n}^{\mu -}}\bra{\chi_{m}^{\mu +}}
+\end{align}
+と計算できる。
+このとき、以下の関係が成り立つ。
+\begin{align}
+    \mathbb{J}(\rho) &= \mathcal{M}_{\mathbf{\Gamma}^{\pm}}(\mathbb{F}(\rho)\\
+    \mathbf{\Gamma}_{\mu}^{\pm} &=\{\Gamma_{\mu}^{\pm}\}_{\mu \in \mathcal{L}} \\
+    \Gamma_{\mu}^{\pm} &= \frac{1}{2}\gamma_{\mu}^{\pm} \rho
+\end{align}
+\textbf{Prf.}\\
+詳細つり合い条件を用いることで、
+\begin{align}
+F_{\mu}(\rho)
+&= \sigma_{\mu} L_{\mu} + k_{\mathrm{B}} [L_{\mu}, \ln \rho] \\
+&= k_{\mathrm{B}} \left[ L_{\mu} \ln(\gamma_{\mu}^{+} \rho) - \ln(\gamma_{\mu}^{-} \rho) L_{\mu} \right] \\
+&= k_{\mathrm{B}} \left[ L_{\mu} (\ln \Gamma_{\mu}^{+}) - (\ln \Gamma_{\mu}^{-}) L_{\mu} \right]
+\end{align}
+となる。これを用いて、
+\begin{align}
+\int_{0}^{1} (\Gamma_{\mu}^{-})^{s}
+\left[ L_{\mu} (\ln \Gamma_{\mu}^{+}) - (\ln \Gamma_{\mu}^{-}) L_{\mu} \right]
+(\Gamma_{\mu}^{+})^{1-s} \, ds
+&= -\int_{0}^{1} \frac{d}{ds}
+\left( e^{s \ln \Gamma_{\mu}^{-}} L_{\mu} e^{(1-s) \ln \Gamma_{\mu}^{+}} \right) ds \\
+&= L_{\mu} \Gamma_{\mu}^{+} - \Gamma_{\mu}^{-} L_{\mu} \\
+&= \frac{1}{2}\gamma_{\mu}^{+} L_{\mu} \rho - \frac{1}{2}\gamma_{\mu}^{-} \rho L_{\mu}
+= J_{\mu}(\rho)
+\end{align}
+が成り立つ。\qed\\
+
+このとき、前の話から
+\begin{align}
+\dot{\Sigma}_{\mathrm{tot}}(\rho)
+&= \ev{\mathbb{F}(\rho), \mathbb{J}(\rho)}\\
+&= \ev{\mathbb{F}(\rho), \mathcal{M}_{\Gamma^{\pm}}(\mathbb{F}(\rho))}\\
+&= \ev{\mathbb{J}(\rho), \mathcal{M}_{\Gamma^{\pm}}^{-1}(\mathbb{J}(\rho))}
+\end{align}
+である。
+ここで、内積
+\begin{align}
+\ev{\mathbb{A}, \mathbb{C}}_{\mathbb{B}^{\pm}}
+&:= \ev{\mathbb{A}, \mathcal{M}_{\mathbb{B}}(\mathbb{C})} \in \mathbb{R},
+\end{align}
+を以下のように導入すると、
+\begin{align}
+\ev{\mathbb{A}, \mathbb{A}}_{\mathbb{B}^{\pm}} &\ge 0,
+\end{align}
+をきちんと満たしてくれる。したがって、
+\begin{align}
+\dot{\Sigma}_{\mathrm{tot}}(\rho)
+= \ev{\mathbb{F}(\rho), \mathbb{F}(\rho)}_{\Gamma^{+}}
+\ge 0
+\end{align}
+が成り立つ。
+
+\end{document}

@@ -1,12 +1,11 @@
 # Fdb version 4
-["dvipdf"] 1760058357.696 "chap62.dvi" "chap62.pdf" "chap62" 1760058359.48153 0
-  "chap62.dvi" 1760058357 48232 49c3c7f93de0e0da9b418fc55a0e07e9 "latex"
+["dvipdf"] 1761103848.64985 "sotsuken2.dvi" "sotsuken2.pdf" "sotsuken2" 1761103850.29178 0
+  "sotsuken2.dvi" 1761103848 59136 892869b7591f9a3935d82db512e386af "latex"
   (generated)
-  "chap62.pdf"
+  "sotsuken2.pdf"
   (rewritten before read)
-["latex"] 1760058355.32168 "chap62.tex" "chap62.dvi" "chap62" 1760058359.46715 0
+["latex"] 1761103846.46277 "sotsuken2.tex" "sotsuken2.dvi" "sotsuken2" 1761103850.27584 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1743309921 3524 cb3e574dea2d1052e39280babc910dc8 ""
-  "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1743309524 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1743308370 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1743308370 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1743308370 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -40,6 +39,7 @@
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1743309006 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1743309006 1300 b62933e007d01cfd073f79b963c01526 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1743309006 1292 21c1c5bfeaebccffdb478fd231a0997d ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmss10.tfm" 1743309006 1316 b636689f1933f24d1294acdf6041daaa ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmss12.tfm" 1743309006 1324 37b971caf729d7edd9cbb9f9b0ea76eb ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1743309006 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1743309006 1116 933a60c408fc0a863a92debe84b2d294 ""
@@ -190,12 +190,12 @@
   "c:/texlive/2025/texmf-dist/web2c/texmf.cnf" 1743308240 42148 61becc7c670cd061bb319c643c27fdd4 ""
   "c:/texlive/2025/texmf-var/web2c/euptex/uplatex.fmt" 1743314285 3337452 a7ab41831b9f0e26f66832580a1f400e ""
   "c:/texlive/2025/texmf.cnf" 1743313992 713 e69b156964470283e0530f5060668171 ""
-  "chap62.aux" 1760058357 765 cf97e8a9908cbae42e4d3c50b5164121 "latex"
-  "chap62.out" 1760058357 491 25f32b8c7f2f50826b9ba60e8a9130a3 "latex"
-  "chap62.tex" 1760058351 25427 32ceb383168370c79e793632c10a06ea ""
+  "sotsuken2.aux" 1761103848 1473 3e55b05b41be7ef6a66b58cfa51b95b8 "latex"
+  "sotsuken2.out" 1761103848 709 eed0b2ea4762932fa9a0c852ea7af4a9 "latex"
+  "sotsuken2.tex" 1761103845 22760 4db6c522d36bf3700e2eaedab308a056 ""
   (generated)
-  "chap62.aux"
-  "chap62.dvi"
-  "chap62.log"
-  "chap62.out"
+  "sotsuken2.aux"
+  "sotsuken2.dvi"
+  "sotsuken2.log"
+  "sotsuken2.out"
   (rewritten before read)

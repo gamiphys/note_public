@@ -1,0 +1,732 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+%footnote
+% \usepackage[flushmargin,hang,multiple]{footmisc}
+
+
+% コマンド定義
+\newcommand{\argmin}{\mathop{\mathrm{arg\,min}}\limits}
+\newcommand{\argmax}{\mathop{\mathrm{arg\,max}}\limits}
+
+
+\begin{document}
+
+\title{卒研ゼミ\#1}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+大賀さんたちの論文\\
+\url{https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.6.013082}
+のまとめ。
+
+\section{設定/モチベーション}
+Markov jump過程で書けるような系を考える。
+マスター方程式は
+\begin{align}
+    \dv{\vb{p}(t)}{t} = W \vb{p}(t)
+\end{align}
+である。
+遷移レート${W}$が対角化可能であるとし、
+$(\lambda_{\alpha}, \vb{u}_{\alpha}, \vb{v}_{\alpha})$を
+${W}$の固有値、右固有ベクトル、左固有ベクトルの組とする。
+このとき、遷移レートをスペクトル分解することができ、
+\begin{align}
+    W &= \sum_{\alpha} \lambda_{\alpha} \vb{u}_{\alpha} \vb{v}_{\alpha}^{\top}\\
+    I &= \vb{\pi} \vb{1}^{\top} + \sum_{\alpha : \lambda_{\alpha} \neq 0} \vb{u}_{\alpha} \vb{v}_{\alpha}^{\top}
+\end{align}
+となる。ただし、遷移レートの一つの固有値は$0$であり、
+そのときの右固有ベクトルは定常分布$\vb{\pi}$、左固有ベクトルは全ての成分が$1$であることを用いた。
+このとき、
+\begin{align}
+    e^{\tau W} &= \vb{\pi} \vb{1}^{\top} + \sum_{\alpha : \lambda_{\alpha} \neq 0} e^{\tau \lambda_{\alpha}} \vb{u}_{\alpha} \vb{v}_{\alpha}^{\top}\\
+    &= \vb{\pi} \vb{1}^{\top} + \sum_{\alpha : \lambda_{\alpha} \neq 0} e^{\tau \Re(\lambda_{\alpha}) + i \tau \Im(\lambda_{\alpha})} \vb{u}_{\alpha} \vb{v}_{\alpha}^{\top}
+\end{align}
+となる。
+$p(\tau) = e^{\tau W} p(0)$であるから、\textbf{遷移レートの固有値が緩和や振動の時間スケールを決めている}ことがわかる。
+
+% 遷移レートが緩和や振動を特徴づける他の例として、自己相関関数がある。
+% 定常状態自己相関関数は
+% \begin{align}
+%     \ev{a(\tau)a(0)} -\ev{a}\ev{a} &= \sum_{i,j} ([e^{\tau W}] _{ji} - \pi_j) \pi_i a_i a_j
+% \end{align}
+% である。
+% \footnote{
+%     \begin{align}
+%         \ev{a(\tau)a(0)} &= \sum_{i,j} p(j,\tau; i,0) a_i a_j\\
+%         &= \sum_{i,j} p(j,\tau|i,0) p(i,0) a_i a_j\\
+%         &= \sum_{i,j} [e^{\tau W}]_{ji} \pi_i a_i a_j
+%     \end{align}
+%     および
+%     \begin{align}
+%         \ev{a} &= \sum_i \pi_i a_i
+%     \end{align}
+%     から従う。ここでは定常状態を考えてることに注意。
+% }
+% これと、上のスペクトル分解の話を合わせると、\textbf{Wの固有値の実部と虚部がそれぞれ自己相関関数の緩和と振動の速度を特徴づける}ことがわかる。
+
+固有値の中でも、spectral gapとよばれる、$0$以外の固有値のうち実部が最大のものが重要である。
+というのも、遷移レートの固有値は0以下であるが、0以外で最大のものが最も遅い緩和を特徴づける、すなわち律速であるからである。
+
+以上の話から、\textbf{遷移レートの固有値と熱力学的なコストの間に関係があるのでは？}と考えられる。
+以下では、定常状態EPRが固有値を制限することを示す。\\
+
+定常状態EPR(以下SSEPR)は
+\begin{align}
+    \sigma := \frac{1}{2} \sum_{i,j} (W_{ji} \pi_i - W_{ij} \pi_j) \ln \frac{W_{ji} \pi_i}{W_{ij} \pi_j}
+\end{align}
+である。
+ただし、$\pi$は定常分布である。
+とくに、遷移レートが詳細つり合い
+\begin{align}
+    W_{ij} \pi_j = W_{ji} \pi_i
+\end{align}
+を満たすとき、これは$0$になる。
+以下、遷移レートに課す仮定として、
+\begin{enumerate}
+    \item $W$は既約である。(定常状態が一意に定まる)
+    \item $W_{ij} > 0 \Leftrightarrow W_{ji} > 0$ (双方向性、EPRが有限となることを保証)
+\end{enumerate}
+を仮定する。(詳細つり合いは仮定しない。)
+
+また、定常状態における状態$i,j$の間のダイナミカルアクティビティを
+\begin{align}
+    A_{ij} := \pi_i W_{ji} + \pi_j W_{ij}
+\end{align}
+と定義する。
+
+ここで、ある遷移レート$W$で記述できる系の(非平衡)定常分布を固定し、\textbf{その定常分布を平衡分布として持つような遷移レートを考える}。
+\begin{itembox}[l]{\textbf{Def.reference rate matrix}}
+    上の仮定を満たす遷移レートを用いて、reference rate matrix$\bar{W}$を
+    \begin{align}
+        \bar{W}_{ij} := \frac{1}{2} \left(W_{ij} + W_{ji} \frac{\pi_i}{\pi_j}\right)
+    \end{align}
+    と定義する。
+\end{itembox}
+形としては、
+\begin{align}
+    \bar{W}_{ij}\pi_j &= \frac{1}{2} (W_{ij} \pi_j + W_{ji} \pi_i)\\
+\end{align}
+のように、算術平均の形をしている。\footnote{このおかげでアクティビティが保たれる。}
+これは以下の4つの性質を満たす。
+\begin{itembox}[l]{\textbf{Prop.reference rate matrixの性質}}
+    reference rate matrix $\bar{W}$は以下の4つの性質を満たす。
+\begin{enumerate}
+    \item $\bar{W}$は詳細つり合い条件を満たす。
+    \item $\bar{W}$は$W$の定常分布$\pi$を平衡分布として持つ。
+    \item $\bar{W}$は$W$と同じエスケープレートを持つ。
+    \item $\bar{W}$は定常状態において$W$と同じダイナミカルアクティビティを持つ。
+\end{enumerate}
+\end{itembox}
+\textbf{Prf.}\\
+1. 
+$\bar{W}$についての詳細つり合い条件$\bar{W}_{ij} \pi_j = \bar{W}_{ji} \pi_i$を示す。
+$\bar{W}$の定義を用いて、
+\begin{align}
+    \bar{W}_{ij} \pi_j &= \frac{1}{2} \left(W_{ij} + W_{ji} \frac{\pi_i}{\pi_j}\right) \pi_j\\
+    &= \frac{1}{2} (W_{ij} \pi_j + W_{ji} \pi_i)\\
+    &= \bar{W}_{ji} \pi_i
+\end{align}
+が得られる。\\
+2.
+$\bar{W}$についてのマスター方程式の右辺に$\pi$を代入して$0$になることを確認する。
+\begin{align}
+    \sum_j \bar{W}_{ij} \pi_j
+    &= \sum_j \frac{1}{2} \qty(W_{ij} + W_{ji} \frac{\pi_i}{\pi_j}) \pi_j\\
+    &= \frac{1}{2} \sum_j (W_{ij} \pi_j + W_{ji} \pi_i)\\
+    &= \frac{1}{2} \left(\sum_j W_{ij} \pi_j + \pi_i \sum_j W_{ji}\right)\\
+    &= \frac{1}{2} (0 + \pi_i \cdot 0) = 0
+\end{align}
+ただし、$\sum_j W_{ji} = 0$(遷移レートの性質)および$\sum_j W_{ij} \pi_j = 0$(定常状態の性質)を用いた。\\
+3.
+エスケープレートは$-W_{ii}$で与えられる。このとき$\bar{W}$の定義から、
+\begin{align}
+    \bar{W}_{ii} &= \frac{1}{2} \left(W_{ii} + W_{ii} \frac{\pi_i}{\pi_i}\right)\\
+    &= W_{ii}
+\end{align}
+がわかる。\\
+4.
+定常状態におけるダイナミカルアクティビティ$A_{ij} = \pi_i W_{ji} + \pi_j W_{ij}$
+を計算すると、
+\begin{align}
+    \pi_i \bar{W}_{ji} + \pi_j \bar{W}_{ij}
+    &= \pi_i \frac{1}{2} \left(W_{ji} + W_{ij} \frac{\pi_j}{\pi_i}\right) + \pi_j \frac{1}{2} \left(W_{ij} + W_{ji} \frac{\pi_i}{\pi_j}\right)\\
+    &= \frac{1}{2} \qty(\pi_i W_{ji} + \pi_i W_{ij} \frac{\pi_j}{\pi_i} + \pi_j W_{ij} + \pi_j W_{ji} \frac{\pi_i}{\pi_j})\\
+    &= \pi_i W_{ji} + \pi_j W_{ij}
+\end{align}
+\qed\\
+
+逆に、これらの性質を満たす遷移レートは一意に定まる。
+\footnote{
+    3の性質から対角成分は一意に定まる。
+    1,4の性質から、非対角成分について、
+    \begin{align}
+        \bar{W}_{ij} \pi_j &= \bar{W}_{ji} \pi_i\\
+        \bar{W}_{ij} \pi_j + \bar{W}_{ji} \pi_i &= W_{ij} \pi_j + W_{ji} \pi_i
+    \end{align}
+    の連立方程式ができる。一本目の式から、$\bar{W}_{ji} = \pi_j/\pi_i \bar{W}_{ij}$であるから、
+    \begin{align}
+        \bar{W}_{ij} \pi_j + \frac{\pi_j}{\pi_i} \bar{W}_{ij} \pi_i &= W_{ij} \pi_j + W_{ji} \pi_i\\
+       \Leftrightarrow 2 \bar{W}_{ij} \pi_j &= W_{ij} \pi_j + W_{ji} \pi_i\\
+        \Leftrightarrow \bar{W}_{ij} &= \frac{1}{2} \left(W_{ij} + W_{ji} \frac{\pi_i}{\pi_j}\right)
+    \end{align}
+    となり、$\bar{W}$の定義に一致する。
+}
+
+上の性質から、$\bar{W}$は$W$の平衡緩和系に対応する遷移レートであるとみなせる。
+
+以下、$W$の固有値を並べたベクトルを$\bm{\lambda}^W$とする。
+ただし、
+\begin{align}
+    \Re \lambda_1^W \geq \Re \lambda_2^W \geq \cdots \geq \Re \lambda_n^W
+\end{align}
+とする。
+今後、\textbf{$W$と$\bar{W}$の固有値を比較し、その差にかかる制限を考える。}
+論文では、
+\begin{align}
+    \norm{\Delta \bm{\lambda}} := \norm{\bm{\lambda}^W - \bm{\lambda}^{\bar{W}}} 
+\end{align}
+によって差を定義する。
+% \footnote{
+%     置換行列を$\Pi$としたとき、
+%     \begin{align}
+%          \norm{\bm{\lambda}^W - \bm{\lambda}^{\bar{W}}}  = \min_{\Pi} \norm{\bm{\lambda}^W - \Pi \bm{\lambda}^{\bar{W}}}
+%     \end{align}
+%     であることが知られている。
+%     \textcolor{red}{
+%     この話は一次元のWasserstein距離を用いた最適輸送理論の話に似ている気がする。
+%     数直線上で左側にある分布を右側に輸送するとき、「左のものほど左に、右のものほど右に」移すのが最適であることが示される。
+% }
+% }
+
+主結果で用いる量として、mixing rateを定義する。
+\begin{itembox}[l]{\textbf{Def.mixing rate}}
+    状態$i,j$の間のダイナミカルアクティビティを$A_{ij}$とする。
+    このとき、mixing rate$\kappa$を
+    \begin{align}
+        \kappa = \max_{i \neq j} \frac{A_{ij}}{2\pi_i \pi_j}
+    \end{align}
+    また、$\eta_{W}$を
+    \begin{align}
+        \eta_{W} = \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{A_{ij}}{2\pi_i \pi_j})^2}
+    \end{align}
+    と定義する。
+\end{itembox}
+mixing rateは定常確率分布で規格化したうえでのアクティビティの最大値である。
+とりあえずは$\sigma$と$\norm{\Delta \bm{\lambda}}$を結びつけるための規格化定数として利用される。
+
+\section{主結果}
+主結果を並べていく。証明は基本的に次のsectionで行う。
+\subsection{全体}
+まずは$\norm{\Delta \bm{\lambda}}$に対するlimitを考える。
+\begin{itembox}[l]{\textbf{Thm.1}}
+    \begin{align}
+        \frac{\sigma}{2\kappa} \geq \qty(\frac{\eta_{W}}{\kappa})^2 \frac{\norm{\Delta \bm{\lambda}}}{\eta_{W}}\tanh^{-1}\frac{\norm{\Delta \bm{\lambda}}}{\eta_{W}} \geq \frac{\norm{\Delta \bm{\lambda}}^2}{\kappa^2} \label{eq:thm1}
+    \end{align}
+    が成り立つ。\footnote{二本目の不等号は$x\tanh^{-1}x \geq x^2$を用いた。}
+\end{itembox}
+すなわち、\textbf{$W$が$\bar{W}$から離れていれば離れているほど、熱力学的コストであるSSEPRが大きくなる。}
+とくに、
+$\Phi_{y}(x) :=  2xy\tanh^{-1} \frac{x}{y}$とおくと、
+\begin{align}
+    \norm{\Delta \bm{\lambda}} \leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma}
+\end{align}
+ともかける。\\
+
+1本目と2本目の不等号の中間程度の大きさのバウンドも考えることができる。
+そこで、以下のような遷移レート$G$を考える。
+\begin{align}
+    G_{ij} &:= 
+    \begin{cases}
+        \pi \quad i \neq j, W_{ij} > 0\\
+        0 \quad i \neq j, W_{ij} = 0\\
+    \end{cases}
+    \\
+    G_{ii} &:= -\sum_{j(\neq i)} G_{ji}
+\end{align}
+である。
+これは(1)詳細つり合いを満たす(2)同じ定常状態を持つ
+\footnote{
+    二番目が非自明なので示しておく。
+    \begin{align}
+        \sum_{j}G_{ij} \pi_j &= G_{ii} \pi_i + \sum_{j(\neq i)} G_{ij} \pi_j\\
+        &= -\sum_{j(\neq i)} G_{ji} \pi_i + \sum_{j(\neq i)} G_{ij} \pi_j\\
+        &= -\sum_{j(\neq i): W_{ji} > 0} G_{ji} \pi_i + \sum_{j(\neq i): W_{ij} > 0} G_{ij} \pi_j\\
+        &= -\sum_{j(\neq i): W_{ji} > 0} \pi_j \pi_i + \sum_{j(\neq i): W_{ij} > 0} \pi_i \pi_j\\
+        &= 0
+    \end{align}
+}(3)$W$と同じグラフトポロジーを持つ。
+\footnote{
+    $G_{ij} > 0 \Leftrightarrow W_{ij} > 0$であるということ。状態をグラフの頂点とし、辺を遷移可能な遷移とみたとき、このグラフのつながり方が同じであるということを意味する。
+}
+
+
+このとき、3.4節で証明するように、
+\begin{align}
+    \eta_{W} &\leq \kappa \eta_{G} \leq \kappa \sqrt{1- \sum_{i} \pi_i^2} \leq \kappa \label{eq:eta_ineq}
+\end{align}
+が成立する。
+これと、$\Phi^{-1}_{y}(x)$が$y$の増加関数であることから、
+\begin{align}
+    \norm{\Delta \bm{\lambda}} &\leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \Phi_{\kappa\eta_{G}}^{-1}(\kappa \sigma) \leq \Phi_{\kappa}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma}
+\end{align}
+が得られる。
+右側二つの項は(EPR)以外はmxing rateのみに依存する。その左の項は、mixing rateのほかに、定常分布とグラフトポロジーに依存する。
+また、左から二番目の項は、全部の状態の組についてのダイナミカルアクティビティに依存する。
+このように、タイトになるにつれて、遷移に関する情報を多く必要とする。
+
+以下、実部と虚部への分解を考える。
+\begin{align}
+    \norm{\Delta \bm{\lambda}} ^2 &= \sum_{\alpha=2}^n \abs{\Delta \Re \lambda_{\alpha}}^2 + \sum_{\alpha=2}^n \abs{\Im \lambda_{\alpha}^{W}}^2\\
+    \Delta \Re \lambda_{\alpha} &:= \Re \lambda_{\alpha}^W - \lambda_{\alpha}^{\bar{W}}
+\end{align}
+である。ただし、$\lambda_1^{W} = \lambda_1^{\bar{W}}=0$であることと$\lambda_{\alpha}^{\bar{W}}$が実数であることを用いた。\footnote{証明は次のsectionで行う。}
+
+\subsection{実部}
+律速である、spectral gap$\abs{\Re \lambda_2^W}$に対するlimitを考える。
+\begin{itembox}[l]{\textbf{Thm.2 spectral gapに対する制限}}
+    \begin{align}
+        0 \leq \abs{\Re \lambda_2^W} - \abs{\lambda_2^{\bar{W}}} \leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma} \label{eq:thm2}
+    \end{align}
+\end{itembox}
+この結果から、1.\textbf{平衡緩和する系よりも、それからずれた系の方が緩和が速いこと}(第一不等号)、
+2.\textbf{緩和が速ければ速いほど、熱力学的コストであるSSEPRが大きくなる}こと(第二不等号以降)がわかる。
+
+また、$\bar{W}$との差ではなく、$W$の実部自体を制限することもできる。
+3.5節で示すように、
+\begin{align}
+    \abs{\lambda_2^{\bar{W}}} &\leq \kappa \abs{\lambda_2^{G} } \leq \kappa \label{eq:lambda2_barW}
+\end{align}
+が成り立つ。これとThm.2、(\ref{eq:eta_ineq})を合わせると、
+\textbf{固有値の実部単体の制限が得られる：}
+\begin{align}
+    \abs{\Re \lambda_2^W} &\leq \abs{\lambda_2^{\bar{W}}} + \Phi_{\eta_{W}}^{-1}(\kappa \sigma)\\
+    &\leq \kappa \abs{\lambda_2^{G} } + \Phi_{\kappa \eta_{G}}^{-1}(\kappa \sigma)\\
+    &\leq \kappa\abs{\lambda_2^{G}} + \sqrt{\frac{\kappa}{2} \sigma}\\
+    &\leq \kappa + \sqrt{\frac{\kappa}{2} \sigma}
+\end{align}
+二番目に緩い不等式は、mixing rateとグラフトポロジーに依存する。
+すなわち、実部の絶対値の上限は、平衡状態で消える熱力学的コストと、平衡状態でも消えないグラフトポロジーで抑えられることがわかる。
+
+\subsection{虚部}
+\begin{itembox}[l]{\textbf{Thm.3 虚部に対する制限}}
+    \begin{align}
+        \norm{\Im \lambda^W} \leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma} \label{eq:thm3}
+    \end{align}
+\end{itembox}
+すなわち、\textbf{振動が速ければ速いほど、熱力学的コストであるSSEPRが大きくなる。}
+これだけ証明が簡単なので、先に証明する。\\
+\textbf{Prf.}\\
+\begin{align}
+    \norm{\Delta \bm{\lambda}} ^2 &= \sum_{\alpha=2}^n \abs{\Delta \Re \lambda_{\alpha}}^2 + \sum_{\alpha=2}^n \abs{\Im \lambda_{\alpha}}^2\\
+    &\geq \sum_{\alpha=2}^n \abs{\Im \lambda_{\alpha}}^2\\
+    &= \norm{\Im \bm{\lambda}^W}^2
+\end{align}
+である。また、Thm.1より
+\begin{align}
+    \norm{\Delta \bm{\lambda}} \leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma}
+\end{align}
+であった。これらを合わせればよい。\qed\\
+
+\section{定理1と定理2の証明}
+\subsection{記号の準備}
+記号をいくつか先に定義しておく。
+\begin{align}
+    K_{ji} &:= W_{ji} \sqrt{\frac{\pi_i}{\pi_j}}
+\end{align}
+としておく。これを用いて、エルミート行列$L$と反エルミート行列$M$を
+\begin{align}
+    L &:= \frac{1}{2} (K + K^{\top})\\
+    M &:= \frac{1}{2} (K - K^{\top})
+\end{align}
+と定義する。
+ここで、$D_{ji} := \delta_{ji} \sqrt{\pi_i}$とすると、
+これは対角行列であり、
+\begin{align}
+    K &= D^{-1} W D\\
+    L &= D^{-1} \bar{W} D
+\end{align}
+となる。(計算すればわかる。)
+相似変換の下で固有値が変化しないことから、
+\begin{align}
+    \bm{\lambda}^K &= \bm{\lambda}^W\\
+    \bm{\lambda}^L &= \bm{\lambda}^{\bar{W}}
+\end{align}
+となる。ただし、$L$がエルミートであるから、$\bm{\lambda}^L, \bm{\lambda}^{\bar{W}}$は実ベクトルである。
+
+加えて、$L$の二番目に大きい固有値は以下の変分原理に従う。
+\begin{align}
+    \lambda_{2}^L = \max_{\vb{v}:\vb{v} \perp \sqrt{\bm{\pi}}, \norm{\vb{v}}=1} \vb{v}^{\top} L \vb{v} \label{eq:var_principle}
+\end{align}
+ただし、$\sqrt{\bm{\pi}} = (\sqrt{\pi_1}, \sqrt{\pi_2}, \cdots, \sqrt{\pi_n})^{\top}$であり、
+$L$の固有値0に対応する固有ベクトルである：
+    \begin{align}
+        L\sqrt{\bm{\pi}} &= D^{-1} \bar{W} D \sqrt{\bm{\pi}}= D^{-1} \bar{W} \bm{\pi}= D^{-1} \cdot 0 = 0
+    \end{align}
+
+\subsection{定理1の証明}
+(\ref{eq:thm1})の第一不等号を示す。(\ref{eq:thm1})を再掲する。
+\begin{align}
+    \frac{\sigma}{2\kappa} \geq \qty(\frac{\eta_{W}}{\kappa})^2 \frac{\norm{\Delta \bm{\lambda}}}{\eta_{W}}\tanh^{-1}\frac{\norm{\Delta \bm{\lambda}}}{\eta_{W}} \geq \frac{\norm{\Delta \bm{\lambda}}^2}{\kappa^2}
+\end{align}
+\textbf{Prf.}\\
+SSEPRを以下のように変形する。
+\begin{align}
+    \sigma &= \frac{1}{2} \sum_{i \neq j} (W_{ji} \pi_i - W_{ij} \pi_j) \ln \frac{W_{ji} \pi_i}{W_{ij} \pi_j}\\
+    &= \frac{1}{2} \sum_{i \neq j} \qty(\pi_{i} \sqrt{\frac{\pi_j}{\pi_i}} K_{ji} - \pi_j \sqrt{\frac{\pi_i}{\pi_j}} K_{ij}) \ln \frac{\pi_i \sqrt{\frac{\pi_j}{\pi_i}} K_{ji}}{\pi_j \sqrt{\frac{\pi_i}{\pi_j}} K_{ij}}\\
+    &= \frac{1}{2} \sum_{i \neq j} \sqrt{\pi_i \pi_j} (K_{ji} - K_{ij}) \ln \frac{K_{ji}}{K_{ij}}\\
+    &\quad\qty(  \tanh^{-1} x = \frac{1}{2} \ln \frac{1+x}{1-x}を用いると、)\nonumber\\
+    &= \sum_{i \neq j} 2\sqrt{\pi_i \pi_j} \abs{M_{ji}} \tanh^{-1}  \frac{\abs{M_{ji}}}{L_{ji}}\\
+    &\quad \qty( \kappa\text{の定義から} \sqrt{\pi_i \pi_j}\geq \frac{L_{ji}}{\kappa} \text{であることに注意して、})\nonumber\\
+    &\geq \frac{2}{\kappa} \sum_{i \neq j} L_{ji} \abs{M_{ji}} \tanh^{-1}  \frac{\abs{M_{ji}}}{L_{ji}}\\
+    &= \frac{2}{\kappa} \qty(\sum_{i \neq j} L_{ji}\abs{M_{ji}}) \sum_{i \neq j} \frac{L_{ji}\abs{M_{ji}}}{\sum_{k \neq l} L_{lk}\abs{M_{lk}}} \tanh^{-1}  \frac{\abs{M_{ji}}}{L_{ji}}\\
+    &\quad \qty(x > 0 \text{で}\tanh^{-1} x \text{は凸関数であることに注意して、Jensenの不等式より})\nonumber\\
+    &\geq \frac{2}{\kappa} \qty(\sum_{i \neq j} L_{ji}\abs{M_{ji}}) \tanh^{-1} \qty(\frac{\sum_{i \neq j}M_{ji}^2}{\sum_{i \neq j} L_{ji}\abs{M_{ji}}})
+\end{align}
+
+また、Schwarzの不等式より、
+\begin{align}
+    \sum_{i \neq j} L_{ji} \abs{M_{ji}} &\leq \sqrt{\sum_{i \neq j} L_{ji}^2} \sqrt{\sum_{i \neq j} M_{ji}^2}\\
+    &= \eta_{W} \norm{M}_F
+\end{align}
+が得られる。
+ただし、$\eta_{W} = \sqrt{\sum_{i \neq j} L_{ji}^2}$およびフロベニウスノルム$\norm{M}_F = \sqrt{\sum_{i \neq j} M_{ji}^2}$を用いた。
+\footnote{$M$の対角成分は$0$であることに注意。}
+これまでの話を合わせれば
+\begin{align}
+    \frac{\sigma}{2\kappa} &\geq \frac{1}{\kappa^2} \qty(\sum_{i \neq j} L_{ji}\abs{M_{ji}}) \tanh^{-1} \qty(\frac{\sum_{i \neq j}M_{ji}^2}{\sum_{i \neq j} L_{ji}\abs{M_{ji}}})\\
+    &\geq \frac{1}{\kappa^2} \qty(\eta_{W} \norm{M}_F) \tanh^{-1} \qty(\frac{\norm{M}_F}{\eta_{W}})\\
+    &= \qty(\frac{\eta_{W}}{\kappa})^2 \frac{\norm{M}_F}{\eta_{W}} \tanh^{-1} \qty(\frac{\norm{M}_F}{\eta_{W}})
+\end{align}
+が得られる。ただし、2つ目の不等号で、$x\tanh^{-1} \qty(\frac{y}{x})$が$x$について単調減少であることを用いた。\\
+
+ここで、補題を用意する。\footnote{まだ証明は追えていない。}(一応一般的な形で書いてはいるが、記号は合わせてある)
+\begin{itembox}[l]{\textbf{Lem.}}
+    $L \in \mathbb{C}^{n \times n}$:エルミート行列、$M \in \mathbb{C}^{n \times n}$とする。
+    このとき、
+    \begin{align}
+        \norm{\bm{\lambda}^L - \Re \bm{\lambda}^{L + M}} \leq 
+        \norm{\frac{M + M^{\dagger}}{2}}_F+ \sqrt{\norm{\frac{M - M^{\dagger}}{2}}_F^2 - \norm{\Im \bm{\lambda}^{L + M}}^2}
+    \end{align}
+    が成り立つ。
+\end{itembox}
+行列摂動論の結果であるらしい。証明は最後に回す。
+
+とくに、今は
+\begin{align}
+    L + M &= K\\
+    M^{\dagger} &= -M
+\end{align}
+であることを用いると、右辺の第一項は$0$となり、根号の中の第一項は$\norm{M}_F^2$となる。
+これを用いると、
+\begin{align}
+    \norm{M}_F^2 &\geq \norm{\bm{\lambda}^L - \Re \bm{\lambda}^{K}}^2 + \norm{\Im \bm{\lambda}^{K}}^2\\
+    &= \norm{\bm{\lambda}^{L} - \bm{\lambda}^{K}}^2\\
+    &= \norm{\bm{\lambda}^{\bar{W}} - \bm{\lambda}^{W}}^2\\
+    &= \norm{\Delta \bm{\lambda}}^2
+\end{align}
+である。ただし、$L$がエルミートであることから、$\bm{\lambda}^L$は実ベクトルであることを用いた。
+($\Im \bm{\lambda}^L = 0$)
+以上の結果を合わせると、
+\begin{align}
+    \frac{\sigma}{2\kappa} &\geq \qty(\frac{\eta_{W}}{\kappa})^2 \frac{\norm{M}_F}{\eta_{W}} \tanh^{-1} \qty(\frac{\norm{M}_F}{\eta_{W}})\\
+    &\geq \qty(\frac{\eta_{W}}{\kappa})^2 \frac{\norm{\Delta \bm{\lambda}}}{\eta_{W}} \tanh^{-1} \qty(\frac{\norm{\Delta \bm{\lambda}}}{\eta_{W}})\\
+    &\geq \frac{\norm{\Delta \bm{\lambda}}^2}{\kappa^2}
+\end{align}
+が得られる。\qed\\
+
+\subsection{定理2の証明}
+(\ref{eq:thm2})を再掲する;
+\begin{align}
+    0 \leq \abs{\Re \lambda_2^W} - \abs{\lambda_2^{\bar{W}}} \leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma} \nonumber
+\end{align}
+\textbf{Prf.}\\
+$\vb{u}$を固有値$\lambda_{2}^{K}$に対応する$K$の右固有ベクトルとする。
+とくに、$\vb{u}$は規格化されているとする。
+\begin{align}
+    K \vb{u} &= \lambda_{2}^{K} \vb{u}
+\end{align}
+であることから、
+\begin{align}
+    \vb{u}^{\top} K  &=( \lambda_{2}^{K})^* \vb{u}^{\top}
+\end{align}
+である。これと、$\Re \lambda_{2}^{K} = \frac{1}{2} (\lambda_{2}^{K} + (\lambda_{2}^{K})^*)$を用いると、
+\begin{align}
+    \Re \lambda_{2}^{K} &= \frac{1}{2} \vb{u}^{\top} (K + K^{\top}) \vb{u}\\
+    &= \vb{u}^{\top} L \vb{u}
+\end{align}
+である。
+$K=D^{-1} W D$であることと$\vb{1}^{\top} W = 0$であることから、
+$K$は固有値$\lambda_{1}^K = 0$に対応する
+左固有ベクトル$(\vb{1}^{\top} D)^{\top} = \sqrt{\bm{\pi}}$を持つ。
+このとき、$\vb{u}$は$\sqrt{\bm{\pi}}$に直交する。\footnote{異なる固有値の右固有ベクトルと左固有ベクトルは直交する。}
+したがって、$\vb{u}$は(\ref{eq:var_principle})の最大化問題の候補に入る。
+これより、
+\begin{align}
+    \lambda_{2}^{\bar{W}} = \lambda_{2}^{L} &\geq \vb{u}^{\top} L \vb{u} = \Re \lambda_{2}^{K} = \Re \lambda_{2}^{W}
+\end{align}
+である。
+したがって、
+\begin{align}
+     \lambda_{2}^{\bar{W}} - \Re \lambda_{2}^{W} &\geq 0
+\end{align}
+である。
+$\lambda$の実部の符号に気を付けて、
+\begin{align}
+    \abs{\Delta \Re \lambda_{2}^{W}} =  \abs{\Re \lambda_{2}^{W}} - \abs{\lambda_{2}^{\bar{W}}} &= \geq 0
+\end{align}
+あとは定理3とまったく同じ流れで証明できる。
+\begin{align}
+    \norm{\Delta \bm{\lambda}} ^2 &= \sum_{\alpha=2}^n \abs{\Delta \Re \lambda_{\alpha}}^2 + \sum_{\alpha=2}^n \abs{\Im \lambda_{\alpha}}^2\\
+    &\geq \abs{\Delta \Re \lambda_{2}^{W}}^2
+\end{align}
+であることと、定理1より
+\begin{align}
+    \norm{\Delta \bm{\lambda}} \leq \Phi_{\eta_{W}}^{-1}(\kappa \sigma) \leq \sqrt{\frac{\kappa}{2} \sigma}
+\end{align}
+であったことを合わせればよい。
+\qed
+
+\subsection{(\ref{eq:eta_ineq})の証明}
+(\ref{eq:eta_ineq})を再掲する;
+\begin{align}
+    \eta_{W} &\leq \kappa \eta_{G} \leq \kappa \sqrt{1- \sum_{i} \pi_i^2} \leq \kappa \nonumber
+\end{align}
+\textbf{Prf.}\\
+$\eta_{W} = \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{A_{ij}}{\pi_i \pi_j})^2}$を変形する。
+\begin{align}
+    \eta_{W} &= \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{\pi_i W_{ji} + \pi_j W_{ij}}{2 \pi_i \pi_j})^2}\\
+    &= \sqrt{\sum_{i \neq j : W_{ij} > 0} \pi_i \pi_j \qty(\frac{\pi_i W_{ji} + \pi_j W_{ij}}{2 \pi_i \pi_j})^2}\\
+    & \quad (\kappa\text{の定義から、})\\
+    &\leq \sqrt{\sum_{i \neq j : W_{ij} > 0} \pi_i \pi_j \kappa^2}\\
+    &= \kappa \sqrt{\sum_{i \neq j : W_{ij} > 0} \pi_i \pi_j}
+\end{align}
+を得る。ただし、二本目の等式で$W_{ij} > 0 \Leftrightarrow W_{ji} > 0$を用いた
+。ここで、
+\begin{align}
+    \sqrt{\sum_{i \neq j : W_{ij} > 0} \pi_i \pi_j} 
+    &= \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{\pi_i \pi_j +\pi_{j} \pi_i}{2 \pi_i \pi_j})^2}\\
+    &= \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{\pi_i G_{ji} + \pi_j G_{ij}}{2 \pi_i \pi_j})^2}\\
+    &= \eta_{G}
+\end{align}
+であるから
+\begin{align}
+    \eta_{W} &\leq \kappa \eta_{G}
+\end{align}
+が得られる。また、
+\begin{align}
+    \sqrt{\sum_{i \neq j} \pi_i \pi_j} &\leq \sqrt{\sum_{i, j} \pi_i \pi_j} = \sqrt{1-\sum_i \pi_i^2} \leq 1
+\end{align}
+が成り立つ。ただし、
+$1 = (\sum_{i} \pi_i)^2 = \sum_{i} \pi_i^2 + \sum_{i \neq j} \pi_i \pi_j$を用いた。
+これを用いれば他の不等号も得られる。\qed\\
+
+\subsection{(\ref{eq:lambda2_barW})の証明}
+(\ref{eq:lambda2_barW})を再掲する;
+\begin{align}
+    \abs{\lambda_2^{\bar{W}}} &\leq \kappa \abs{\lambda_2^{G} } \leq \kappa \nonumber
+\end{align}
+\textbf{Prf.}\\
+$\abs{\lambda_2^{\bar{W}}} = \abs{\lambda_2^{L}} - \lambda_2^{L}$より、
+\begin{align}
+    \abs{\lambda_2^{\bar{W}}} 
+    &= -\max_{\vb{v}:\vb{v} \perp \sqrt{\bm{\pi}}, \norm{\vb{v}}=1} \sum_{i,j} v^*_i L_{ij} v_j\\
+    &= -\max_{\vb{v}:\vb{v} \perp \sqrt{\bm{\pi}}, \norm{\vb{v}}=1} \sum_{i,j} \frac{v_i^* v_j}{\sqrt{\pi_i \pi_j}} \bar{W}_{ij} \pi_j
+\end{align}
+である。ただし、$L_{ij} = \bar{W}_{ij} \sqrt{\frac{\pi_j}{\pi_i}}$を用いた。
+\footnote{
+    \begin{align}
+        L_{ij} &= \frac{1}{2} (K_{ij} + K_{ji})\\
+        &= \frac{1}{2} \qty(\sqrt{\frac{\pi_j}{\pi_i}} W_{ij} + \sqrt{\frac{\pi_i}{\pi_j}} W_{ji})\\
+        &= \frac{1}{2} \frac{1}{\sqrt{\pi_i \pi_j}} (\pi_j W_{ij} + \pi_i W_{ji})\\
+        &= \frac{1}{\sqrt{\pi_i \pi_j}} \bar{W}_{ij} \pi_j
+    \end{align}
+}
+ここで、$\phi_i = v_i/ \sqrt{\pi_i}$とし、
+\begin{align}
+    \norm{\phi}_{\pi} = \sqrt{\sum_i \pi_i \abs{\phi_i}^2}
+\end{align}
+と定義する。すると、面倒な計算の末、
+\begin{align}
+    \abs{\lambda_2^{\bar{W}}}
+    &= -\max_{\phi:\phi \perp 1, \norm{\phi}_{\pi}=1} \sum_{i,j} \phi_i^* \phi_j\bar{W}_{ij} \pi_j \\
+    &= \frac{1}{2} \min_{\phi:\phi \perp 1, \norm{\phi}_{\pi}=1} \sum_{i\neq j} \abs{\phi_i - \phi_j}^2 \bar{W}_{ij} \pi_j
+\end{align}
+が得られる。\footnote{
+    \begin{align}
+        \frac{1}{2} \sum_{i\neq j} \abs{\phi_i - \phi_j}^2 \bar{W}_{ij} \pi_j
+        &= \frac{1}{2} \sum_{i\neq j} (\abs{\phi_i}^2-\phi_i^* \phi_j - \phi_j^* \phi_i + \abs{\phi_j}^2) \bar{W}_{ij} \pi_j\\
+        &= \frac{1}{2} \sum_{i\neq j} (\abs{\phi_i}^2 -\phi_i^* \phi_j) \bar{W}_{ij} \pi_j + \frac{1}{2} \sum_{i\neq j} (\abs{\phi_j}^2 - \phi_j^* \phi_i) \bar{W}_{ij} \pi_j\\
+        & \quad \qty( \text{詳細つり合い条件}\bar{W}_{ij} \pi_j = \bar{W}_{ji} \pi_i \text{を用いると、})\nonumber\\
+        &= \frac{1}{2} \sum_{i\neq j} (\abs{\phi_i}^2 -\phi_i^* \phi_j) \bar{W}_{ij} \pi_j + \frac{1}{2} \sum_{i\neq j} (\abs{\phi_j}^2 - \phi_j^* \phi_i) \bar{W}_{ji} \pi_i\\
+        &= \sum_{i\neq j} (\abs{\phi_i}^2 -\phi_i^* \phi_j) \bar{W}_{ij} \pi_j\\
+        &= \sum_{i} \abs{\phi_i}^2 \sum_{j(\neq i)} \bar{W}_{ij} \pi_j - \sum_{i\neq j} \phi_i^* \phi_j \bar{W}_{ij} \pi_j\\
+        & \quad \qty( \text{詳細つり合い条件をもう一度用いて、})\nonumber\\
+        &= \sum_{i} \abs{\phi_i}^2 \pi_i \sum_{j(\neq i)} \bar{W}_{ji} - \sum_{i\neq j} \phi_i^* \phi_j \bar{W}_{ij} \pi_j\\
+        &= - \sum_{i} \abs{\phi_i}^2 \pi_i \bar{W}_{ii} - \sum_{i\neq j} \phi_i^* \phi_j \bar{W}_{ij} \pi_j\\
+        &= - \sum_{i,j} \phi_i^* \phi_j \bar{W}_{ij} \pi_j
+    \end{align}
+    から従う。
+}
+ここで、$(i \neq j)$に関して、
+\begin{align}
+    \bar{W}_{ij} \pi_j &= \frac{W_{ij} \pi_j + W_{ji} \pi_i}{2\pi_i \pi_j} \pi_i \pi_j\\
+    &\leq \kappa G_{ij} \pi_j\\
+    &\leq \kappa \pi_i \pi_j
+\end{align}
+である。(1つ目の不等式は$\kappa$の定義と$G_{ij}$の定義から従う。
+)よって、
+\begin{align}
+    \abs{\lambda_2^{\bar{W}}}
+    &\leq \frac{\kappa}{2} \min_{\phi:\phi \perp 1, \norm{\phi}_{\pi}=1} \sum_{i\neq j} \abs{\phi_i - \phi_j}^2 G_{ij} \pi_j = \kappa \abs{\lambda_2^{G}}\\
+    &\leq \frac{\kappa}{2} \min_{\phi:\phi \perp 1, \norm{\phi}_{\pi}=1} \sum_{i,j} \abs{\phi_i - \phi_j}^2 \pi_i \pi_j = \kappa
+\end{align}
+が得られる。ただし、一つ目の等号は$G$の二番目に小さい固有値に対する変分原理から従い、
+二つ目の等式は$\frac{1}{2} \sum_{i,j} \abs{\phi_i - \phi_j}^2 \pi_i \pi_j =1$を用いた。
+\footnote{
+    \begin{align}
+        \sum_{i} \phi_i \pi_i &= 0\\
+        \sum_{i} \abs{\phi_i}^2 \pi_i &= 1
+    \end{align}
+    であることから従う。(計算すればわかる。)
+}
+\qed
+
+\subsection{Lem.の証明}
+Lem.を再掲する;
+\begin{itembox}[l]{\textbf{Lem.}}
+    $L \in \mathbb{C}^{n \times n}$:エルミート行列、$M \in \mathbb{C}^{n \times n}$とする。
+    このとき、
+    \begin{align}
+        \norm{\bm{\lambda}^L - \Re \bm{\lambda}^{L + M}} \leq 
+        \norm{\frac{M + M^{\dagger}}{2}}_F+ \sqrt{\norm{\frac{M - M^{\dagger}}{2}}_F^2 - \norm{\Im \bm{\lambda}^{L + M}}^2}
+    \end{align}
+    が成り立つ。
+\end{itembox}
+\textbf{Prf.}\\
+一般性を失わず、$L+M$を上三角行列にできる。\footnote{Schurの補題より、任意の正方行列はユニタリ行列による相似変換で上三角行列にできる。
+固有値がユニタリ発展により不変であることと、フロベニウスノルムがユニタリ変換により不変であることから、一般性を失わない。}
+このとき、
+\begin{align}
+    L+M = \Lambda + iD_{\mu} +iU
+\end{align}
+と分解する。ただし、$\Lambda$は$L+M$の対角成分の実部を並べた対角行列、
+$D_{\mu}$は$L+M$の対角成分の虚部を並べた対角行列、$U$は上三角行列で対角成分が$0$である行列である。
+ここで、$L+M$をエルミート行列と反エルミート行列に分解すると、
+\begin{align}
+    L+M &= \frac{L+M + (L+M)^{\dagger}}{2} + \frac{L+M - (L+M)^{\dagger}}{2}
+\end{align}
+となる。それぞれの部分について考察する。\\
+
+(1)エルミート部分\\
+\begin{align}
+    L + \frac{M + M^{\dagger}}{2} &= \Lambda + \frac{i}{2}(U-U^{\dagger})
+\end{align}
+となる。移項して、
+\begin{align}
+    \Lambda - L &= \frac{M + M^{\dagger}}{2} - \frac{i}{2}(U-U^{\dagger})
+\end{align}
+が得られる。これのノルムをとると、
+\begin{align}
+    \norm{\Lambda - L}_F= \norm{\frac{M + M^{\dagger}}{2} - \frac{i}{2}(U-U^{\dagger})}_F
+\end{align}
+となる。ここで、以下の補題を用いる。\footnote{証明は追えていない。}
+\begin{itembox}[l]{\textbf{Lem.Hoffman-Wielandtの不等式}}
+    $A, B \in \mathbb{C}^{n \times n}$をエルミート行列とする。
+    このとき、
+    \begin{align}
+        \norm{\bm{\lambda}^A - \bm{\lambda}^B} \leq \norm{A-B}_F
+    \end{align}
+    が成り立つ。
+\end{itembox}
+これを用いることで、
+\begin{align}
+    \norm{\bm{\lambda}^L - \Re \bm{\lambda}^{L + M}} &\leq \norm{\Lambda - L}_F\\
+    &= \norm{\frac{M + M^{\dagger}}{2} - \frac{i}{2}(U-U^{\dagger})}_F\\
+    &\leq \norm{\frac{M + M^{\dagger}}{2}}_F + \norm{\frac{1}{2}(U-U^{\dagger})}_F
+\end{align}
+が得られる。\\
+
+(2)反エルミート部分\\
+\begin{align}
+    \frac{M - M^{\dagger}}{2} &= iD_{\mu} + \frac{i}{2}(U+U^{\dagger})
+\end{align}
+となる。これのノルムをとると、
+\begin{align}
+    \norm{\frac{M - M^{\dagger}}{2}}_F &= \norm{iD_{\mu} + \frac{i}{2}(U+U^{\dagger})}_F
+\end{align}
+が得られる。ここで、フロベニウス内積
+\begin{align}
+    \ev{A, B}_F := \sum_{i,j} A_{ij}^* B_{ij}
+\end{align}
+について、
+\begin{align}
+    \ev{iD_{\mu}, \frac{i}{2}(U+U^{\dagger})}_F &=0
+\end{align}
+となる。\footnote{
+    $D_{\mu}$は対角行列であり、$U+U^{\dagger}$は対角成分が$0$であることから従う。
+}
+したがって、
+\begin{align}
+    \norm{\frac{M - M^{\dagger}}{2}}_F^2 &= \norm{D_{\mu}}_F^2 + \norm{\frac{1}{2}(U+U^{\dagger})}_F^2
+\end{align}
+が得られる。
+ここで、
+\begin{align}
+    \norm{D_{\mu}}_F^2 &= \norm{\Im \bm{\lambda}^{L + M}}^2\\
+    \norm{\frac{1}{2}(U+U^{\dagger})}_F^2 &= \frac{1}{2} \norm{U}_F^2\\
+    \norm{\frac{1}{2}(U-U^{\dagger})}_F^2 &= \frac{1}{2} \norm{U}_F^2
+\end{align}
+であることに注意すると、
+\begin{align}
+    \norm{\frac{1}{2}(M-M^{\dagger})}_F^2 &= \norm{\Im \bm{\lambda}^{L + M}}^2 + \norm{\frac{1}{2}(U-U^{\dagger})}_F^2
+\end{align}
+が得られる。これを変形すると、
+\begin{align}
+    \norm{\frac{1}{2}(U-U^{\dagger})}_F &= \sqrt{\norm{\frac{M - M^{\dagger}}{2}}_F^2 - \norm{\Im \bm{\lambda}^{L + M}}^2}
+\end{align}
+が得られる。\\
+
+(1)と(2)を合わせることで、
+\begin{align}
+    \norm{\bm{\lambda}^L - \Re \bm{\lambda}^{L + M}} &\leq 
+    \norm{\frac{M + M^{\dagger}}{2}}_F+ \sqrt{\norm{\frac{M - M^{\dagger}}{2}}_F^2 - \norm{\Im \bm{\lambda}^{L + M}}^2}
+\end{align}
+が得られる。\qed\\
+
+\end{document}

@@ -175,6 +175,13 @@
     ただし、$\ev{\cdot}^+ = \frac{1}{2}(\ev{\cdot}^B + \ev{\cdot}^{-B})$である。
 \end{itembox}
 \textbf{Prf}\\
+いま、
+\begin{align}
+    \hat{\sigma} &= \Delta \Pi_X \hat{\mathcal{J}}\\
+    &= \Delta \Pi_X \int_{0}^{\tau} dt \hat{J}(t)\\
+    \ev{A} &= \ev{A}_0 + \left.\pdv{\Delta \Pi_X} \ev{A}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X + \frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{A}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^2 + O(\Delta \Pi_X ^3)
+\end{align}
+であった。
 FDTを導出する途中の展開をより高次まで行うと、
 \begin{align}
     1=\ev{e^{-\hat{\sigma}}}&= 1-\ev{\hat{\mathcal{J}}}^B \Delta \Pi_X + \frac{1}{2}\ev{\hat{\mathcal{J}}^2}^B \Delta \Pi_X ^2- \frac{1}{6}\ev{\hat{\mathcal{J}}^3}^B \Delta \Pi_X ^3 + O(\Delta \Pi_X ^4)\\
@@ -192,13 +199,13 @@ FDTを導出する途中の展開をより高次まで行うと、
     &+ \frac{1}{2}\qty(\ev{\hat{\mathcal{J}}^2}^{-B}_0 \Delta \Pi_X ^2 + \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^{-B}\right|_{\Delta \Pi_X = 0} \Delta \Pi_X ^3)- \frac{1}{6}\left(\ev{\hat{\mathcal{J}}^3}^{-B}_0 \Delta \Pi_X ^3\right) + O(\Delta \Pi_X ^4)
 \end{align}
 となる。\\
-ここで、期待値の時間反転対称性から、
+ここで、平衡状態の時間反転対称性から、
 \begin{align}
     \ev{\hat{\mathcal{J}}^3}^B = -\ev{\hat{\mathcal{J}}^3}^{-B}
 \end{align}
 が成り立つことを用いて、上の二式を両辺足して、$\Delta \Pi_X$の三次の項を比較すると、
 \begin{align*}
-    0=&\frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^B\right|_{\Delta \Pi_X = 0} - \frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^{-B}\right|_{\Delta \Pi_X = 0}\\
+    0=-&\frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^B\right|_{\Delta \Pi_X = 0} - \frac{1}{2}\left.\pdv[2]{\Delta \Pi_X} \ev{\hat{\mathcal{J}}}^{-B}\right|_{\Delta \Pi_X = 0}\\
     &+\frac{1}{2} \left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^B\right|_{\Delta \Pi_X = 0} + \frac{1}{2}\left.\pdv{\Delta \Pi_X} \ev{\hat{\mathcal{J}}^2}^{-B}\right|_{\Delta \Pi_X = 0} -\frac{1}{6}\ev{\hat{\mathcal{J}}^3}^B_0 - \frac{1}{6}\ev{\hat{\mathcal{J}}^3}^{-B}_0\\
 \end{align*}
 すなわち、
@@ -211,7 +218,7 @@ FDTを導出する途中の展開をより高次まで行うと、
 \end{align}
 が成り立つ。\hfill \qedsymbol\\
 
-また、以下も成り立つ。
+また、上の定理の系として、以下も成り立つ。
 \begin{itembox}[l]{\textbf{Thm.高次における関係(2)}}
     IFTを満たす系について、以下が成り立つ:
     \begin{align}
@@ -219,11 +226,14 @@ FDTを導出する途中の展開をより高次まで行うと、
     \end{align}
 \end{itembox}
 \textbf{Prf}\\
-$\hat{\mathcal{J}}$を$J$を用いて表すことで、
+上の定理で$\hat{\mathcal{J}}$を$J$を用いて表すことで、
 \begin{align}
-    \pdv{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \hat{J}(t')\hat{J}(t)}^+|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t \hat{J}(t)}^+\right|_{\Delta \Pi_X = 0}
+    \left.\pdv{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \hat{J}(t')\hat{J}(t)}^+ \right|_{\Delta \Pi_X = 0} = \left.\pdv[2]{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t \hat{J}(t)}^+\right|_{\Delta \Pi_X = 0}
 \end{align}
 が成り立つ。ここで、左辺の被積分関数について、$\Delta \hat{J} = \hat{J} - \ev{\hat{J}}$として展開すると、
+\footnote{
+    以下$\ev{\hat{J}} = J$と書くことにする。
+}
 \begin{align}
     \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \hat{J}(t')\hat{J}(t)}^+ &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t (\Delta \hat{J}(t') +{J}(t'))(\Delta \hat{J}(t) +{J}(t))}^+\\
     &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t')\Delta \hat{J}(t)}^+ \\
@@ -241,7 +251,7 @@ $\hat{\mathcal{J}}$を$J$を用いて表すことで、
     &= \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t')\Delta \hat{J}(t)}^+ \\
     &+ \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t {J}(t'){J}(t)}^+
 \end{align}
-となる。ここで、この最後の式の第二項は、$\Delta \Pi_X=0$で、$\Delta \Pi_X$について微分することで0になる。これは、$\int_0 ^{\tau} \dd t \ev{\hat{J}(t))^2}$が、$\Delta \Pi_X$についての偶関数であることからわかる。\\
+となる。ここで、この最後の式の第二項は、$\Delta \Pi_X=0$で、$\Delta \Pi_X$について微分することで0になる。これは、$\ev{\hat{\mathcal{J}^2}}$が、$\Delta \Pi_X$についての偶関数であることからわかる。\\
 したがって、
 \begin{align} 
     \left.\pdv{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t' \int_0 ^{\tau} \dd t \Delta \hat{J}(t')\Delta \hat{J}(t)}^+\right|_{\Delta \Pi_X = 0} = \pdv[2]{\Delta \Pi_X} \ev{\int_0 ^{\tau} \dd t \hat{J}(t)}^+|_{\Delta \Pi_X = 0}

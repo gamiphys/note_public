@@ -1,0 +1,564 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+% 表
+\usepackage[utf8]{inputenc}
+\usepackage{diagbox} % 斜線付きセルを作成するために必要
+\usepackage{booktabs} % 表の罫線を美しくするために必要
+\usepackage{hhline} % 水平罫線を制御するために必要
+
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+\usepackage{physics}
+\usepackage{float} % 追加
+
+% 図
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz} %図を描く
+\usetikzlibrary{positioning, intersections, calc, arrows.meta,math} %tikzのlibrary
+
+% ハイパーリンク
+\usepackage[dvipdfm,
+  colorlinks=false,
+  bookmarks=true,
+  bookmarksnumbered=false,
+  pdfborder={0 0 0},
+  bookmarkstype=toc]{hyperref}
+
+% 式番号を章ごとにリセット
+\numberwithin{equation}{section}
+
+% コマンド定義
+\newcommand{\argmin}{\mathop{\mathrm{arg\,min}}\limits}
+\newcommand{\argmax}{\mathop{\mathrm{arg\,max}}\limits}
+
+\begin{document}
+
+\title{Cross asymmetry}
+\author{大上由人}
+\date{\today}
+\maketitle
+
+\section{モチベーション}
+$a(t),b(t)$をそれぞれ時刻$t$における物理量とする。
+このとき、cross-correlationを
+\begin{align}
+    C_{ba}^{\tau} &= \ev{b(t+\tau)a(t)}
+\end{align}
+で定義する。系が奇変数を持たないときを考える。
+このとき、平衡状態ならば、
+\begin{align}
+    C_{ab}^{\tau} &= C_{ba}^{\tau}
+\end{align}
+が成り立つことが知られている。
+しかし、非平衡定常状態においては一般に
+\begin{align}
+    C_{ab}^{\tau} &\neq C_{ba}^{\tau}
+\end{align}
+であることが知られている。
+このことを踏まえると、cross-correlationの非対称性は系の非平衡性度合いを示す指標となりうる。
+
+一般に非平衡定常状態を維持するためにはThermodynamic forceが必要である(温度勾配、化学ポテンシャル勾配など)。
+このことを踏まえると、\textbf{cross-correlationの非対称性とThermodynamic forceの間には何らかの関係がある}と予想される。
+
+\section{準備}
+以下、Markov jump processを考える。
+確率分布を$\vb{p} = (p_1, p_2, \ldots, p_n)^T$と表す。
+これが従う
+マスター方程式は、
+\begin{align}
+    \dv{\vb{p}}{t} &=R\vb{p}
+\end{align}
+である。ただし$R$は遷移レートである。
+また、特に定常状態を$\vb{q}$と表す。
+これは、
+\begin{align}
+    R\vb{q} &=0
+\end{align}
+を満たす。定常状態における一方向確率流を
+\begin{align}
+    \mathcal{T}_{ij} &:= R_{ij}q_j
+\end{align}
+と定義する。
+
+
+また、状態を頂点としてグラフを作ることを考える。
+状態間を結んでできるサイクルを$c$と表す。
+単純サイクル$c= (i_1,i_2,\ldots,i_n)$に注目する。
+以下、$R_{i_{k+1}i_k} >0$が成り立つことを仮定する。
+このとき、サイクル$c$に沿ったThermodynamic forceを
+\begin{align}
+    \mathcal{F}_c   &= \ln \frac{R_{i_2 i_1} R_{i_3 i_2} \cdots R_{i_1 i_n}}{R_{i_1 i_2} R_{i_2 i_3} \cdots R_{i_n i_1}}
+\end{align}
+により定義する。これは1サイクルに沿った熱浴のエントロピー変化に対応する。\\
+
+非対称性を測る無次元量の指標として以下の量を導入する:
+\begin{align}
+    \chi_{ba} := \lim_{\tau \to 0} \frac{C_{ba}^{\tau} - C_{ab}^{\tau}}{2\sqrt{(\Delta_{\tau}C_{aa})(\Delta_{\tau} C_{bb})}}
+\end{align}
+ただし、
+\begin{align}
+    \Delta_{\tau} C_{aa} &:= C_{aa}^{0} - C_{aa}^{\tau} 
+\end{align}
+であり、これは自己相関の減少を表す。
+% また、これは拡散の尺度になることも知られている(確かめなきゃ)。
+また、$\chi_{ba}$はスケール不変である。
+\footnote{
+$a'(t) = \alpha a(t), b'(t) = \beta b(t)$としたとき、
+\begin{align}
+C_{b'a'}^{\tau} &= \langle b'(t+\tau)a'(t) \rangle = \langle (\beta b(t+\tau)) (\alpha a(t)) \rangle = \alpha\beta \langle b(t+\tau)a(t) \rangle = \alpha\beta C_{ba}^{\tau} \\
+C_{a'b'}^{\tau} &= \langle a'(t+\tau)b'(t) \rangle = \langle (\alpha a(t+\tau)) (\beta b(t)) \rangle = \alpha\beta \langle a(t+\tau)b(t) \rangle = \alpha\beta C_{ab}^{\tau}
+\end{align}
+したがって、分子は、
+\begin{align}
+C_{b'a'}^{\tau} - C_{a'b'}^{\tau} = \alpha\beta C_{ba}^{\tau} - \alpha\beta C_{ab}^{\tau} = \alpha\beta (C_{ba}^{\tau} - C_{ab}^{\tau})
+\end{align}
+となる。
+また、分母は、
+\begin{align}
+C_{a'a'}^{\tau} &= \langle a'(t+\tau)a'(t) \rangle = \langle (\alpha a(t+\tau)) (\alpha a(t)) \rangle = \alpha^2 C_{aa}^{\tau} \\
+\Delta_{\tau}C_{a'a'} &= C_{a'a'}^{0} - C_{a'a'}^{\tau} = \alpha^2 C_{aa}^{0} - \alpha^2 C_{aa}^{\tau} = \alpha^2 (C_{aa}^{0} - C_{aa}^{\tau}) = \alpha^2 \Delta_{\tau}C_{aa}
+\end{align}
+同様にして、
+\begin{align}
+\Delta_{\tau}C_{b'b'} = \beta^2 \Delta_{\tau}C_{bb}
+\end{align}
+となる。
+以上を合わせればスケール不変性が示される:
+\begin{align}
+\chi_{b'a'} &= \lim_{\tau\rightarrow 0} \frac{\alpha\beta (C_{ba}^{\tau} - C_{ab}^{\tau})}{2 \alpha\beta \sqrt{(\Delta_{\tau}C_{aa})(\Delta_{\tau}C_{bb})}}\\
+&=\lim_{\tau\rightarrow 0} \frac{C_{ba}^{\tau} - C_{ab}^{\tau}}{2 \sqrt{(\Delta_{\tau}C_{aa})(\Delta_{\tau}C_{bb})}} \\
+&= \chi_{ba}
+\end{align}
+また、物理量の定数シフトに対しても不変であることが示せる。
+}
+
+
+$\tau$が小さい時
+\begin{align}
+    C_{ba}^{\tau} &= \sum_{i,j}e^{\tau R}_{ij} q_j b_i a_j \\
+    &\simeq \sum_{i,j}(\delta_{ij} + \tau R_{ij}) q_j b_i a_j \\
+    &= \sum_{i} q_i b_i a_i + \tau \sum_{i,j} R_{ij} q_j b_i a_j
+\end{align}
+と書ける。このとき、
+\begin{align}
+    \Delta_{\tau} C_{aa} &=C_{aa}^{0} - C_{aa}^{\tau} \\
+    &\simeq -\tau \sum_{i,j} \mathcal{T}_{ij} a_i a_j\\
+    &= \frac{\tau}{2}\sum_{i,j}\mathcal{T}_{ij}(a_i - a_j)^2
+\end{align}
+
+と書くことができる。ただし、最後の式変形では$\sum_{i} \mathcal{T}_{ij} =0, \sum_{j} \mathcal{T}_{ij} =0$を用いた。
+
+このとき、
+\begin{align}
+    \chi_{ba} &= \frac{\sum_{i,j}\mathcal{T}_{ij}(b_ia_j-b_ja_i)}{2\sqrt{-\sum_{i,j} \mathcal{T}_{ij}a_ia_j }\sqrt{-\sum_{i,j} \mathcal{T}_{ij}b_ib_j}}
+\end{align}
+と書くことができる。
+
+\section{主結果}
+\subsection{主結果}
+以下の不等式が成り立つことが示される。
+\begin{itembox}[l]{\textbf{Thm.1}}
+    $\chi_{ba}$について、以下の不等式が成り立つ:
+    \begin{align}
+    \abs{\chi_{ba}} \leq \max_{c} 
+\frac{\tanh(\mathcal{F}_c / 2n_c)}{\tan(\pi / n_c)} 
+\leq \max_{c} \frac{\mathcal{F}_c}{2\pi},
+\end{align}
+ただし、$\max_{c}$は取りうるすべての単純サイクルについてとる。
+また、$n_c$はサイクル$c$に含まれる状態の数である。
+また、等号成立条件は
+\begin{align}
+    \mathcal{T}_{12} = \mathcal{T}_{23} &= \cdots = \mathcal{T}_{n1}\\
+    \mathcal{T}_{21} = \mathcal{T}_{32} &= \cdots = \mathcal{T}_{1n}
+\end{align}
+および、ある$\gamma$が存在して、$(\gamma a_1, b_1), (\gamma a_2, b_2), \ldots, (\gamma a_n, b_n)$が正n角形をなすことである。
+\end{itembox}
+すなわち、非対称性の大きさはThermodynamic forceによって上から抑えられる。
+
+また、これよりタイトな不等式を得ることもできる。
+\begin{itembox}[l]{\textbf{Thm.2}}
+    Thm.1よりタイトな不等式が成り立つ:
+    \begin{align}
+    \abs{\chi_{ba}}
+\leq 
+\max_{c \in \mathcal{C}^*}
+\frac{n_c \tanh(\mathcal{F}_c / 2n_c)}{n'_c \tan(\pi / n'_c)}
+\leq 
+\max_{c \in \mathcal{C}^*}
+\frac{\mathcal{F}_c / 2n'_c}{\tan(\pi / n'_c)}
+\leq 
+\max_{c \in \mathcal{C}^*}
+\frac{\mathcal{F}_c}{2\pi}
+\end{align}
+ただし、
+$n_c'$はサイクル$c$において$(a,b)$の値が変化する回数であり、$n_c' \leq n_c$である。また、
+\begin{align}
+    C^* &= C_{\text{asy}} \cap C_{\text{uni}} \\
+    C_{\text{asy}} &:= \left\{ c \mid b_{i_{k+1}} a_{i_k} - b_{i_k} a_{i_{k+1}} \neq 0\right\} \\
+    C_{\text{uni}} &= \{ c  \mid \forall e \in c, e \in \mathcal{E}^{+} \}\\
+    \mathcal{E}^{+} &:= \{ e \mid \mathcal{J}_{e} = \mathcal{T}_e - \mathcal{T}_{-e} > 0 \}
+\end{align}
+である。
+\end{itembox}
+証明は後述。\\
+
+この不等式の応用例を見ていく。
+遷移レート$R$び固有値を$\lambda_1, \lambda_2, \ldots, \lambda_n$とする。
+また、
+\begin{align}
+    \lambda_{\alpha} &= -\lambda_{\alpha}^{R} + i \lambda_{\alpha}^{I}
+\end{align}
+とする。
+このとき、時間発展は以下のように書ける:
+\begin{align}
+    e^{\tau R} &= \sum_{\alpha} \exp(-\lambda_{\alpha}^{R} \tau)\exp(i \lambda_{\alpha}^{I} \tau) \vb{u}^{(\alpha)}\vb{v}^{(\alpha) T}
+\end{align} 
+ただし、$\vb{u}^{\alpha}, \vb{v}^{\alpha}$はそれぞれ右固有ベクトル、左固有ベクトルである。
+このとき、以下の不等式が成り立つ。
+\begin{itembox}[l]{\textbf{Thm.3}}
+    \begin{align}
+    \frac{\abs{\lambda_\alpha^{\mathrm{I}}}}{2\pi \lambda_\alpha^{\mathrm{R}}}
+    \leq \max_{c} \frac{\tanh(\mathcal{F}_c / 2n_c)}{2\pi \tan(\pi / n_c)}.
+\end{align}
+
+\end{itembox}
+これは振動があれば、その分だけThermodynamic forceが必要であることを示している。
+\footnote{
+    時間結晶との関連を考えてみると、固有値の実部が$0$に近づくわけだが、このとき左辺が発散する。
+    したがって右辺も発散することとなるが、これは物理的におかしい。したがってこの系(古典・詳細つり合いあり)では時間結晶はできなさそうである。
+}
+
+\textbf{Prf.}\\
+\begin{align}
+    a_{i} &= \frac{\Im(u_{i}^{\alpha})}{q_i} \\
+    b_{i} &= \frac{\Re(u_{i}^{\alpha})}{q_i}
+\end{align}
+とおく。
+いま、
+\begin{align}
+    \sum_{i} \abs{u_{i}^{\alpha}}^2/q_i &=1
+\end{align}
+となるように固有ベクトルを規格化しておく。これを用いると、
+\begin{align}
+    \lambda = \sum_i \frac{u_i^*}{q_i} \lambda u_i
+= \sum_{i,j} \frac{u_i^*}{q_i} R_{ij} u_j
+= \sum_{i,j} R_{ij} q_j \frac{u_i^* u_j}{q_i q_j}.
+\end{align}
+と計算することができる。
+ここで、$\mathcal{T}_{ij} = R_{ij} q_j$および$a_{i}= \Im(u_{i}^{\alpha})/q_i, b_{i} = \Re(u_{i}^{\alpha})/q_i$を用いることで、
+\begin{align}
+    \lambda &= \sum_{i,j} \mathcal{T}_{ij}(b_i - i a_i)(b_j + i a_j)\\
+    &=\sum_{i,j} \mathcal{T}_{ij}(b_i b_j + a_i a_j + i b_i a_j - i a_i b_j).
+\end{align}
+と書くことができる。このことと、$\lambda_\alpha = -\lambda_\alpha^{R} + i \lambda_\alpha^{I}$を合わせることで、
+\begin{align}
+    \lambda^{\mathrm{I}}
+&= \sum_{i,j} \mathcal{T}_{ij}(b_i a_j - a_i b_j)
+= \lim_{\tau \to 0}
+\frac{C_{ba}^{\tau} - C_{ab}^{\tau}}{\tau},\\
+\lambda^{\mathrm{R}}
+&= -\sum_{i,j} \mathcal{T}_{ij}(b_i b_j + a_i a_j)
+= \lim_{\tau \to 0}
+\frac{\Delta_\tau C_{aa} + \Delta_\tau C_{bb}}{\tau}.
+\end{align}
+が得られる。
+これを用いると、
+\begin{align}
+    \abs{\chi_{ba}} &= \abs{\lim_{\tau \to 0} \frac{C_{ba}^{\tau} - C_{ab}^{\tau}}{2\sqrt{(\Delta_{\tau}C_{aa})(\Delta_{\tau} C_{bb})}}} \\
+    &= \frac{\abs{(C_{ba}^{\tau} - C_{ab}^{\tau})/\tau}}{2\sqrt{(\Delta_{\tau}C_{aa}/\tau)(\Delta_{\tau} C_{bb}/\tau)}} \\
+    &\geq \frac{\abs{(C_{ba}^{\tau} - C_{ab}^{\tau})/\tau}}{(\Delta_{\tau}C_{aa}+\Delta_{\tau} C_{bb})/\tau} \\
+    &= \frac{\abs{\lambda_{\alpha}^{I}}}{\lambda_{\alpha}^{R}}
+\end{align}
+が言える。あとはThm.1の不等式を用いればよい。
+\qed\\
+
+\subsection{主結果の導出}
+\subsubsection{記号のメモ}
+\begin{align}
+    \mathcal{J}_{ij} &:= \mathcal{T}_{ij} - \mathcal{T}_{ji} \\
+    \mathcal{A}_{ij} &:= \mathcal{T}_{ij} + \mathcal{T}_{ji}\\
+    \Omega_{ij} &:=\frac{1}{2}( b_i a_j - b_j a_i) \\
+    L_{ij} &:= \sqrt{(a_i - a_j)^2 +(b_i - b_j)^2}
+\end{align}
+
+\subsubsection{$\chi$の書き換え}
+$\chi_{ba}$のスケール不変性を利用することで、
+\begin{align}
+    \sum_{ij} \mathcal{T}_{ij} a_i a_j &= \sum_{ij} \mathcal{T}_{ij} b_i b_j
+\end{align}
+となるようにとることができる。
+このことを用いて、$\chi_{ba}$を以下のように書き換える:
+\begin{align}
+\chi_{ba} &=
+ \frac{\sum_{i,j}\mathcal{T}_{ij}(b_ia_j-b_ja_i)}{2\sqrt{-\sum_{i,j} \mathcal{T}_{ij}a_ia_j }\sqrt{-\sum_{i,j} \mathcal{T}_{ij}b_ib_j}}\\
+&=
+\frac{\sum_{i,j} \mathcal{T}_{ij} (b_i a_j - b_j a_i)}{- \sum_{i,j} \mathcal{T}_{ij} (a_i a_j + b_i b_j)}
+= 
+\frac{\sum_{i,j} \mathcal{T}_{ij} (b_i a_j - b_j a_i)}{\frac{1}{2} \sum_{i,j} \mathcal{T}_{ij} \left[ (a_i - a_j)^2 + (b_i - b_j)^2 \right]} \\
+&=
+\frac{4 \sum_{i,j} \mathcal{T}_{ij} \Omega_{ij}}{\sum_{i,j} \mathcal{T}_{ij} L_{ij}^2}
+= 
+\frac{4 \sum_{i>j} \mathcal{J}_{ij} \Omega_{ij}}{\sum_{i>j} \mathcal{A}_{ij} L_{ij}^2}.
+\end{align}
+ただし、2つ目の等号でスケール不変性からの条件を用いた。したがって、
+\begin{align}
+    \abs{\chi_{ba}} &=
+    \frac{4 \abs{\sum_{i>j} \mathcal{J}_{ij} \Omega_{ij}}}{\sum_{i>j} \mathcal{A}_{ij} L_{ij}^2}.
+\end{align}
+と書ける。
+
+\subsubsection{サイクルの分解}
+%まじで書く
+正味の流れが正であるエッジの集合を
+\begin{align}
+    \mathcal{E}^{+} := \{ e \mid \mathcal{J}_e > 0 \}
+\end{align}
+と定義する。また、$C_{\text{uni}}$を以下のように定義する:
+\begin{align}
+    C_{\text{uni}} = \{ c  \mid \forall e \in c, e \in \mathcal{E}^{+} \}
+\end{align}
+辺$e$のカレントを、$C_{\text{uni}}$に含まれる単純サイクル$c$のカレントの和として表すことができる。
+すなわち、
+\begin{align}
+    \mathcal{J}_{e} &= \sum_{c \in C_{\text{uni}}}S_{ec} J_c \\ 
+    S_{ec} &=
+    \begin{cases}
+        1 & \quad e \in c \\
+        0 & \quad \text{otherwise}
+    \end{cases}
+\end{align}
+と書ける。
+
+このとき、以下が成り立つ:
+\begin{align}
+\sum_{e \in \mathcal{E}^+} \mathcal{J}_e X_e
+&= \sum_{c \in \mathcal{C}_{\mathrm{uni}}} \mathcal{J}_c \left( \sum_{e \in \mathcal{E}^+} S_{ec} X_e \right) \\
+&= \sum_{c \in \mathcal{C}_{\mathrm{uni}}} \mathcal{J}_c \left( \sum_{e \in c} X_e \right).
+\end{align}
+このもとで、$\chi$の分母と分子に関わる不等式をそれぞれ導いておく。
+\begin{align}
+\left| \sum_{i>j} \mathcal{J}_{ij} \Omega_{ij} \right|
+&= \left| \sum_{e \in \mathcal{E}^+} \mathcal{J}_e \Omega_e \right| \\
+&= \left| \sum_{c \in \mathcal{C}_{\mathrm{uni}}} \mathcal{J}_c \left( \sum_{e \in c} \Omega_e \right) \right| \\
+&= \left| \sum_{c \in \mathcal{C}^*} \mathcal{J}_c \left( \sum_{e \in c} \Omega_e \right) \right| \\
+&\leq \sum_{c \in \mathcal{C}^*} \mathcal{J}_c \left| \sum_{e \in c} \Omega_e \right|.
+\end{align}
+ただし、$C^* = C_{\text{asy}} \cap C_{\text{uni}}$である。また、最後に三角不等式を用いた。
+また、以下も成り立つ:
+\begin{align}
+\sum_{i>j} \mathcal{A}_{ij} L_{ij}^2
+&\geq \sum_{e \in \mathcal{E}^+} \mathcal{A}_e L_e^2 \\
+&= \sum_{e \in \mathcal{E}^+} \mathcal{J}_e \frac{\mathcal{A}_e}{\mathcal{J}_e} L_e^2 \\
+&= \sum_{c \in \mathcal{C}_{\mathrm{uni}}} \mathcal{J}_c \left( \sum_{e \in c} \frac{\mathcal{A}_e}{\mathcal{J}_e} L_e^2 \right) \\
+&\geq \sum_{c \in \mathcal{C}^*} \mathcal{J}_c \left( \sum_{e \in c} \frac{\mathcal{A}_e}{\mathcal{J}_e} L_e^2 \right).
+\end{align}
+
+\subsection{一般化TUR}
+Thermodynamic force の言葉でTUR likeな不等式を示す。
+\begin{itembox}[l]{\textbf{Lem.}}
+    $\forall c \in C_{\text{uni}}$に対して、
+    \begin{align}
+        \frac{\left( \sum_{e \in c} X_e \right)^2}{\sum_{e \in c} X_e^2 \mathcal{A}_e / \mathcal{J}_e}
+\leq n_c \tanh\left( \frac{\mathcal{F}_c}{2 n_c} \right).
+    \end{align}
+    が成立する。
+\end{itembox}
+\textbf{Prf.}\\
+$(X_{e}\sqrt{\mathcal{A}_e / \mathcal{J}_e} )_{e \in c}$および$(\sqrt{\mathcal{J}_e / \mathcal{A}_e}) _{e \in c}$
+についてのSchwarzの不等式を用いることで、
+\begin{align}
+    \qty(\sum_{e \in c} X_e)^2 
+&\leq \left( \sum_{e \in c} X_e^2 \frac{\mathcal{A}_e}{\mathcal{J}_e} \right) \left( \sum_{e \in c} \frac{\mathcal{J}_e}{\mathcal{A}_e} \right).\\
+\Leftrightarrow \frac{\qty(\sum_{e \in c} X_e)^2}{\sum_{e \in c} X_e^2 \mathcal{A}_e / \mathcal{J}_e}
+&\leq \sum_{e \in c} \frac{\mathcal{J}_e}{\mathcal{A}_e}.
+\end{align}
+が成り立つ。
+また、Thermodynamic forceの定義から、
+\begin{align}
+    F_{e} &= \sum_{e \in c} \ln \frac{\mathcal{T}_e}{\mathcal{T}_{-e}} \\
+    &= \sum_{e \in c} \ln \frac{\mathcal{A}_e + \mathcal{J}_e}{\mathcal{A}_e - \mathcal{J}_e}\\
+    &= 2n_{c} \sum_{e \in c} \frac{1}{n_c} \mathrm{artanh} \frac{\mathcal{J}_e}{\mathcal{A}_e}
+\end{align}
+が成り立つ。ただし、$\text{artanh}(x) = \frac{1}{2} \ln \frac{1+x}{1-x}$である。
+Jensenの不等式を用いることで、
+\begin{align}
+    F_{c} &\geq 2 n_c \mathrm{artanh} \left( \frac{1}{n_c} \sum_{e \in c} \frac{\mathcal{J}_e}{\mathcal{A}_e} \right).
+\end{align}
+が得られる。
+これと、$\tanh$の単調性を用いることで、
+\begin{align}
+    \frac{1}{n_c} \sum_{e \in c} \frac{\mathcal{J}_e}{\mathcal{A}_e}
+&\leq \tanh\left( \frac{F_c}{2 n_c} \right).
+\end{align}
+が得られる。
+これら二つの結果をわせることで示せる。\qed\\
+
+証明からわかるように、この結果の等号成立条件はSchwarzの不等式とJensenの不等式の等号成立条件であり、
+\begin{align}
+    (X_{e}\sqrt{\mathcal{A}_e / \mathcal{J}_e} )_{e \in c} &\propto (\sqrt{\mathcal{J}_e / \mathcal{A}_e}) _{e \in c}\\
+    \forall e \in c, \frac{\mathcal{J}_e}{\mathcal{A}_e} &= \text{const}
+\end{align}
+である。
+
+\subsection{等周不等式}
+\begin{itembox}[l]{\textbf{Thm.等周不等式}}
+    $\mathbb{R}^2$上の点列
+    $(a_1,b_1), (a_2,b_2), \ldots, (a_n,b_n)$について、
+    \begin{align}
+\left( 4n \tan \frac{\pi}{n} \right)
+\left| \sum_{i=1}^{n} \Omega_{i+1,i} \right|
+&\leq 
+\left( \sum_{i=1}^{n} L_{i+1,i} \right)^2,
+\end{align}
+    が成立する。等号成立条件は、$(a_1,b_1), (a_2,b_2), \ldots, (a_n,b_n)$が正n角形をなすことである。
+\end{itembox}
+\textbf{Prf.}\\
+一旦略\qed\\
+
+この定理から直ちに以下の不等式も示せる。
+\begin{itembox}[l]{\textbf{Cor.}}
+    $\mathbb{R}^2$上の点列
+    $(a_1,b_1), (a_2,b_2), \ldots, (a_n,b_n)$について、
+    \begin{align}
+        n' &:= \left| \{ i \in \{1,2,\ldots,n\} \mid (a_{i},b_{i}) \neq (a_{i+1},b_{i+1}) \} \right|
+    \end{align}
+    とする。このとき、
+    \begin{align}
+    \left( 4n' \tan \frac{\pi}{n'} \right)
+    \left| \sum_{i=1}^{n} \Omega_{i+1,i} \right|
+    &\leq
+    \left( \sum_{i=1}^{n} L_{i+1,i} \right)^2,
+    \end{align}
+\end{itembox}
+\textbf{Prf.}\\
+$I = \{ i \in \{1,2,\ldots,n\} \mid (a_{i},b_{i}) \neq (a_{i+1},b_{i+1}) \}$とする。
+これに対する等周不等式から、
+\begin{align}
+\left( 4n' \tan \frac{\pi}{n'} \right)
+\left| \sum_{i \in I} \Omega_{i+1,i} \right|
+&\leq
+\left( \sum_{i \in I} L_{i+1,i} \right)^2,
+\end{align}
+が得られる。
+このことと、
+\begin{align}
+\sum_{i=1}^{n} \Omega_{i+1,i} &= \sum_{i \in I} \Omega_{i+1,i}\\
+\sum_{i=1}^{n} L_{i+1,i} &= \sum_{i \in I} L_{i+1,i}.
+\end{align}
+を用いれば示せる。\qed\\
+
+\subsection{主結果の証明}
+%OK
+主結果のタイトな場合の方を示す。初めの主結果はこの結果から直ちに従う。
+\footnote{
+    $n_c' \leq n_c$より、
+    \begin{align}
+        n_c'\tan(\pi/n_c') \geq  n_c\tan(\pi/n_c) 
+    \end{align}
+    が成り立つため。
+}
+\\
+\textbf{Prf.}\\
+サイクル$C = \{i_1, i_2, \ldots, i_{n_c}\}$に対して、等周不等式の系を用いることで、
+\begin{align}
+\left( 4n'_c \tan \frac{\pi}{n'_c} \right)
+\left| \sum_{e \in c} \Omega_e \right|
+&\leq
+\left( \sum_{e \in c} L_e \right)^2
+\end{align}た、グラフの分解のところで得られた不等式を用いることで、
+\begin{align}
+\left| \sum_{i>j} \mathcal{T}_{ij} \Omega_{ij} \right|
+&\leq
+\sum_{c \in \mathcal{C}^*} \mathcal{J}_c 
+\left| \sum_{e \in c} \Omega_e \right|
+\leq
+\sum_{c \in \mathcal{C}^*} \mathcal{J}_c
+\left( \sum_{e \in c} L_e \right)^2
+\left( 4n'_c \tan \frac{\pi}{n'_c} \right)^{-1}
+\end{align}
+が成立する。
+
+また、一般化TURにおいて、$X_e = L_e$とすることで、
+\begin{align}
+    \frac{\left( \sum_{e \in c} L_e \right)^2}{\sum_{e \in c} L_e^2 \mathcal{A}_e / \mathcal{J}_e}
+&\leq n_c \tanh\left( \frac{\mathcal{F}_c}{2 n_c} \right).\\
+\Leftrightarrow \qty(n_c \tanh\left( \frac{\mathcal{F}_c}{2 n_c} \right))^{-1}
+\qty( \sum_{e \in c} L_e )^2
+&\leq \sum_{e \in c} L_e^2 \frac{\mathcal{A}_e}{\mathcal{J}_e}
+\end{align}
+が得られる。さらに、グラフの分解のところで得られた不等式を用いることで、
+\begin{align}
+    \sum_{c \in \mathcal{C}^*} \mathcal{J}_c
+\left( n_c \tanh\left( \frac{\mathcal{F}_c}{2 n_c} \right) \right)^{-1}
+\left( \sum_{e \in c} L_e \right)^2
+&\leq
+\sum_{c \in \mathcal{C}^*} \mathcal{J}_c
+\sum_{e \in c} L_e^2 \frac{\mathcal{A}_e}{\mathcal{J}_e} \\
+&\leq
+\sum_{i>j} \mathcal{A}_{ij} L_{ij}^2.
+\end{align}
+が成立する。
+これら二つの不等式を用いることで、
+\begin{align}
+\abs{\chi_{ba}}
+&\leq
+\frac{
+4 \sum_{c \in \mathcal{C}^*} \mathcal{J}_c (\sum_{e \in c} L_e)^2
+\left[ 4n'_c \tan(\pi / n'_c) \right]^{-1}
+}{
+\sum_{c \in \mathcal{C}^*} \mathcal{J}_c (\sum_{e \in c} L_e)^2
+\left[ n_c \tanh(\mathcal{F}_c / 2n_c) \right]^{-1}
+}
+\end{align}
+
+ここで、
+\begin{align}
+\frac{
+\sum_{c \in \mathcal{C}^*} y_c
+}{
+\sum_{c \in \mathcal{C}^*} x_c
+}
+=
+\max_{c \in \mathcal{C}^*} \frac{y_c}{x_c}
+\end{align}
+が成り立つことを用いると、\footnote{
+    $M = \max_{c \in \mathcal{C}^*} \frac{y_c}{x_c}$とする。
+    このとき、
+    \begin{align}
+        \frac{y_c}{x_c} &\leq M \\
+        \Leftrightarrow y_c &\leq M x_c\\
+        \Rightarrow \sum_{c \in \mathcal{C}^*} y_c &\leq M \sum_{c \in \mathcal{C}^*} x_c \\
+        \Leftrightarrow \frac{\sum_{c \in \mathcal{C}^*} y_c}{\sum_{c \in \mathcal{C}^*} x_c} &\leq M
+    \end{align}
+}
+
+\begin{align}
+\abs{\chi_{ba}}
+&\leq
+\max_{c \in \mathcal{C}^*}
+\frac{
+4 \mathcal{J}_c (\sum_{e \in c} L_e)^2
+\left[ 4n'_c \tan(\pi / n'_c) \right]^{-1}
+}{
+\mathcal{J}_c (\sum_{e \in c} L_e)^2
+\left[ n_c \tanh(\mathcal{F}_c / 2n_c) \right]^{-1}
+}
+=
+\max_{c \in \mathcal{C}^*}
+\frac{
+n_c \tanh(\mathcal{F}_c / 2n_c)
+}{
+n'_c \tan(\pi / n'_c)
+}
+\end{align}
+が示される。\qed\\
+
+\end{document}
