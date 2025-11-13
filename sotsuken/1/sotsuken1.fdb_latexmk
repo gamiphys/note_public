@@ -1,10 +1,10 @@
 # Fdb version 4
-["dvipdf"] 1760680378.41659 "sotsuken1.dvi" "sotsuken1.pdf" "sotsuken1" 1760680380.0482 0
-  "sotsuken1.dvi" 1760680378 98148 e59fbb918f345a9df22dd2141e574bb9 "latex"
+["dvipdf"] 1761803234.77443 "sotsuken1.dvi" "sotsuken1.pdf" "sotsuken1" 1761803236.62431 0
+  "sotsuken1.dvi" 1761803234 98192 dcebd9d3051e6762e3f89d4c7d339b7e "latex"
   (generated)
   "sotsuken1.pdf"
   (rewritten before read)
-["latex"] 1760680376.19365 "sotsuken1.tex" "sotsuken1.dvi" "sotsuken1" 1760680380.03053 0
+["latex"] 1761803232.49479 "sotsuken1.tex" "sotsuken1.dvi" "sotsuken1" 1761803236.61284 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1743309921 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1743308370 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1743308370 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -191,9 +191,9 @@
   "c:/texlive/2025/texmf-dist/web2c/texmf.cnf" 1743308240 42148 61becc7c670cd061bb319c643c27fdd4 ""
   "c:/texlive/2025/texmf-var/web2c/euptex/uplatex.fmt" 1743314285 3337452 a7ab41831b9f0e26f66832580a1f400e ""
   "c:/texlive/2025/texmf.cnf" 1743313992 713 e69b156964470283e0530f5060668171 ""
-  "sotsuken1.aux" 1760680378 1946 1dcd4d219abc195a9fb13cffb1a0d615 "latex"
-  "sotsuken1.out" 1760680378 1162 70d085a257d93c24cfad354c423e508e "latex"
-  "sotsuken1.tex" 1760680375 35921 537c211df92dfb00cbd485827b98586b ""
+  "sotsuken1.aux" 1761803234 1946 1dcd4d219abc195a9fb13cffb1a0d615 "latex"
+  "sotsuken1.out" 1761803234 1162 70d085a257d93c24cfad354c423e508e "latex"
+  "sotsuken1.tex" 1761803231 35947 a18d62c3928f534bb813755997b4fc0c ""
   (generated)
   "sotsuken1.aux"
   "sotsuken1.dvi"

@@ -273,7 +273,7 @@ $\Phi_{y}(x) :=  2xy\tanh^{-1} \frac{x}{y}$とおくと、
 \begin{align}
     G_{ij} &:= 
     \begin{cases}
-        \pi \quad i \neq j, W_{ij} > 0\\
+        \pi_{i} \quad i \neq j, W_{ij} > 0\\
         0 \quad i \neq j, W_{ij} = 0\\
     \end{cases}
     \\
@@ -483,7 +483,7 @@ $\vb{u}$を固有値$\lambda_{2}^{K}$に対応する$K$の右固有ベクトル�
 \end{align}
 であることから、
 \begin{align}
-    \vb{u}^{\top} K  &=( \lambda_{2}^{K})^* \vb{u}^{\top}
+    \vb{u}^{\top} K^{\top}  &=( \lambda_{2}^{K})^* \vb{u}^{\top}
 \end{align}
 である。これと、$\Re \lambda_{2}^{K} = \frac{1}{2} (\lambda_{2}^{K} + (\lambda_{2}^{K})^*)$を用いると、
 \begin{align}
@@ -508,7 +508,7 @@ $K$は固有値$\lambda_{1}^K = 0$に対応する
 である。
 $\lambda$の実部の符号に気を付けて、
 \begin{align}
-    \abs{\Delta \Re \lambda_{2}^{W}} =  \abs{\Re \lambda_{2}^{W}} - \abs{\lambda_{2}^{\bar{W}}} &= \geq 0
+    \abs{\Delta \Re \lambda_{2}^{W}} \geq \abs{\Re \lambda_{2}^{W}} - \abs{\lambda_{2}^{\bar{W}}}  \geq 0
 \end{align}
 あとは定理3とまったく同じ流れで証明できる。
 \begin{align}
@@ -528,7 +528,7 @@ $\lambda$の実部の符号に気を付けて、
     \eta_{W} &\leq \kappa \eta_{G} \leq \kappa \sqrt{1- \sum_{i} \pi_i^2} \leq \kappa \nonumber
 \end{align}
 \textbf{Prf.}\\
-$\eta_{W} = \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{A_{ij}}{\pi_i \pi_j})^2}$を変形する。
+$\eta_{W} = \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{A_{ij}}{2\pi_i \pi_j})^2}$を変形する。
 \begin{align}
     \eta_{W} &= \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{\pi_i W_{ji} + \pi_j W_{ij}}{2 \pi_i \pi_j})^2}\\
     &= \sqrt{\sum_{i \neq j : W_{ij} > 0} \pi_i \pi_j \qty(\frac{\pi_i W_{ji} + \pi_j W_{ij}}{2 \pi_i \pi_j})^2}\\
@@ -550,7 +550,7 @@ $\eta_{W} = \sqrt{\sum_{i \neq j} \pi_i \pi_j \qty(\frac{A_{ij}}{\pi_i \pi_j})^2
 \end{align}
 が得られる。また、
 \begin{align}
-    \sqrt{\sum_{i \neq j} \pi_i \pi_j} &\leq \sqrt{\sum_{i, j} \pi_i \pi_j} = \sqrt{1-\sum_i \pi_i^2} \leq 1
+    \sqrt{\sum_{i \neq j,W_{ij}>0} \pi_i \pi_j} &\leq \sqrt{\sum_{i\neq j} \pi_i \pi_j} = \sqrt{1-\sum_i \pi_i^2} \leq 1
 \end{align}
 が成り立つ。ただし、
 $1 = (\sum_{i} \pi_i)^2 = \sum_{i} \pi_i^2 + \sum_{i \neq j} \pi_i \pi_j$を用いた。
@@ -562,7 +562,7 @@ $1 = (\sum_{i} \pi_i)^2 = \sum_{i} \pi_i^2 + \sum_{i \neq j} \pi_i \pi_j$を用�
     \abs{\lambda_2^{\bar{W}}} &\leq \kappa \abs{\lambda_2^{G} } \leq \kappa \nonumber
 \end{align}
 \textbf{Prf.}\\
-$\abs{\lambda_2^{\bar{W}}} = \abs{\lambda_2^{L}} - \lambda_2^{L}$より、
+$\abs{\lambda_2^{\bar{W}}} = \abs{\lambda_2^{L}}=  - \lambda_2^{L}$より、
 \begin{align}
     \abs{\lambda_2^{\bar{W}}} 
     &= -\max_{\vb{v}:\vb{v} \perp \sqrt{\bm{\pi}}, \norm{\vb{v}}=1} \sum_{i,j} v^*_i L_{ij} v_j\\
