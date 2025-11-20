@@ -1,11 +1,12 @@
 # Fdb version 4
-["dvipdf"] 1761174567.94193 "sotsuken3.dvi" "sotsuken3.pdf" "sotsuken3" 1761174569.78709 0
-  "sotsuken3.dvi" 1761174567 34144 8708c50757075136b70661febf1785c2 "latex"
+["dvipdf"] 1763656281.80624 "sotsuken3.dvi" "sotsuken3.pdf" "sotsuken3" 1763656283.91507 0
+  "sotsuken3.dvi" 1763656281 59976 b65aca0f113cee4d2bac3dfb554addd9 "latex"
   (generated)
   "sotsuken3.pdf"
   (rewritten before read)
-["latex"] 1761174565.71875 "sotsuken3.tex" "sotsuken3.dvi" "sotsuken3" 1761174569.76912 0
+["latex"] 1763656278.57881 "sotsuken3.tex" "sotsuken3.dvi" "sotsuken3" 1763656283.89355 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1743309921 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1743309524 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1743308370 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1743308370 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1743308370 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -42,7 +43,9 @@
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1743309006 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1743309006 1300 b62933e007d01cfd073f79b963c01526 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1743309006 1292 21c1c5bfeaebccffdb478fd231a0997d ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr9.tfm" 1743309006 1292 6b21b9c2c7bebb38aa2273f7ca0fb3af ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmss12.tfm" 1743309006 1324 37b971caf729d7edd9cbb9f9b0ea76eb ""
+  "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmss17.tfm" 1743309006 1320 ed93d62c5f2c16343826001f03341dbc ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1743309006 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1743309006 1116 933a60c408fc0a863a92debe84b2d294 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1743309006 1120 8b7d695260f3cff42e636090a8002094 ""
@@ -193,9 +196,10 @@
   "c:/texlive/2025/texmf-dist/web2c/texmf.cnf" 1743308240 42148 61becc7c670cd061bb319c643c27fdd4 ""
   "c:/texlive/2025/texmf-var/web2c/euptex/uplatex.fmt" 1743314285 3337452 a7ab41831b9f0e26f66832580a1f400e ""
   "c:/texlive/2025/texmf.cnf" 1743313992 713 e69b156964470283e0530f5060668171 ""
-  "sotsuken3.aux" 1761174567 592 859d3729dd08cbaf0969a3a5c5d8eb68 "latex"
-  "sotsuken3.out" 1761174567 391 ef0bac796d1c74fdc682f965610d9e07 "latex"
-  "sotsuken3.tex" 1761174564 14116 23b5fcab6b3be660a2e5a5aaf7577970 ""
+  "node.png" 1763653090 9983 0d04678f8c3b1fd4e74da99f14623b98 ""
+  "sotsuken3.aux" 1763656281 2071 908e8e851ff965f4339e0e9f2a5dd621 "latex"
+  "sotsuken3.out" 1763656281 1169 1066339a14b13d0c6b27196daa6e9a9b "latex"
+  "sotsuken3.tex" 1763656277 24402 6d841995ccd669ef52e60cab55c31df3 ""
   (generated)
   "sotsuken3.aux"
   "sotsuken3.dvi"

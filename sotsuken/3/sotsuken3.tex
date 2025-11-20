@@ -41,21 +41,198 @@
 
 \begin{document}
 
-\title{量子系における確率熱力学}
+\title{Force-current structure in classical and open quantum systems}
 \author{大上由人}
 \date{\today}
 \maketitle
 
-Yoshimura-Maekawa-Nagayama-Itoおよび大賀さんのトークのスライドを参考に量子系の確率熱力学をまとめる。
+Yoshimura, et al. PRR2023,2025のまとめ。
 
+\part{古典系}
+古典系の話を知っていた方が面白いので古典系の話もしておく。
+\section{マスター方程式}
+\subsection{マスター方程式}
+マルコフジャンプ過程における時間発展はマスター方程式を用いて記述される：
+\begin{align}
+    \dv{p_{n}(t)}{t} &= \sum_{m} W_{nm} p_{m}(t) \\
+    W_{nm} &= \sum_{\nu} W_{nm}^{\nu} 
+\end{align}
+ただし、$W_{nm}^{\nu}$は熱浴$\nu$との相互作用による遷移レートである。
+また、局所詳細つり合い条件
+\begin{align}
+    W_{nm}^{\nu} e^{-\beta_{\nu}E_{n}} = W_{mn}^{\nu} e^{-\beta_{\nu}E_{m}} \quad (n \neq m)
+\end{align}
+を課す。
+
+局所詳細つり合い条件の下で、エントロピー生成は以下のように書けることが知られている。
+\begin{align}
+    \dot{\sigma}(t) &= \sum_{n\neq m} \sum_{\nu} W_{nm}^{\nu}p_{m}(t) \ln \frac{W_{nm}^{\nu}p_{m}(t)}{W_{mn}^{\nu}p_{n}(t)} \\
+\end{align}
+これはKLダイバージェンスの形をしており、その非負性が示される。
+
+\subsection{グラフによる記法}
+グラフによるマルコフジャンプ過程の記述をまとめておく。\\
+\textbf{記号}
+\begin{itemize}
+    \item 頂点: $n \in \{1,2,\cdots,N\}$
+    \item 有向辺: $e \in \{1,2,\cdots,E\}$
+    \item 時刻$t$における分布: $\vb{p}(t) = (p_1(t),p_2(t),\cdots,p_N(t))^{\mathrm{T}}$
+    \item nodeの始点と終点: $\iota(e),\iota'(e)$
+    \item 向きが逆の辺: $-e$
+\end{itemize}
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=50mm]{node.png}
+    \end{center}
+    \caption{グラフの例}
+    \label{fig:graph_example}
+\end{figure}
+
+グラフの構造は行列$\nabla^{\top}$を用いて
+\begin{align}
+    (\nabla^{\top})_{ne} &=
+    \begin{cases}
+        +1 & (n = \iota'(e)) \\
+        -1 & (n = \iota(e)) \\
+        0 & (\text{otherwise})
+    \end{cases}
+\end{align}
+により表される。ただし$\top$は転置を表す。
+$\iota(e) \to \iota'(e)$の向きのフラックスを
+\begin{align}
+    K_e(p) &= W_{e} p_{\iota(e)} \\
+\end{align}
+と書く。
+また、$\iota'(e) \to \iota(e)$の向きのフラックスを$K_{-e}(p)$と書く。
+以下、$K_{\pm e}(p)>0$を仮定する。
+このとき確率流は
+\begin{align}
+    J_{e}(p) &= K_{e}(p) - K_{-e}(p)
+\end{align}
+と書ける。頂点$n$への確率の流入は$\sum_{e} (\nabla^{\top})_{ne} J_{e}(p)$となるので
+\begin{align}
+    \dv{p_n(t)}{t} &= \sum_{e} (\nabla^{\top})_{ne} J_{e}(p(t))
+\end{align}
+が得られる。
+
+辺$e$に対応する力学的な力を
+\begin{align}
+    F_{e}(p) &= \ln \frac{K_{e}(p)}{K_{-e}(p)}
+\end{align}
+により定義する。局所詳細つり合いを仮定すると、これは辺$e$での遷移によるエントロピー変化に対応する。
+このときエントロピー生成率は
+\begin{align}
+    \dot{\sigma}(p) &= \sum_{e} J_{e}(p) F_{e}(p) 
+    = J(p)^{\top} F(p)
+    \label{eq:epr_graph}
+\end{align}
+と表せる。(面倒になってきたので以下適宜$p$を省略する。)
+
+辺に沿ったOnsager係数を
+\begin{align}
+    l_{e} &= \frac{J_{e}}{F_{e}} = \frac{K_{e} - K_{-e}}{\ln K_{e} - \ln K_{-e}}
+\end{align}
+と定義する。このとき、$L = \text{diag}(l_{1},l_{2},\cdots,l_{E})$とおくと、これは正値行列である。
+新たな内積とノルムを
+\begin{align}
+    \ev{\vb{u},\vb{v}}_{L} &= \vb{u}^{\mathrm{T}} L \vb{v} = \sum_{e} l_{e} u_{e} v_{e}\\
+    \norm{\vb{u}}_{L} &= \sqrt{\ev{\vb{u},\vb{u}}_{L}} = \sqrt{\sum_{e} l_{e} u_{e}^{2}}
+\end{align}
+と定義する。このとき、エントロピー生成率は
+\begin{align}
+    \dot{\sigma} &= \sum_{e} J_{e} F_{e} \\
+    &= \sum_{e} l_{e} F_{e}^{2} \\
+    &= \norm{\vb{F}}_{L}^{2} \label{eq:epr_norm}
+\end{align}
+と書ける。
+
+詳細つり合いを満たすような平衡分布$p^{\mathrm{eq}}$が存在する場合を考える。このとき、
+\begin{align}
+    K_{e}(p^{\mathrm{eq}}) &= K_{-e}(p^{\mathrm{eq}}) 
+\end{align}
+である。このとき、
+\begin{align}
+    F_{e}(p) &= \ln \frac{K_{e}(p)}{K_{-e}(p)} \\
+    &= \ln \frac{K_{e}(p)/K_{e}(p^{\mathrm{eq}})}{K_{-e}(p)/K_{-e}(p^{\mathrm{eq}})} \\
+    &= -(\nabla \phi)_{e} \label{eq:potential}\\
+    \phi_{n} &= \ln \frac{p_{n}}{p_{n}^{\mathrm{eq}}} 
+\end{align}
+と書ける。\\
+$(\because)$
+    \begin{align}
+        \sum_{n} \nabla_{en} \ln\frac{p_n}{p_n^{\text{eq}}}
+        &= \nabla_{e\iota(e)} \ln\frac{p_\iota(e)}{p_\iota(e)^{\text{eq}}}
+        +\nabla_{e\iota'(e)} \ln\frac{p_{\iota'(e)}}{p_{\iota'(e)}^{\text{eq}}}\\
+        &= - \ln\frac{p_{\iota(e)}}{p_{\iota(e)}^{\text{eq}}}
+        + \ln\frac{p_{\iota'(e)}}{p_{\iota'(e)}^{\text{eq}}}\\
+        &= \ln \frac{K_{e}(p)/K_{e}(p^{\mathrm{eq}})}{K_{-e}(p)/K_{-e}(p^{\mathrm{eq}})}
+    \end{align}
+\qed\\
+すなわち、力をポテンシャルの勾配として表せる。
+
+\newpage
+\part{量子系}
 \section{GKSL方程式}
-GKSL方程式
+\subsection{GKSL方程式の導入}
+開放量子系におけるMarkov的な時間発展はGKSL方程式(量子マスター方程式)により記述される。
+まずはGKSL方程式を現象論的に導入する。
+\footnote{
+    ミクロな導出はここでは行わない。
+}
+開放量子系における時間発展はCPTP写像(完全正値性、トレース保存を満たす写像)$\Lambda$によりにより記述される。
+任意のCPTP写像はKraus表現
+\begin{align}
+    \Lambda(\rho) &= \sum_{k} \hat{M}_{k} \hat{\rho} \hat{M}_{k}^\dagger\\
+    \sum_{k} &\hat{M}_{k}^\dagger \hat{M}_{k} = \hat{I}
+\end{align}
+で表される。この$\hat{M}_{k}$をKraus演算子と呼ぶ。
+
+ここで、時間発展を微小時間$\Delta t$で刻んで考える。
+特にMarkov性を満たすようなKraus演算子を現象論的に導入する。
+\begin{align}
+    \hat{M}_{0} &= \hat{I} +(\hat{K}-i\hat{H})\Delta t \\
+    \hat{M}_{k} &= \hat{L}_{k} \sqrt{\Delta t} \quad (k\geq 1)\\
+    \sum_{k}& \hat{M}_{k}^\dagger \hat{M}_{k} = \hat{I} 
+\end{align}
+とおく。ただし、$\hat{K},\hat{H}$はエルミート演算子である。
+また、$\hat{L}_{k}$は相互作用を特徴づける演算子である。\footnote{古典master方程式の遷移レートに対応する。}
+直感的には$\hat{M}_{0}$はeventが何も起こらなかったことに対応し、$\hat{M}_{k}$はevent kが起きたことに対応する。
+これを用いて、
+\begin{align}
+    \hat{\rho}(t+\Delta t) &= \sum_{k} \hat{M}_{k} \hat{\rho}(t) \hat{M}_{k}^\dagger \\
+    &= \hat{M}_{0} \hat{\rho}(t) \hat{M}_{0}^\dagger + \sum_{k\geq 1} \hat{M}_{k} \hat{\rho}(t) \hat{M}_{k}^\dagger\\
+    &= (\hat{I} +(\hat{K}-i\hat{H})\Delta t) \hat{\rho}(t) (\hat{I} +(\hat{K}+i\hat{H}))\Delta t \\
+    &\quad + \sum_{k\geq 1} \hat{L}_{k} \hat{\rho}(t) \hat{L}_{k}^\dagger \Delta t \\
+    &= \hat{\rho}(t) -i[\hat{H}, \hat{\rho}(t)]\Delta t + \qty(\sum_{k\geq 1} \hat{L}_{k} \hat{\rho}(t) \hat{L}_{k}^\dagger + \hat{K}\hat{\rho}(t) + \hat{\rho}(t)\hat{K})\Delta t + o(\Delta t)
+\end{align}
+となるから、
+\begin{align}
+    \dv{\hat{\rho}(t)}{t} &= -i[\hat{H}, \hat{\rho}(t)] + \sum_{k\geq 1} \hat{L}_{k} \hat{\rho}(t) \hat{L}_{k}^\dagger + \hat{K}\hat{\rho}(t) + \hat{\rho}(t)\hat{K}
+\end{align}
+が得られる。第一項はvon Neumann方程式に対応し(ユニタリ発展)、それ以降の項は環境との相互作用に対応する(非ユニタリ発展)。
+完全性条件を用いることで$\hat{K}$を消去することができる。
+\begin{align}
+    \sum_{k\geq 0} \hat{M}_{k}^\dagger \hat{M}_{k} &= \hat{I} +(2\hat{K} + \sum_{k\geq 1} \hat{L}_{k}^\dagger \hat{L}_{k})\Delta t = \hat{I}
+\end{align}
+であるから、
+\begin{align}
+    K = -\frac{1}{2}\sum_{k\geq 1} \hat{L}_{k}^{\dagger} \hat{L}_{k}
+\end{align}
+を得る。したがって、GKSL方程式は反交換子を用いて
+\begin{align}
+    \dv{\hat{\rho}(t)}{t} &= -i[\hat{H}, \hat{\rho}(t)] + \sum_{k\geq 1}\qty(\hat{L}_{k} \hat{\rho}(t) \hat{L}_{k}^\dagger - \frac{1}{2}\qty{\hat{L}_{k}^\dagger \hat{L}_{k}, \hat{\rho}(t)}) \label{eq:QME}
+\end{align}
+と書ける。これがよくみる形である。
+このとき$\hat{L}_{k}$をLindblad演算子(jump演算子)と呼ぶ。
+
+\subsection{記法の整理}
+以下、GKSL方程式
 \begin{align}
     \dv{\rho}{t} &= -i[H,\rho] + \sum_{\mu \in \mathcal{L}_{L}}D_{\mu}[\rho] \\
     D_{\mu}[\rho] &= \sum_{\mu \in \mathcal{L}_{L}} [\gamma_{\mu}^{+} (L_{\mu} \rho L_{\mu}^{\dagger} - \frac{1}{2} \{L_{\mu}^{\dagger} L_{\mu}, \rho\}) 
     + \gamma_{\mu}^{-} (L_{\mu}^{\dagger} \rho L_{\mu} - \frac{1}{2} \{L_{\mu} L_{\mu}^{\dagger}, \rho\})]
 \end{align}
-である。
+に従う系を考える。
 ただし、$\gamma_{\mu}^{\pm} \in \mathbb{R}$はパラメータ、$L_{\mu}$はjump op.である。
 また、$\mu \in \mathcal{L}_{L}$はjumpの添字である。
 Hamiltonianは
@@ -78,7 +255,10 @@ $S_{\mu}$を
 と定義する。
 
 \section{カレント}
-Observable currentと呼ばれる量を考える。\\
+古典系において、カレントは系の時間発展やエントロピー生成率(EPR)を記述するのに重要な役割を果たす。
+量子系においても同様にカレントを定義することができる。
+まず、
+Observable currentと呼ばれる量を考える。
 \begin{itembox}[l]{\textbf{Def.Observable current}}
     jumpに対応するObservable currentは
     \begin{align}
@@ -100,7 +280,7 @@ jumpに対応するObservable currentは単位時間当たりのjump $\mu$の正
     ほげほげ
 }
 
-また、Dynamical currentと呼ばれる量も考えることができる。
+また、それより抽象的な量として、Dynamical currentと呼ばれる量も考えることができる。
 \begin{itembox}[l]{\textbf{Def.Dynamical current}}
     jumpに対応するDynamical currentは
     \begin{align}
@@ -117,7 +297,7 @@ jumpに対応するObservable currentは単位時間当たりのjump $\mu$の正
     $\Pi_{\mu}^{-}$は$\Im V_{\mu}^{\dagger}$への射影演算子である。
 \end{itembox}
 これらはObservable currentよりも抽象的な定義であるが\footnote{
-    定義自体はGKSL方程式での最適輸送から持ち込んでいるらしい。要確認？
+    定義自体はGKSL方程式での最適輸送から持ち込んでいるらしい。
 }、これらは時間発展やObservable currentを表現するのに便利である。
 実際、以下の関係式を示すことができる。
 \begin{itembox}[l]{\textbf{Thm.}}
@@ -135,7 +315,7 @@ jumpに対応するObservable currentは単位時間当たりのjump $\mu$の正
 + i V_{\mu}^{\dagger} \left[ \Pi_{\mu}^{+} \rho + (1 - \Pi_{\mu}^{+}) \rho V_{\mu}^{-} \right] \\
 &= i \zeta_{\mu} (\rho V_{\mu}^{\dagger} - V_{\mu}^{\dagger} \rho)\\
 &= i \zeta_{\mu} [\rho, V_{\mu}^{\dagger}] 
-1\end{align}
+\end{align}
 を用いることで、
 \begin{align}
 [J_{\mu}(\rho), V_{\mu}^{\dagger}] - [J_{\mu}^{\dagger}(\rho), V_{\mu}]
@@ -156,7 +336,6 @@ jumpに対応するObservable currentは単位時間当たりのjump $\mu$の正
 \left( L_{\mu}^{\dagger} \rho L_{\mu} - \frac{1}{2} \{ \rho, L_{\mu} L_{\mu}^{\dagger} \} \right)
 \end{align}
 が得られる。これらを合わせることで、時間発展の表式が得られる。\qed\\
-
 \section{内積構造}
 上で導いた時間発展の表式は双対構造を誘導する。
 dynamical currentの空間とエルミート演算子の空間のそれぞれで内積を導入する。
@@ -174,13 +353,13 @@ dynamical currentの空間$\mathfrak{J}:= \text{opr}(H)^{\mathcal{L}} \ni \mathb
 \end{align}
 で定義する。
 
-ここで、グラディエント$\nabla_{\mathbb{S}} : \text{Herm}(H) \to \mathbb{J}$
+ここで、グラディエント$\nabla_{\mathbb{S}} : \text{Herm}(H) \to \mathfrak{J}$
 を、
 \begin{align}
     \nabla_{\mathbb{S}} A &= \{[A, S_{\mu}]\}_{\mu \in \mathcal{L}}
 \end{align}
 と定義する。
-また、ダイバージェンス$\nabla^*_{\mathbb{S}} : \mathbb{J} \to \text{Herm}(H)$
+また、ダイバージェンス$\nabla^*_{\mathbb{S}} : \mathfrak{J} \to \text{Herm}(H)$
 を、
 \begin{align}
     \nabla^*_{\mathbb{S}} \mathbb{A}&=  \sum_{\mu \in \mathcal{L}} \qty([A_{\mu}, S_{\mu}^{\dagger}] - [A_{\mu}^{\dagger}, S_{\mu}])
@@ -218,6 +397,7 @@ $(\because)$\\
 また、Thermodynamic force op.を
 \begin{align}
     F_{\mu}(\rho) 
+    :=
     \begin{cases}
         0 & (\mu \in \mathcal{L}_{H}) \\
         \sigma_{\mu} L_{\mu} + k_{\text{B}}[L_{\mu}, \ln \rho] & (\mu \in \mathcal{L}_{L})
@@ -320,18 +500,64 @@ F_{\mu}(\rho)
 ここで、内積
 \begin{align}
 \ev{\mathbb{A}, \mathbb{C}}_{\mathbb{B}^{\pm}}
-&:= \ev{\mathbb{A}, \mathcal{M}_{\mathbb{B}}(\mathbb{C})} \in \mathbb{R},
+&:= \ev{\mathbb{A}, \mathcal{M}_{\mathbb{B^{\pm}}}(\mathbb{C})} \in \mathbb{R},
 \end{align}
 を以下のように導入すると、
 \begin{align}
 \ev{\mathbb{A}, \mathbb{A}}_{\mathbb{B}^{\pm}} &\ge 0,
 \end{align}
-をきちんと満たしてくれる。したがって、
+をきちんと満たしてくれる。
+\footnote{他の内積の公理も満たしてくれる。上での基底を用いて展開した式を用いる。}
+したがって、
 \begin{align}
 \dot{\Sigma}_{\mathrm{tot}}(\rho)
-= \ev{\mathbb{F}(\rho), \mathbb{F}(\rho)}_{\Gamma^{+}}
+= \ev{\mathbb{F}(\rho), \mathbb{F}(\rho)}_{\Gamma^{\pm}}
 \ge 0
 \end{align}
 が成り立つ。
+ここで、
+\begin{align}
+    \mathbb{J}(\pi) &= 0
+\end{align}
+なる平衡状態$\pi$が存在するとする。このとき、
+\begin{align}
+    \mathbb{F}(\pi) &= \mathcal{M}_{\Gamma^{\pm}}^{-1}(\mathbb{J}(\pi)) = 0
+\end{align}
+であるから、
+\begin{align}
+    \mathbb{F}(\rho) &= \mathbb{F}(\rho) - \mathbb{F}(\pi)\\
+    &= \{k_{\mathrm{B}} [L_{\mu}, \ln \rho - \ln \pi]\}_{\mu \in \mathcal{L}} \\
+    &= -\{[\phi, L_{\mu}]\}_{\mu \in \mathcal{L}} \\
+    &= - \nabla_{\mathbb{L}} \phi
+\end{align}
+となる$\phi = -k_{\mathrm{B}} (\ln \rho - \ln \pi)$が存在する。
+すなわち、力をポテンシャルの勾配として表すことができる。
+
+古典系と量子系の対応を以下にまとめる。
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|c|}
+\hline
+ & Classical & Quantum \\
+\hline
+Gradient & $\nabla$ & $\nabla_{L}$ \\
+\hline
+Continuity & $dp/dt = \nabla^{\top}J(p)$ & $\mathcal{D}(\rho) = \nabla_{L}^{*}\mathbb{J}(\rho)$ \\
+\hline
+Current & $K_{e} = K_{e}^{+} - K_{e}^{-}$ & $\mathbb{J}(\rho) = [L, \, \Gamma \otimes \rho]$ \\
+\hline
+Force & $F_{e} = \ln(K_{e}^{+}/K_{e}^{-})$ & $\mathbb{F}(\rho) = [L, \ln(\Gamma \otimes \rho)]$ \\
+\hline
+Conservative & $F = -\nabla \phi$ & $\mathbb{F}(\rho) = -\nabla_{L}\phi$ \\
+\hline
+Detailed balance & $J(p^{\mathrm{eq}}) = 0$ & $\mathbb{J}(\rho^{\mathrm{eq}}) = 0$ \\
+\hline
+EPR & $J^{T}F$ & $\mathrm{tr}\,\bigl(\mathbb{J}(\rho)^{\dagger}\mathbb{F}(\rho)\bigr)$ \\
+\hline
+\end{tabular}
+\caption{Classical-Quantum Correspondence}
+\end{table}
 
 \end{document}
