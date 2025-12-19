@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  21 NOV 2025 01:31
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  5 DEC 2025 12:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -677,52 +677,52 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 5.5481pt on input line 48.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 51.
+(Font)              scaled to size 13.31541pt on input line 52.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 51.
+(Font)              scaled to size 13.31541pt on input line 52.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 51.
+(Font)              scaled to size 13.31541pt on input line 52.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 51.
+(Font)              scaled to size 13.31541pt on input line 52.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 19.17792pt on input line 51.
+(Font)              scaled to size 19.17792pt on input line 52.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 19.17792pt on input line 51.
+(Font)              scaled to size 19.17792pt on input line 52.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 54.
+(Font)              scaled to size 11.09619pt on input line 55.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 56.
+(Font)              scaled to size 6.47278pt on input line 58.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 56.
+(Font)              scaled to size 4.62341pt on input line 58.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 56.
+(Font)              scaled to size 9.24683pt on input line 58.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 56.
+(Font)              scaled to size 6.47278pt on input line 58.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 56.
-LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT2/gt/m/n' tried instead on input line 75.
-LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 75.
-LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY2/gt/m/n' tried instead on input line 75.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 75.
+(Font)              scaled to size 4.62341pt on input line 58.
 
 
 [1
 
 ]
+LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 77.
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 77.
+LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 77.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 77.
 File: node.png Graphic file (type bmp)
 <node.png>
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 87.
+(Font)              scaled to size 8.32214pt on input line 90.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 87.
+(Font)              scaled to size 8.32214pt on input line 90.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 99.
+(Font)              scaled to size 6.47278pt on input line 102.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 99.
+(Font)              scaled to size 4.62341pt on input line 102.
 
 
 [2]
@@ -731,7 +731,7 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 
 [4]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 181.
+(Font)              scaled to size 5.5481pt on input line 184.
 
 
 [5]
@@ -739,12 +739,12 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 [6]
 
 [7]
-LaTeX Font Info:    Trying to load font information for U+euf on input line 342.
+
+[8]
+LaTeX Font Info:    Trying to load font information for U+euf on input line 380.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 )
-
-[8]
 
 [9]
 
@@ -752,7 +752,9 @@ File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 
 [11]
 
-[12] (./sotsuken3.aux)
+[12]
+
+[13] (./sotsuken3.aux)
  ***********
 pLaTeX2e <2023-02-14u04>+1, based on
 LaTeX2e <2024-11-01> patch level 2
@@ -764,10 +766,10 @@ Package rerunfilecheck Info: File `sotsuken3.out' has not changed.
 Here is how much of TeX's memory you used:
  23197 strings out of 473836
  428922 string characters out of 5734547
- 834849 words of memory out of 5000000
+ 835850 words of memory out of 5000000
  46029 multiletter control sequences out of 15000+600000
  581218 words of font info for 141 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,17n,93p,546b,501s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,19n,93p,546b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on sotsuken3.dvi (12 pages, 59976 bytes).
+Output written on sotsuken3.dvi (13 pages, 65224 bytes).
