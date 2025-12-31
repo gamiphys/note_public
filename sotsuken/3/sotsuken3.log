@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  5 DEC 2025 12:09
+This is e-upTeX, Version 3.141592653-p4.1.2-u2.00-250202-2.6 (utf8.uptex) (TeX Live 2025) (preloaded format=uplatex 2025.3.30)  21 DEC 2025 21:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -731,7 +731,7 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 
 [4]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 184.
+(Font)              scaled to size 5.5481pt on input line 185.
 
 
 [5]
@@ -741,7 +741,7 @@ LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 [7]
 
 [8]
-LaTeX Font Info:    Trying to load font information for U+euf on input line 380.
+LaTeX Font Info:    Trying to load font information for U+euf on input line 381.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 )
@@ -770,6 +770,6 @@ Here is how much of TeX's memory you used:
  46029 multiletter control sequences out of 15000+600000
  581218 words of font info for 141 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 84i,19n,93p,546b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,19n,93p,546b,473s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on sotsuken3.dvi (13 pages, 65224 bytes).
+Output written on sotsuken3.dvi (13 pages, 65552 bytes).

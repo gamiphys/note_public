@@ -62,7 +62,7 @@ Yoshimura, et al. PRR2023,2025のまとめ。
 ただし、$W_{nm}^{\nu}$は熱浴$\nu$との相互作用による遷移レートである。
 また、局所詳細つり合い条件
 \begin{align}
-    W_{nm}^{\nu} e^{-\beta_{\nu}E_{n}} = W_{mn}^{\nu} e^{-\beta_{\nu}E_{m}} \quad (n \neq m)
+    W_{nm}^{\nu} e^{-\beta_{\nu}E_{m}} = W_{mn}^{\nu} e^{-\beta_{\nu}E_{n}} \quad (n \neq m)
 \end{align}
 を課す。
 
@@ -149,11 +149,12 @@ $\iota(e) \to \iota'(e)$の向きのフラックスを
 \end{align}
 と書ける。
 
-詳細つり合いを満たすような平衡分布$p^{\mathrm{eq}}$が存在する場合を考える。このとき、
+特に詳細つり合い条件が成り立つ場合を考える。
+すなわち、平衡分布$p^{\mathrm{eq}}$が存在し、
 \begin{align}
     K_{e}(p^{\mathrm{eq}}) &= K_{-e}(p^{\mathrm{eq}}) 
 \end{align}
-である。このとき、
+が成り立つ場合を考える。このとき、
 \begin{align}
     F_{e}(p) &= \ln \frac{K_{e}(p)}{K_{-e}(p)} \\
     &= \ln \frac{K_{e}(p)/K_{e}(p^{\mathrm{eq}})}{K_{-e}(p)/K_{-e}(p^{\mathrm{eq}})} \\
@@ -423,7 +424,8 @@ $(\because)$\\
 \section{詳細つり合い条件の下でのEPR}
 以下、局所詳細つりあい条件
 \begin{align}
-    k_{\text{B}} \ln \frac{\gamma_{\mu}^{+}}{\gamma_{\mu}^{-}} = \sigma_{\mu}= -\beta_{\mu} \omega_{\mu} \quad (\mu \in \mathcal{L}_{L})
+    k_{\text{B}} \ln \frac{\gamma_{\mu}^{+}}{\gamma_{\mu}^{-}} &= \sigma_{\mu}= -\beta_{\mu} \omega_{\mu} \quad (\mu \in \mathcal{L}_{L})\\
+    [H,L_{\mu}] &= -\omega_{\mu} L_{\mu} \quad (\mu \in \mathcal{L}_{L})
 \end{align}
 を仮定する。(とくに、$\forall \mu \in \mathcal{L}_{L}, \beta_{\mu} = \beta$のとき詳細つり合い条件とよぶ。)
 このとき、着目系/環境系/全体のEPRを以下のように定義する:
@@ -564,10 +566,13 @@ F_{\mu}(\rho)
 \ge 0
 \end{align}
 が成り立つ。
+
+特に詳細つり合い条件が成り立つ場合を考える。
+このとき、covariant条件を使えば
 \begin{align}
     \mathbb{J}(\rho^{\mathrm{eq}})|_{L} &= 0
 \end{align}
-なる平衡状態$\rho^{\mathrm{eq}}$が存在するとする。
+が成り立つことを示せる。
 (jump部分に制限したカレントを$\mathbb{J}(\rho^{\mathrm{eq}})|_{L}$と表す。)
 このとき、
 \begin{align}
