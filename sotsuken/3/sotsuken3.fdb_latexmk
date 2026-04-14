@@ -1,10 +1,10 @@
 # Fdb version 4
-["dvipdf"] 1766319745.52526 "sotsuken3.dvi" "sotsuken3.pdf" "sotsuken3" 1766319746.63987 0
-  "sotsuken3.dvi" 1766319745 65552 94baf28636fc551918c82451bbdba5f7 "latex"
+["dvipdf"] 1773992222.62264 "sotsuken3.dvi" "sotsuken3.pdf" "sotsuken3" 1773992224.36592 0
+  "sotsuken3.dvi" 1773992222 65552 20dc7726d0200a68e1d3bbf3e909ad67 "latex"
   (generated)
   "sotsuken3.pdf"
   (rewritten before read)
-["latex"] 1766319743.79056 "sotsuken3.tex" "sotsuken3.dvi" "sotsuken3" 1766319746.63077 0
+["latex"] 1773992219.54267 "sotsuken3.tex" "sotsuken3.dvi" "sotsuken3" 1773992224.34821 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1743309921 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1743309524 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1743308370 1120 1e8878807317373affa7f7bba4cf2f6a ""
@@ -197,9 +197,9 @@
   "c:/texlive/2025/texmf-var/web2c/euptex/uplatex.fmt" 1743314285 3337452 a7ab41831b9f0e26f66832580a1f400e ""
   "c:/texlive/2025/texmf.cnf" 1743313992 713 e69b156964470283e0530f5060668171 ""
   "node.png" 1763653090 9983 0d04678f8c3b1fd4e74da99f14623b98 ""
-  "sotsuken3.aux" 1766319745 2072 8115658b70ba5a907fc81ca0a8df27a8 "latex"
-  "sotsuken3.out" 1766319745 1169 1066339a14b13d0c6b27196daa6e9a9b "latex"
-  "sotsuken3.tex" 1766319743 27637 635716cc49ad552703e91ee59c4d62e1 ""
+  "sotsuken3.aux" 1773992222 2072 8115658b70ba5a907fc81ca0a8df27a8 "latex"
+  "sotsuken3.out" 1773992222 1169 1066339a14b13d0c6b27196daa6e9a9b "latex"
+  "sotsuken3.tex" 1773992218 27639 ef2175dcbfa8c2be945ea712c7d27da0 ""
   (generated)
   "sotsuken3.aux"
   "sotsuken3.dvi"
